@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Req Man</title>
+  
+  <subtitle>需求管理学习和实践笔记</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://peapon.github.io/"/>
+  <updated>2020-04-19T11:57:06.000Z</updated>
+  <id>https://peapon.github.io/</id>
+  
+  <author>
+    <name>peapon</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>多层物料关联递归关联处理</title>
+    <link href="https://peapon.github.io/2020/04/19/%E5%A4%9A%E5%B1%82%E7%89%A9%E6%96%99%E5%85%B3%E8%81%94/"/>
+    <id>https://peapon.github.io/2020/04/19/多层物料关联/</id>
+    <published>2020-04-19T10:57:19.000Z</published>
+    <updated>2020-04-19T11:57:06.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>临时要处理一堆BOM相关的问题，但是一个个核对效率太慢，所以打算用Python写个小脚本解决这个问题。</p><h2 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h2><p>某机型的全配BOM的层级是一个多级递进和回归的表格，表格示意如下</p><table><thead><tr><th>层级</th><th>料号</th><th>类型</th><th>名称</th></tr></thead><tbody><tr><td>0</td><td>xxx</td><td>xxxx</td><td>xxx</td></tr><tr><td>1</td><td>xx</td><td>xxx</td><td>xxx</td></tr></tbody></table><p><img src="/images/15872938817513.jpg" alt></p><p>层级间的递进关系如图所示<img src="/images/%E5%9B%BE%E5%83%8F.jpeg" alt="图像"></p><h2 id="要解决的问题和要达到的目的"><a href="#要解决的问题和要达到的目的" class="headerlink" title="要解决的问题和要达到的目的"></a>要解决的问题和要达到的目的</h2><p>为了便于在物料处理过程中能够快速的反查底层物料影响哪一些模块，因此打算把数据导入到Access数据库，并用Parent ID的关系把他们串起来，便于反查。</p><p>因此就想简单的用Python写两个脚本来实现这个功能，其中比较难处理的就是前面说的这部分的处理。</p><p>因此对处理过程做一个记录，本文只对物料多层级关联处理这一部分。</p><h2 id="用到的工具"><a href="#用到的工具" class="headerlink" title="用到的工具"></a>用到的工具</h2><ul><li>Python 3.7</li><li>xlrd – 用来读取Excel数据</li><li>Visual Studio Code – Python IDE</li></ul><h2 id="处理过程"><a href="#处理过程" class="headerlink" title="处理过程"></a>处理过程</h2><p>这个问题的处理有两部分：</p><ol><li>正向读取数据的后的物料之间的关联，这个比较简单，只需要记住上一层及的物料的料号作为父亲料号即可；</li><li><p>回溯时候的父亲料号处理：</p><ul><li>从低层级物料回溯到高层级物料的处理，要使用高层级物料已经记录的父亲节点料号；</li><li>从回溯后的高层级物料分解是，要使用临近高层级的物料作为父亲物料</li></ul><p><strong>因此这里是处理的重点。</strong></p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>要处理这个问题，主要要用到的知识点是：</p><ol><li>Python 对Excel的处理，这里主要用到了读取的操作，比较简单，可以执行搜索；</li><li>Python的字典，由于我没有用递归算法，递归在这里也不是很实用，所以我用到了字典来处理，字典就是‘键-值’对；</li><li>对于已经出现过的层级，记录在字典中，当搜索进行到下一层级时，取上一级作为父亲节点；</li><li>当回溯时，从字典中取出已经存在的父亲节点的料号，即可完成处理。</li></ol><h2 id="处理的示例代码"><a href="#处理的示例代码" class="headerlink" title="处理的示例代码"></a>处理的示例代码</h2></li></ol><figure class="highlight plain"><figcaption><span>xlrd</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">import xlwt</span><br><span class="line"></span><br><span class="line">dict = &#123;0:&quot;&quot;&#125;</span><br><span class="line"></span><br><span class="line">pre_level=0</span><br><span class="line">pre_id=&quot;&quot;</span><br><span class="line">cur_level=0</span><br><span class="line">cur_id=&quot;&quot;</span><br><span class="line"></span><br><span class="line">parent_id=&quot;&quot;</span><br><span class="line">data = xlrd.open_workbook(&quot;/Volumes/Doc/code/test.xls&quot;)</span><br><span class="line"></span><br><span class="line">table = data.sheets()[0]          #通过索引顺序获取</span><br><span class="line">print(table.nrows)</span><br><span class="line"></span><br><span class="line">print(&quot;-------------current--------------&quot;)</span><br><span class="line">for i in range(0,table.nrows):</span><br><span class="line">    rvalue = table.row_values(i)</span><br><span class="line">    cur_level = rvalue[0]</span><br><span class="line">    cur_id = rvalue[1]</span><br><span class="line">    print(&quot;curleve:%d, curid:%s&quot;%(cur_level,cur_id))</span><br><span class="line">    if cur_level &gt; pre_level:</span><br><span class="line">        dict[cur_level]=pre_id</span><br><span class="line">    parent_id = dict[cur_level]</span><br><span class="line">    pre_level = cur_level</span><br><span class="line">    pre_id = cur_id</span><br><span class="line">    print(&quot;Current Level:%d, Current ID:%s, Parent ID:%s&quot;%(cur_level,cur_id,parent_id))</span><br><span class="line">print(&quot;-------------current--------------&quot;)</span><br><span class="line"></span><br><span class="line">print(&quot;Dict&quot;)</span><br><span class="line">for key in dict:</span><br><span class="line">    print(&quot;key:%d, value:%s&quot; %(key,dict[key]))</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;临时要处理一堆BOM相关的问题，但是一个个核对效率太慢，所以打算用Python写个小脚本解决这个问题。&lt;/p&gt;
+&lt;h2 id=&quot;问题背景&quot;&gt;&lt;a href=&quot;#问题背景&quot; class=&quot;headerlink&quot; title=&quot;问题背景&quot;&gt;&lt;/a&gt;问题背景&lt;/h2&gt;&lt;p&gt;某机型
+      
+    
+    </summary>
+    
+    
+      <category term="Python" scheme="https://peapon.github.io/tags/Python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>浅谈用户思维</title>
+    <link href="https://peapon.github.io/2019/05/29/%E6%B5%85%E8%B0%88%E7%94%A8%E6%88%B7%E6%80%9D%E7%BB%B4/"/>
+    <id>https://peapon.github.io/2019/05/29/浅谈用户思维/</id>
+    <published>2019-05-28T23:14:47.000Z</published>
+    <updated>2020-04-19T13:20:16.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近几个月，iM3产品团队一直扑在了包括在中国、土耳其、西班牙、泰国等不同地域、不同医院、不同客户需求的10来个项目上，虽然项目各不相同，但他们都有一个共同的特点——就是都在用iM3为临床客户创造价值、简化工作、提高效率。</p><p>“这就是有价值的创新。”在厦门某三甲医院护理部主任试用了iM3之后如是评价，这是一个来自于终端客户对iM3中所包含的用户思维的肯定。</p><h1 id="什么是用户思维"><a href="#什么是用户思维" class="headerlink" title="什么是用户思维"></a>什么是用户思维</h1><p>我想先从4月底的产品经理交流会上的一个案例开始来探讨什么是用户思维。</p><p>请大家思考这样一个问题：你购买iPhone的原因是什么？</p><p>现场有两个答案：</p><h1 id="为什么需要用户思维"><a href="#为什么需要用户思维" class="headerlink" title="为什么需要用户思维"></a>为什么需要用户思维</h1><h1 id="如何才能拥有用户思维"><a href="#如何才能拥有用户思维" class="headerlink" title="如何才能拥有用户思维"></a>如何才能拥有用户思维</h1><p>虽然到现在我还不能说iM3 取得了全面的胜利，但用户思维已经取得了全面的胜利。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;最近几个月，iM3产品团队一直扑在了包括在中国、土耳其、西班牙、泰国等不同地域、不同医院、不同客户需求的10来个项目上，虽然项目各不相同，但他们都有一个共同的特点——就是都在用iM3为临床客户创造价值、简化工作、提高效率。&lt;/p&gt;
+&lt;p&gt;“这就是有价值的创新。”在厦门某三甲
+      
+    
+    </summary>
+    
+    
+      <category term="需求管理" scheme="https://peapon.github.io/tags/%E9%9C%80%E6%B1%82%E7%AE%A1%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>7Edit 安装和使用</title>
+    <link href="https://peapon.github.io/2019/05/27/7Edit-%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8/"/>
+    <id>https://peapon.github.io/2019/05/27/7Edit-安装和使用/</id>
+    <published>2019-05-26T16:18:06.000Z</published>
+    <updated>2020-04-19T13:19:30.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="/images/15588875381333.jpg" alt><br><img src="/images/15588875535102.jpg" alt><br><img src="/images/15588875668906.jpg" alt><br><img src="/images/15588875863337.jpg" alt><br><img src="/images/15588876367794.jpg" alt><br><img src="/images/15588876492924.jpg" alt><br><img src="/images/15588877264433.jpg" alt></p><p><img src="/images/15588878285200.jpg" alt></p><p><img src="/images/15588878726116.jpg" alt><br><img src="/images/15588878916670.jpg" alt><br><img src="/images/15588879098633.jpg" alt><br><img src="/images/15588879306946.jpg" alt><br><img src="/images/15588879816173.jpg" alt><br><img src="/images/15588879964961.jpg" alt><br><img src="/images/15588880231170.jpg" alt><br><img src="/images/15588880377603.jpg" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;img src=&quot;/images/15588875381333.jpg&quot; alt&gt;&lt;br&gt;&lt;img src=&quot;/images/15588875535102.jpg&quot; alt&gt;&lt;br&gt;&lt;img src=&quot;/images/15588875668906.jpg&quot; alt&gt;&lt;br
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>为什么要创建EMR 信息化(MedCon)</title>
+    <link href="https://peapon.github.io/2019/05/26/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%88%9B%E5%BB%BAEMR-%E4%BF%A1%E6%81%AF%E5%8C%96-MedCon/"/>
+    <id>https://peapon.github.io/2019/05/26/为什么要创建EMR-信息化-MedCon/</id>
+    <published>2019-05-26T11:46:46.000Z</published>
+    <updated>2020-04-19T13:19:58.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="起源"><a href="#起源" class="headerlink" title="起源"></a>起源</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>我本人是在医疗器械企业的研发部门工作的，从事研发和产品相关的工作近10年，我的经历可以大致分为下面几个阶段：</p><ul><li>软件开发，软件工程师，负责基于Windows平台的软件的研发；</li><li>项目管理，软件工程师&amp;软件项目经理，人少则仕，项目经理跑了，就要去做项目管理的工作；</li><li>需求管理，需求管理与产品稍微挂钩，做一个简单的尝试。</li></ul><p>我这些年的工作，多多少少都涉及到一个共同的话题——医疗信息化，也许这正好就是这几年的势头。当然，我在所服务的企业内部也经历了信息化发展的几个阶段：</p><ul><li>发端，由当时我的上级编写的一个简单HL7程序，而我去实施的首个案例；</li><li>发展，在实施了几个案例后，我们发现我们的方案的缺陷，我带头调研了北美市场的EMR状况及IHE等进展，并提出开发网关的设想并得到实施；</li><li>战略提升，截止到我们规划的一款产品上市时，公司已经把公司产品的信息化和设备的互操作性提升为公司战略。</li></ul><h2 id="为什么EMR-信息化"><a href="#为什么EMR-信息化" class="headerlink" title="为什么EMR 信息化"></a>为什么EMR 信息化</h2><p>既然我所服务的企业都已经把信息化上升为企业战略了，那为什么现在才创建这个EMR 信息化呢，原因很简单，我们并没有一个完全成熟的解决方案。<br>我目睹了公司信息化产品的发展，了解其中的艰难，知道其中的弯路，而且还要帮助提升产品的信息化程度，所以，希望借用一些公开平台作为载体，记录学习和实施过程中的一些要点，以帮助后续需要用到这些信息的人。<br>我所披露的都是公开和公有的信息，我相信业界一定有科学家一样的大神存在，但我还是想系统的归纳，作为后续其他人查找信息的入口。</p><h1 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h1><p>EMR 信息化的目标，是为了在中国创建一个更好的解读国内外信息化标准的技术交流平台。</p><h1 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h1><p>EMR信息化初期规划的内容包含以下几部分：</p><ul><li>Mirth Connect的使用和解析；</li><li>HL7简要解析；</li><li>中国医院信息互联互通标准解析；</li><li>HIMSS初步解析；</li><li>ATSM解析；</li><li>IEC 11073标准的解析。</li></ul><p>对于医疗信息化标准的解析，国内的厂商多数是处于封闭的发展状态，而且很多时候也没有精力去做这一块，所以国内真正要找一块信息化相关的内容，难度还是不小的，我希望能够通过我的努力，稍微改善一下这样的状况。<br>这一系列的事情，我会根据我解读的情况，以系列文章的形式来整理出来，最终能到什么程度我也不清楚，所以我会选择一个难度最小的，也就是Mirth Connect入手。</p><h1 id="假定"><a href="#假定" class="headerlink" title="假定"></a>假定</h1><p>我假定读这些文章的人对医疗信息化、HL7这些东西都有一个简单的了解，至少听说过，因此在有些术语上，我不会特别深入的去解释。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;起源&quot;&gt;&lt;a href=&quot;#起源&quot; class=&quot;headerlink&quot; title=&quot;起源&quot;&gt;&lt;/a&gt;起源&lt;/h1&gt;&lt;h2 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot; title=&quot;背景&quot;&gt;&lt;/a&gt;背景&lt;/h2&gt;&lt;p&gt;我本人
+      
+    
+    </summary>
+    
+    
+      <category term="医疗信息化" scheme="https://peapon.github.io/tags/%E5%8C%BB%E7%96%97%E4%BF%A1%E6%81%AF%E5%8C%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>读《情商管理课——优秀的人如何掌控情绪》</title>
+    <link href="https://peapon.github.io/2019/05/11/%E8%AF%BB%E3%80%8A%E6%83%85%E5%95%86%E7%AE%A1%E7%90%86%E8%AF%BE%E2%80%94%E2%80%94%E4%BC%98%E7%A7%80%E7%9A%84%E4%BA%BA%E5%A6%82%E4%BD%95%E6%8E%8C%E6%8E%A7%E6%83%85%E7%BB%AA%E3%80%8B/"/>
+    <id>https://peapon.github.io/2019/05/11/读《情商管理课——优秀的人如何掌控情绪》/</id>
+    <published>2019-05-11T01:05:08.000Z</published>
+    <updated>2020-04-15T16:06:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在一次偶然的机会，应该是图书打折的机会，我买到了左岸老师编著的《情商管理科——优秀的人如何掌控情绪》这本书。<br>说实话，我对这本书的期望还是蛮大的，因为我不是一个优秀的人，而且变成一个优秀的人是大家共性的追求，所以我是满怀期待读完这本书的。<br>先给这本书定个位，这是一本鸡汤加故事会，当然，这是这种书的典型套路，说一个鼓舞人心的道理当然需要一个相辅相成的故事，因此在了解清楚这本书的定位后，去读这本书就轻松很多了。<br>这并不是说这本书读完对我没有帮助，帮助还是有的。首先，这本书的框架是这样的：认识自己，管理情绪，激励自己；认识他人，善待他人，创造美好的人际关系，这说的很有道理啊，这就是一个人变得受欢迎的标准公式啊：认识自己，善待他人。<br>那么书中有哪些我觉得有意思的呢？认识他人，我觉得每一点说的都很有道理，当我把左岸老师提出的那些点放回到自己身上时，仿佛又对我自己有了重新的认识，所以我摘录一下：</p><h1 id="认识他人的小窍门"><a href="#认识他人的小窍门" class="headerlink" title="认识他人的小窍门"></a>认识他人的小窍门</h1><h2 id="眼神（看）"><a href="#眼神（看）" class="headerlink" title="眼神（看）"></a>眼神（看）</h2><p>眼睛是心灵的窗户嘛，透过窗户就能观察到很多事情了。那么如何从眼神中读出他的含义呢：</p><ol><li>眼神镇定，表示对方胸有成竹，也就是淡定，泰然自若；</li><li>眼神散乱，表示六神无主，也许是面临巨大困难需要帮助；</li><li>眼神阴沉，表示对方心情欠佳，不要招惹。</li></ol><h2 id="听说话的弦外之音（听）"><a href="#听说话的弦外之音（听）" class="headerlink" title="听说话的弦外之音（听）"></a>听说话的弦外之音（听）</h2><p>说话都是有目的的，打发时间？获取同情？获取帮助？抱怨？等等，总之，说话就是有目的的，而往往说话很多时候都不会直接了当，很多时候都有些保留，尤其是在不太熟悉的人之间的交际的时候，那么要怎么听出对方的心声呢：</p><ol><li>反常，如果一个人平时不会轻声细语，而突然反常，事出突然必有妖嘛，这个时候就静静的听吧；</li><li>如果一个人总爱牢骚和跟别人聊天，那么这个人缺乏主见；</li><li>说话时眼神飘忽不定，坐立不安，那么这个人在这种场景下缺乏自信；</li><li>如果对方欲言又止，那就需要追问一下啦。</li></ol><h2 id="习惯动作（看）"><a href="#习惯动作（看）" class="headerlink" title="习惯动作（看）"></a>习惯动作（看）</h2><p>人都有习惯性的动作，咬手指、双手抱胸、抹鼻子等等等等，每一样呢都以自己的意思，左岸老师指导我们可以通过观察这些小动作去观察别人，认识别人：</p><ol><li>指手画脚的人易冲动；</li><li>经常以手掩口的人易情绪低落；</li><li>时常轻拍别人肩膀的人显然比较骄傲；</li><li>经常把指关节弄得啪啪响的人，对面对的事情充满恐惧；</li><li>抓头发的人易健忘，易受情绪支配；</li><li>拖着鞋走路的人意志易消沉，易得过且过。</li></ol><p>好像都有点道理。</p><h2 id="声音（听）"><a href="#声音（听）" class="headerlink" title="声音（听）"></a>声音（听）</h2><p>声音的频率可以反应一个人的内心活动和状态，悠然自得的声音和充满恐惧的声音显然是不一样的，这个很容易理解，那怎么通过声音去了解他人呢：</p><ol><li>说话声音凝重且深沉，情绪稳定，一般知识广博，思想成熟；</li><li>声音锋利尖锐，情绪一般不稳定，具备极强的攻击性；</li><li>声音刚毅，情绪比较健康，有很强的纪律性和组织性；</li><li>声音圆滑而缓和，情绪平稳，不容易大起大落，为人诚恳、认清，具同理心，处事圆滑，容易受他人指责；</li><li>声柔而顺畅，性格温和，淡泊名利，与世无争，希望过得平淡；</li><li>声音急躁，情绪不好，易怒，易生气，做事没有详尽计划安排，急于求成。</li></ol><p>有点像算命。</p><h2 id="倾听（听）"><a href="#倾听（听）" class="headerlink" title="倾听（听）"></a>倾听（听）</h2><p>所有管理学、沟通课程，都会告诉你倾听的重要性，那么能听出什么呢？</p><ol><li>说话者的人品；</li><li>说话者意向；</li><li>说话者的见识和学识；</li><li>说话者的气质。</li></ol><p>认识他人的小窍门，总结来说，多看，多听，少说。好了，我就写这么多，所以呢，多读书，还是有好处的，一本无论是怎么样的书，总有一个让你有所收获的地方</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;在一次偶然的机会，应该是图书打折的机会，我买到了左岸老师编著的《情商管理科——优秀的人如何掌控情绪》这本书。&lt;br&gt;说实话，我对这本书的期望还是蛮大的，因为我不是一个优秀的人，而且变成一个优秀的人是大家共性的追求，所以我是满怀期待读完这本书的。&lt;br&gt;先给这本书定个位，这是
+      
+    
+    </summary>
+    
+    
+      <category term="自我管理" scheme="https://peapon.github.io/tags/%E8%87%AA%E6%88%91%E7%AE%A1%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>一个假产品经理对产品经理的理解</title>
+    <link href="https://peapon.github.io/2019/05/02/%E4%B8%80%E4%B8%AA%E5%81%87%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86%E5%AF%B9%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86%E7%9A%84%E7%90%86%E8%A7%A3/"/>
+    <id>https://peapon.github.io/2019/05/02/一个假产品经理对产品经理的理解/</id>
+    <published>2019-05-02T13:53:48.000Z</published>
+    <updated>2020-04-15T16:06:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>我是2014年底至2015年除被秦工从中央站拽过来做需求管理的，细数过来也有几个年头了，在这几年中，也做了几款产品的规划和需求管理工作。虽然我一直不知道秦工看中我身上什么特质，但在做需求管理这几年中，确实给予了我很大的帮助。<br>如果说中央站是我涉及到产品管理的开端，那么从开发转岗需求管理是真正开始深入的涉猎产品管理。为什么没有用进入或者是精通产品管理呢，因为至今我都觉得我所做的，也只是产品很少的一部分。<br>那说道对产品管理具体的认识的话，要回溯到2015年，秦工在需求组后边那个小角落跟我们需求组几个人开了一个非正式的会议说，你们需求组要做的是：产品策划、需求管理、产品发布、抱怨跟踪、产品改进，这不就是产品管理的全过程吗？<br>而从事需求管理这些年，需求组的同事确实在做其中的一部分工作，所以我们一直都自封为Fake Product Manager，要管的多，实际写到职能的少，所以是Fake的，有时候，我也能接到组内同事的投诉，为什么我们要管这么多。<br>接下来我就我个人的经验来谈谈，我们为什么要管这么多。</p><h2 id="好的产品本来的样子"><a href="#好的产品本来的样子" class="headerlink" title="好的产品本来的样子"></a>好的产品本来的样子</h2><p>4月底，邱总邀请了一直跟我们合作不错的合作公司的产品经理Michael Gao来给我们做了一次产品管理的分享，会上Michael问了一个很有趣的问题</p><h2 id="到临床中去"><a href="#到临床中去" class="headerlink" title="到临床中去"></a>到临床中去</h2><p>毛主席说过：“在我党的一切实际工作中，凡属正确的领导，必须是从群众中来，到群众中去。”</p><h2 id="摇滚的力量"><a href="#摇滚的力量" class="headerlink" title="摇滚的力量"></a>摇滚的力量</h2><p>我在谈摇滚的时候，不是在谈摇滚，而是要讲一个故事。</p><h2 id="做好“传声筒”"><a href="#做好“传声筒”" class="headerlink" title="做好“传声筒”"></a>做好“传声筒”</h2><p>我在谈传声筒的时候，不是在说传声筒，而是在讲需求管理。</p><h2 id="客户爽一点，自己苦一点"><a href="#客户爽一点，自己苦一点" class="headerlink" title="客户爽一点，自己苦一点"></a>客户爽一点，自己苦一点</h2><p>我在谈让客户爽一点，自己苦一点的时候，真的是在谈让客户爽一点，自己苦一点。</p><h2 id="吃水不忘挖井人"><a href="#吃水不忘挖井人" class="headerlink" title="吃水不忘挖井人"></a>吃水不忘挖井人</h2><p>我在谈挖井人的时候，我就是在谈开发团队。</p><p>结语:人人都是产品经理，人人都须是产品经理。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;我是2014年底至2015年除被秦工从中央站拽过来做需求管理的，细数过来也有几个年头了，在这几年中，也做了几款产品的规划和需求管理工作。虽然我一直不知道秦工看中我身上什么特质，但在做需求管理这几年中，确实给予了我很大的帮助。&lt;br&gt;如果说中央站是我涉及到产品管理的开端，那么
+      
+    
+    </summary>
+    
+    
+      <category term="需求管理" scheme="https://peapon.github.io/tags/%E9%9C%80%E6%B1%82%E7%AE%A1%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MWeb外部模式的图片文件夹处理</title>
+    <link href="https://peapon.github.io/2019/04/21/MWeb%E5%A4%96%E9%83%A8%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%9B%BE%E7%89%87%E6%96%87%E4%BB%B6%E5%A4%B9%E5%A4%84%E7%90%86/"/>
+    <id>https://peapon.github.io/2019/04/21/MWeb外部模式的图片文件夹处理/</id>
+    <published>2019-04-21T04:51:38.000Z</published>
+    <updated>2020-04-15T16:06:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>这段文字来源于官方的帮助，详见：<a href="https://zh.mweb.im/15304187309476.html" target="_blank" rel="noopener">MWeb外部模式的详细应用</a></strong></p><p>引入文件夹到 MWeb 中的办法<br>如下图，按 CMD + E 打开外部模式，然后点击左下角的 “+” 按钮，选择要引入的文件夹即可。<br><img src="/images/15558223756761.jpg" alt></p><p>另外，你还可以直接把文件夹拖拽到左边的文件夹树形列表中，也可以引入文件夹。<br>还有一种方法就是：直接把文件夹拖拽到 MWeb 的图标中，也可以引入文件夹。</p><p>配置引入的文件夹<br>引入文件夹后，还有一项重要的设置，就是引入文件夹的设置，可以右键引入的文件夹，然后选择 编辑，就会显示如下图的界面：<br><img src="/images/15558223937612.jpg" alt></p><p>一个设置是 “显示名称”，这个是引入的文件夹所特有的，你修改这个名称不会修改到文件夹的名称。还有几个比较重要的设置，都是跟插入图片相关的，第一个就是 “保存插入的图片的文件夹名称：”，这个一看就知道意思，这个跟下面的 “插入的图片的保存位置” 相关联，这个只有 “绝对位置” 与 “相对位置” 两个选项。<br>举个例子，比如说我引入的文件夹为 A，然后有一文件在 “A/folder/file.md” 下，我如果在 “file.md” 中插入一张名为 “pic.jpg” 的图片，则不同的选项的结果为：</p><p>相对位置：图片会保存在 “A/folder/media/pic.jpg”，然后生成的 Markdown 为：<img src="media/pic.jpg" alt>。<br>绝对位置：图片会保存在 “A/media/pic.jpg”，生成的 Markdwon 为：![](/media/pic.jpg。<br>另外一个设置：“把插入的图片自动上传至…”。如果勾选了这个选项，那么上面的设置就无效了，因为你插入的图片都会自动上传至所选择的图片上传服务，然后返回 Markdown 语法。</p><p>根据这个特性，可以让 MWeb 很好地支持 Octpress、Jekyll、hexo、gitbook、VuePress 等等静态网站生成工具的图片插入、预览和管理。</p><p>管理引入后的文件夹<br>文件夹引入后，就可以使用右键对引入的文件夹和文件进行一些常用的操作，如下图所示。<br><img src="/images/15558224098027.jpg" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;strong&gt;这段文字来源于官方的帮助，详见：&lt;a href=&quot;https://zh.mweb.im/15304187309476.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;MWeb外部模式的详细应用&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p
+      
+    
+    </summary>
+    
+    
+      <category term="IT 技术" scheme="https://peapon.github.io/tags/IT-%E6%8A%80%E6%9C%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>在macOS Mojave上搭建树莓派的Qt开发环境</title>
+    <link href="https://peapon.github.io/2019/04/20/%E5%9C%A8macOS-Mojave%E4%B8%8A%E6%90%AD%E5%BB%BA%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84Qt%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/"/>
+    <id>https://peapon.github.io/2019/04/20/在macOS-Mojave上搭建树莓派的Qt开发环境/</id>
+    <published>2019-04-20T14:39:27.000Z</published>
+    <updated>2020-04-15T16:06:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>做这件事的原因有两个：<br>第一是，接上一篇《为树莓派3B+编译Qt 5.11.2》中的Ubuntu 18.10是在虚拟机中搭建的，所以每次要进行开发时，都需要再启动一个虚拟机，有点麻烦，不想这样做，也就是懒；<br>第二是，Mac是Unix-like系统，理论上只要找到合适的编译器，也就可以在Mac上配置环境而使用在虚拟机中编译的Qt。<br>所以带着勇闯雷区的勇气就开始了我的尝试之旅了。</p><h1 id="树莓派部分"><a href="#树莓派部分" class="headerlink" title="树莓派部分"></a>树莓派部分</h1><p>树莓派部分我们已经在Ubuntu中做好了一切准备，所以我们不需要再做什么了，具体参考<a href="https://peapon.github.io/2019/04/17/为树莓派3B-编译Qt-5-11-2/">为树莓派3B+编译Qt 5.11.2</a>。<br></p><h1 id="主机准备"><a href="#主机准备" class="headerlink" title="主机准备"></a>主机准备</h1><p>我的电脑的信息如下：<br><img src="/images/15558112564165.jpg" alt></p><h2 id="工作目录和工具链准备"><a href="#工作目录和工具链准备" class="headerlink" title="工作目录和工具链准备"></a>工作目录和工具链准备</h2><p>这部分的工作呢，和在Ubuntu上准备是一样的，具体如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir ~/raspi</span><br><span class="line">cd ~/raspi</span><br><span class="line">git clone https://github.com/raspberrypi/tools</span><br></pre></td></tr></table></figure><p>虽然我们不用tool下的gcc编译器，但我不确定是否用到其他环境，所以我们还是完整的下载。</p><h2 id="准备正确的工具链和sysroot"><a href="#准备正确的工具链和sysroot" class="headerlink" title="准备正确的工具链和sysroot"></a>准备正确的工具链和sysroot</h2><h3 id="下载Mac下用的工具链"><a href="#下载Mac下用的工具链" class="headerlink" title="下载Mac下用的工具链"></a>下载Mac下用的工具链</h3><p>armv8-rpi3-linux-gnueabihf-gcc-8.1.0-macos-high-sierra这个工具链是在mac下可以使用来编译Qt的交叉编译器,先<code>git clone</code>下这个工具链。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github.com:yc2986/armv8-rpi3-linux-gnueabihf-gcc-8.1.0-macos-high-sierra.git</span><br></pre></td></tr></table></figure><p>下载完工具链后，把<code>armv8-rpi3-linux-gnueabihf</code>拷贝到<code>~/raspi/tools</code>目录下。</p><h3 id="准备sysroot"><a href="#准备sysroot" class="headerlink" title="准备sysroot"></a>准备sysroot</h3><p>还是需要在raspi下创建sysroot，并同步树莓派上面的库</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir sysroot sysroot/usr sysroot/opt</span><br><span class="line">rsync -avz -e &quot;ssh -p 22&quot; pi@raspberrypi.local:/lib sysroot</span><br><span class="line">rsync -avz -e &quot;ssh -p 22&quot; pi@raspberrypi.local:/usr/include sysroot/usr</span><br><span class="line">rsync -avz -e &quot;ssh -p 22&quot; pi@raspberrypi.local:/usr/lib sysroot/usr</span><br><span class="line">rsync -avz -e &quot;ssh -p 22&quot; pi@raspberrypi.local:/opt/vc sysroot/opt</span><br></pre></td></tr></table></figure><p>把<code>raspberrypi.local</code>换成树莓派的IP。<br>还有一种办法就是直接同步Ubuntu 下配置好的sysroot，具体方法如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rsync -avz -e &quot;ssh -p 22&quot; penn@Penn 92.168.3.113:/home/penn/raspi/sysroot ./</span><br></pre></td></tr></table></figure><p>这条命令是把Ubuntu端的sysroot同步到Mac的raspi目录。</p><p><strong>还有一步非常非常重要的步骤，不然编译器的环境不完整，需要将<code>~/raspi/tools/armv8-rpi3-linux-gnueabihf/armv8-rpi3-linux-gnueabihf/sysroot</code>下所有的目录及文件拷到~/raspi/sysroot下，选择合并处理</strong>。</p><h2 id="编译Qmake"><a href="#编译Qmake" class="headerlink" title="编译Qmake"></a>编译Qmake</h2><p>下载源代码</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget http://download.qt.io/official_releases/qt/5.11/5.11.2/single/qt-everywhere-src-5.11.2.tar.xz</span><br><span class="line">tar xvf  qt-everywhere-src-5.11.2.tar.xz</span><br><span class="line">cd  qt-everywhere-src-5.11.2</span><br></pre></td></tr></table></figure><p>做完前面的工作，mac端的编译环境就准备好了，我们需要用到qt的编译器qmake，这个需要我们自己编译出来，步骤不重复叙述，configure要说一下。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure -release -no-opengl -device linux-rasp-pi3-g++ -device-option CROSS_COMPILE=~/raspi/tools/armv8-rpi3-linux-gnueabihf/bin/armv8-rpi3-linux-gnueabihf- -sysroot ~/raspi/sysroot/ -opensource -confirm-license -skip qtwayland -skip qtlocation -skip qtscript -make libs -prefix /usr/local/qt5pi -extprefix ~/raspi/qt5pi -hostprefix ~/raspi/qt5 -no-use-gold-linker -v -no-gbm</span><br></pre></td></tr></table></figure><p>这里注意，我们用了<code>-no-opengl</code>选项，因为我们在Ubuntu上已经编译了，而且这里我们也只是需要生成一个qmake及相关环境，我们并不用mac下编译出来的库。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make -j4</span><br><span class="line">make install</span><br></pre></td></tr></table></figure><p>做完上面的步骤后，执行下面的命令确认是否正确编译了qmake</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~/rasp/qt5</span><br><span class="line">./bin/qmake -v</span><br></pre></td></tr></table></figure><p>如果正确编译了qmake，能够得到下面的信息</p><p><em>QMake version 3.1</em></p><h1 id="配置开发环境"><a href="#配置开发环境" class="headerlink" title="配置开发环境"></a>配置开发环境</h1><p>QtCreator的配置是跟Ubuntu下是一样的，参考<a href="https://peapon.github.io/2019/04/17/为树莓派3B-编译Qt-5-11-2/#搭建开发环境">为树莓派3B-编译Qt-5-11-2/#搭建开发环境</a></p><h2 id="GDB"><a href="#GDB" class="headerlink" title="GDB"></a>GDB</h2><p>要特别说明一下，这里的GDB有点区别，GDB设置的路径为</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/Cellar/gdb/8.2.1/bin/gdb</span><br></pre></td></tr></table></figure><h1 id="测试环境是否可用"><a href="#测试环境是否可用" class="headerlink" title="测试环境是否可用"></a>测试环境是否可用</h1><p>创建一个Qt Widgets Application名字为WidgetsDemo，然后编译执行，在VNC到树莓派，可以看到我们的程序已经上传到输煤派了。<br><img src="/images/15558165964519.jpg" alt></p><p>好了，到这里在macOS mojave下搭建Qt的交叉编译环境也就完成了，希望你也能成功。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;做这件事的原因有两个：&lt;br&gt;第一是，接上一篇《为树莓派3B+编译Qt 5.11.2》中的Ubuntu 18.10是在虚拟机中搭建的，所以每次要进行开发时，都需要再启动一个虚拟机，有点麻烦，不想这样做，也就是懒；&lt;br&gt;第二是，Mac是Unix-like系统，理论上只要找到
+      
+    
+    </summary>
+    
+    
+      <category term="Rasp" scheme="https://peapon.github.io/tags/Rasp/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RX 580解决270度旋转问题</title>
+    <link href="https://peapon.github.io/2019/04/17/RX-580%E8%A7%A3%E5%86%B3270%E5%BA%A6%E6%97%8B%E8%BD%AC%E9%97%AE%E9%A2%98/"/>
+    <id>https://peapon.github.io/2019/04/17/RX-580解决270度旋转问题/</id>
+    <published>2019-04-17T11:15:15.000Z</published>
+    <updated>2020-04-15T16:06:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>暂时没解决。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;暂时没解决。&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+    
+      <category term="IT 技术" scheme="https://peapon.github.io/tags/IT-%E6%8A%80%E6%9C%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>为树莓派3B+编译Qt 5.11.2</title>
+    <link href="https://peapon.github.io/2019/04/17/%E4%B8%BA%E6%A0%91%E8%8E%93%E6%B4%BE3B-%E7%BC%96%E8%AF%91Qt-5-11-2/"/>
+    <id>https://peapon.github.io/2019/04/17/为树莓派3B-编译Qt-5-11-2/</id>
+    <published>2019-04-17T05:49:47.000Z</published>
+    <updated>2020-04-15T16:06:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="概述信息"><a href="#概述信息" class="headerlink" title="概述信息"></a>概述信息</h1><p>最近因为一个项目的原因，接触树莓派，觉得有意思，买了一个板子来自己玩，同时最近在了解QT开发，所以，就趁此机会尝试编写可以在树莓派上运行的程序。</p><h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><h3 id="树莓派"><a href="#树莓派" class="headerlink" title="树莓派"></a>树莓派</h3><p>我选择了树莓派3B+，这块板子的性能更高，因此可玩性可能更好一些，购买可以选择去马云家，搜索下有很多，具体的配置如下：<br><img src="/images/15555078279977.jpg" alt></p><h3 id="交叉编译主机"><a href="#交叉编译主机" class="headerlink" title="交叉编译主机"></a>交叉编译主机</h3><p><strong>Mac：</strong> 本来准备在Mac上交叉编译，并搭建相关开发环境，在参考<a href="https://github.com/raulicomr/qt-rpi-macos" target="_blank" rel="noopener">qt-rpi-macos</a>的指导编译后，在Mac上编译的程序没有EGL，配置起来很复杂，所以选择放弃。<br><strong>Ubuntu 18.04：</strong> 后来又跟着<a href="https://mechatronicsblog.com/cross-compile-and-deploy-qt-5-12-for-raspberry-pi/" target="_blank" rel="noopener">Cross-compile and deploy Qt 5.12 for Raspberry Pi</a>这篇指导进行Qt编译和开发环境搭建，<a href="https://mechatronicsblog.com/cross-compile-and-deploy-qt-5-12-for-raspberry-pi/" target="_blank" rel="noopener">Cross-compile and deploy Qt 5.12 for Raspberry Pi</a>的指导是在OpenSUSE 上进行的，我对Ubuntu比较熟悉，所以我选择了Ubuntu。</p><h3 id="Qt版本"><a href="#Qt版本" class="headerlink" title="Qt版本"></a>Qt版本</h3><p><a href="https://mechatronicsblog.com/cross-compile-and-deploy-qt-5-12-for-raspberry-pi/" target="_blank" rel="noopener">Cross-compile and deploy Qt 5.12 for Raspberry Pi</a>的中使用了Qt 5.12.0版本，但我在编译的过程中，使用Qt 5.12.0编译有问题，所以选择了5.11.2。</p><p>总结一下环境：</p><ul><li style="list-style: none"><input type="checkbox"> 树莓派3B+</li><li style="list-style: none"><input type="checkbox"> Ubuntu 18.04</li><li style="list-style: none"><input type="checkbox"> Qt 5.11.2</li></ul><h1 id="编译Qt"><a href="#编译Qt" class="headerlink" title="编译Qt"></a>编译Qt</h1><h2 id="树莓派端的工作"><a href="#树莓派端的工作" class="headerlink" title="树莓派端的工作"></a>树莓派端的工作</h2><h3 id="树莓派基础环境准备"><a href="#树莓派基础环境准备" class="headerlink" title="树莓派基础环境准备"></a>树莓派基础环境准备</h3><p>第一步是安装树莓派，这个教程度娘家一堆，这里不重复，自行百度。</p><p>第二步是更新树莓派，以保证有最新的库，这步很重要，必须这样做，否则没有最新的库和包含文件，是没办法进行后边的操作的。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo rpi-update</span><br><span class="line">reboot</span><br></pre></td></tr></table></figure><p>同时，在树莓派上配置打开VNC和SSH，可以选择用树莓派的图形界面或者是使用</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo raspi-config</span><br></pre></td></tr></table></figure><h3 id="为树莓派安装开发库"><a href="#为树莓派安装开发库" class="headerlink" title="为树莓派安装开发库"></a>为树莓派安装开发库</h3><p>为了编译Qt，我们需要安装一些必须的库文件，因为需要安装一些源文件包，因此，需要将 <strong>deb-src</strong> 的这个源启用，具体的启用方法是修改 <strong>/etc/apt/sources.list</strong> 。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nano /etc/apt/sources.list</span><br></pre></td></tr></table></figure><p>效果如下图，要把 <strong>deb-src</strong>前面的 “#”去掉，保存后执行以下命令。<br><img src="/images/15555094487523.jpg" alt></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get build-dep qt4-x11</span><br><span class="line">sudo apt-get build-dep libqt5gui5</span><br><span class="line">sudo apt-get install libudev-dev libinput-dev libts-dev libxcb-xinerama0-dev libxcb-xinerama0</span><br></pre></td></tr></table></figure><p>上面这端代码是为树莓派安装必要的库，后边编译需要用到。</p><h3 id="在树莓派创建QT编译后的目标文件夹"><a href="#在树莓派创建QT编译后的目标文件夹" class="headerlink" title="在树莓派创建QT编译后的目标文件夹"></a>在树莓派创建QT编译后的目标文件夹</h3><p>在树莓派端创建如下文件夹和修改相应的权限，现在只是创建文件夹，还什么都不需要做。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir /usr/local/qt5pi</span><br><span class="line">sudo chown pi:pi /usr/local/qt5pi</span><br></pre></td></tr></table></figure><h2 id="主机端的工作"><a href="#主机端的工作" class="headerlink" title="主机端的工作"></a>主机端的工作</h2><h3 id="准备工作目录和工具链"><a href="#准备工作目录和工具链" class="headerlink" title="准备工作目录和工具链"></a>准备工作目录和工具链</h3><p>要创建一个文件夹，可下载一个工具链，如果提示git没有安装，用<code>sudo apt-get install git</code>安装一下就可以。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir ~/raspi</span><br><span class="line">cd ~/raspi</span><br><span class="line">git clone https://github.com/raspberrypi/tools</span><br></pre></td></tr></table></figure></p><h3 id="创建和配置sysroot"><a href="#创建和配置sysroot" class="headerlink" title="创建和配置sysroot"></a>创建和配置sysroot</h3><p>这个sysroot文件夹非常重要，我们要用这个文件夹把编译QT，以及后期开发所需的库同步过来，先在主机创建下面的文件夹</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir sysroot sysroot/usr sysroot/opt</span><br></pre></td></tr></table></figure><p>然后我们需要同步树莓派中的库文件和包含文件，我们使用<code>rsync</code>命令</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rsync -avz pi@raspberrypi_ip:/lib sysroot</span><br><span class="line">rsync -avz pi@raspberrypi_ip:/usr/include sysroot/usr</span><br><span class="line">rsync -avz pi@raspberrypi_ip:/usr/lib sysroot/usr</span><br><span class="line">rsync -avz pi@raspberrypi_ip:/opt/vc sysroot/opt</span><br></pre></td></tr></table></figure><p><code>raspberrypi_ip</code>是你的树莓派的IP地址。<br>同步完的效果是这样的：<br><img src="/images/15557610146364.jpg" alt></p><p>接下来，调整一下符号链接，因为目录下的文件是从树莓派同步过来的，链接部分都是失效的，需要重新链接</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/riscv/riscv-poky/master/scripts/sysroot-relativelinks.py</span><br><span class="line">chmod +x sysroot-relativelinks.py</span><br><span class="line">./sysroot-relativelinks.py sysroot</span><br></pre></td></tr></table></figure><h3 id="下载Qt"><a href="#下载Qt" class="headerlink" title="下载Qt"></a>下载Qt</h3><p>在我参考的指南中，作者使用的是5.12.0版本的QT，我尝试过，并没有成功。所以我尝试换了一个版本5.11.2就成功了，所以我推荐你参考我的指南来走</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget http://download.qt.io/official_releases/qt/5.11/5.11.2/single/qt-everywhere-src-5.11.2.tar.xz</span><br><span class="line">tar xvf  qt-everywhere-src-5.11.2.tar.xz</span><br><span class="line">cd  qt-everywhere-src-5.11.2</span><br></pre></td></tr></table></figure><p>到这里，编译前的准备工作都已经做完了了，接下来就是进入到编译的过程了。</p><h3 id="为Qt交叉编译进行配置"><a href="#为Qt交叉编译进行配置" class="headerlink" title="为Qt交叉编译进行配置"></a>为Qt交叉编译进行配置</h3><p>因为在Raspbian stretch版本中，使用了EGL，不过呢，使用了一个别的名字brcmEGL，具体方法如下：<br>编辑<code>./qtbase/mkspecs/devices/linux-rasp-pi3-g++/qmake.conf</code>中的<code>-lEGL</code>修改为<code>-lbrcmEGL</code>，以及修改<code>-lGLESv2</code>为<code>-lbrcmGLESv2</code>，保存之后，使用下面的命令进行配置。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure -release -opengl es2 -device linux-rasp-pi3-g++ -device-option CROSS_COMPILE=~/raspi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf- -sysroot ~/raspi/sysroot -opensource -confirm-license -skip qtwayland -skip qtlocation -skip qtscript -make libs -prefix /usr/local/qt5pi -extprefix ~/raspi/qt5pi -hostprefix ~/raspi/qt5 -no-use-gold-linker -v -no-gbm</span><br></pre></td></tr></table></figure><h3 id="编译和安装Qt"><a href="#编译和安装Qt" class="headerlink" title="编译和安装Qt"></a>编译和安装Qt</h3><p>Configure运行完，如果你看到下面的提示，则表示环境配置没有任何问题，可以进行编译和安装了。</p><p><em>Qt is now configured for building. Just run ‘make’.</em><br><em>Once everything is built, you must run ‘make install’.</em><br><em>Qt will be installed into ‘/home/penn/raspi/qt5pi’.</em></p><p><em>Prior to reconfiguration, make sure you remove any leftovers from<br>the previous build.</em></p><p>编译和安装需要多久是根据你电脑的性能的，我是用下面的命令来编译的，大概编译了2~3个小时。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make -j4</span><br><span class="line">make install</span><br></pre></td></tr></table></figure><p><code>make install</code>后，实际上qt是安装在本地的qt5pi目录的，需要将这个目录上传到树莓派，还是使用<code>rsync</code>命令</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rsync -avz qt5pi pi@raspberrypi_ip:/usr/local</span><br></pre></td></tr></table></figure><p>如果你顺利执行到了这一步，表示你的Qt已经编译安装成功，接下来可以进行开发环境的搭建了。</p><h1 id="搭建开发环境"><a href="#搭建开发环境" class="headerlink" title="搭建开发环境"></a>搭建开发环境</h1><p>开发环境创建和配置其实就两件事情，第一是连上你的树莓派，第二是配置之前编译出来的Qt的环境来编译程序</p><h2 id="创建远程设备"><a href="#创建远程设备" class="headerlink" title="创建远程设备"></a>创建远程设备</h2><p>在QtCreator的 <strong>工具-&gt;选项</strong> 下选中 <strong>设备</strong>，添加一个新的通用Linux设备进行配置，具体见下图<br>在设备的域名或者IP地址中填入树莓派的IP，用户名为pi，密码填写树莓派的密码。<br><img src="/images/15557625833616.jpg" alt><br><strong>注意：</strong> 这个是用ssh进行远程访问的，要确保树莓派的ssh是打开的。</p><p>配置完成应该能够看到如下的画面：<br><img src="/images/15557627444063.jpg" alt></p><h2 id="配置编译器和Qt版本"><a href="#配置编译器和Qt版本" class="headerlink" title="配置编译器和Qt版本"></a>配置编译器和Qt版本</h2><p>为了让我们开发的程序能够在树莓派上运行，我们需要使用适合树莓派的交叉编译器，在QtCreator中，我们要用到编译Qt的编译器，具体方法如下：<br>在QtCreator的 <strong>工具-&gt;选项</strong> 下选中 <strong>构建和运行</strong><br><img src="/images/15557629628799.jpg" alt></p><h3 id="添加gcc编译器，编译器的路径为"><a href="#添加gcc编译器，编译器的路径为" class="headerlink" title="添加gcc编译器，编译器的路径为"></a>添加gcc编译器，编译器的路径为</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/raspi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf-gcc</span><br></pre></td></tr></table></figure><h3 id="添加一个G-编译器，编译器路径为"><a href="#添加一个G-编译器，编译器路径为" class="headerlink" title="添加一个G++编译器，编译器路径为"></a>添加一个G++编译器，编译器路径为</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/raspi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf-g++</span><br></pre></td></tr></table></figure><h3 id="设置GDB"><a href="#设置GDB" class="headerlink" title="设置GDB"></a>设置GDB</h3><p>切换到 <strong>Debuggers</strong>添加Debugger，这里要注意，我使用<code>~/raspi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf-gdb</code>时，会报错，无法使用，因此我使用了<strong>gdb-multiarch</strong>。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install gdb-multiarch</span><br></pre></td></tr></table></figure><p>之后再Debuggers中添加一个gdb-multiarch，路径为</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/gdb-multiarch</span><br></pre></td></tr></table></figure><h3 id="设置qmake"><a href="#设置qmake" class="headerlink" title="设置qmake"></a>设置qmake</h3><p>切换到QtVersions页面，添加一个新的Qt版本，选择刚编译出来的qmake即可，路径为</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/raspi/qt5/bin/qmake</span><br></pre></td></tr></table></figure><h3 id="设置kit"><a href="#设置kit" class="headerlink" title="设置kit"></a>设置kit</h3><p>在 <strong>构建套件(Kits)</strong>页面，添加一个新的Kit，设置如图上的那些信息，在完成这一步后，QtCreator的编译环境也设置好了，可以开始编程了。<br><img src="/images/15557637311294.jpg" alt></p><h1 id="开始开发"><a href="#开始开发" class="headerlink" title="开始开发"></a>开始开发</h1><p>在QtCreator中创建一个Qt Widgets Application程序来测试我们的环境到底有没有设置好。<br><img src="/images/15557639253548.jpg" alt></p><h2 id="设置上传路径"><a href="#设置上传路径" class="headerlink" title="设置上传路径"></a>设置上传路径</h2><p>我使用的QtCreator版本（4.5.2）创建出来的项目.pro文件，只有默认的部署路径/opt/，pi用户在树莓派上没有这个目录的写入权限，所以我们要改目录，在.pro文件中加入如下代码</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target.path = /home/pi/$$&#123;TARGET&#125;/bin!isEmpty(target.path): INSTALLS += target</span><br></pre></td></tr></table></figure><p>然后编译执行，出现下面的信息，表示程序上传成功<br><em>Starting /home/pi/WidgetTest/bin/WidgetTest…</em></p><p><em>Unable to query physical screen size, defaulting to 100 dpi.<br>To override, set QT_QPA_EGLFS_PHYSICAL_WIDTH and QT_QPA_EGLFS_PHYSICAL_HEIGHT (in millimeters).</em></p><p>用VNC登录到树莓派，可以看到我们的程序是上传成功的，运行也可以看到Qt的图形界面。<br><img src="/images/15557645799531.jpg" alt></p><h2 id="链接库文件"><a href="#链接库文件" class="headerlink" title="链接库文件"></a>链接库文件</h2><p>有时我们的程序需要用到树莓派使用的一些库文件比如wiringPi，在我们需要的使用，在.pro文件中加入如下的代码就可以了</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LIBS += -L/usr/lib -lwiringPi</span><br></pre></td></tr></table></figure><p>到这一步呢，表示我们已经成功的搭建了树莓派在Ubuntu 18.10中的QtCreator的Qt开发环境了，可以进行图形界面的开发了。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;概述信息&quot;&gt;&lt;a href=&quot;#概述信息&quot; class=&quot;headerlink&quot; title=&quot;概述信息&quot;&gt;&lt;/a&gt;概述信息&lt;/h1&gt;&lt;p&gt;最近因为一个项目的原因，接触树莓派，觉得有意思，买了一个板子来自己玩，同时最近在了解QT开发，所以，就趁此机会尝试编写可以在
+      
+    
+    </summary>
+    
+    
+      <category term="Rasp" scheme="https://peapon.github.io/tags/Rasp/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>临床数据检测工具</title>
+    <link href="https://peapon.github.io/2019/03/16/%E4%B8%B4%E5%BA%8A%E6%95%B0%E6%8D%AE%E6%A3%80%E6%B5%8B%E5%B7%A5%E5%85%B7/"/>
+    <id>https://peapon.github.io/2019/03/16/临床数据检测工具/</id>
+    <published>2019-03-16T15:04:48.000Z</published>
+    <updated>2020-04-15T16:06:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="方案一：视频读取"><a href="#方案一：视频读取" class="headerlink" title="方案一：视频读取"></a>方案一：视频读取</h1><h2 id="一、知识和环境准备"><a href="#一、知识和环境准备" class="headerlink" title="一、知识和环境准备"></a>一、知识和环境准备</h2><p>1、使用QT提取视频帧<br><a href="https://blog.csdn.net/jxbinwd/article/details/81034339" target="_blank" rel="noopener">https://blog.csdn.net/jxbinwd/article/details/81034339</a></p><p>2、进行图像识别<br>QImage类使用 <a href="https://blog.csdn.net/jxbinwd/article/details/81034339" target="_blank" rel="noopener">https://blog.csdn.net/jxbinwd/article/details/81034339</a></p><p>3、OpenCV + QT环境搭建<br><a href="https://blog.csdn.net/qingyang8513/article/details/80339550" target="_blank" rel="noopener">https://blog.csdn.net/qingyang8513/article/details/80339550</a><br><a href="https://blog.csdn.net/zbw1185/article/details/82469496" target="_blank" rel="noopener">https://blog.csdn.net/zbw1185/article/details/82469496</a></p><p>4、OpenCV进行图像识别<br><a href="https://www.cnblogs.com/farewell-farewell/p/5887068.html" target="_blank" rel="noopener">https://www.cnblogs.com/farewell-farewell/p/5887068.html</a></p><p>5、读取和播放视频<br><a href="https://blog.csdn.net/obervose/article/details/70038901" target="_blank" rel="noopener">https://blog.csdn.net/obervose/article/details/70038901</a><br><a href="https://blog.csdn.net/mars_xiaolei/article/details/83317032" target="_blank" rel="noopener">https://blog.csdn.net/mars_xiaolei/article/details/83317032</a></p><p>6、QT基础<br><a href="https://blog.csdn.net/qq769651718/article/details/79357869" target="_blank" rel="noopener">https://blog.csdn.net/qq769651718/article/details/79357869</a></p><p>7、打开文件<br><a href="https://blog.csdn.net/zl_95520/article/details/82687556" target="_blank" rel="noopener">https://blog.csdn.net/zl_95520/article/details/82687556</a></p><p>8、Mac<br><a href="https://www.cnblogs.com/xiaomanon/p/3930242.html" target="_blank" rel="noopener">https://www.cnblogs.com/xiaomanon/p/3930242.html</a></p><h2 id="二、需求和方案"><a href="#二、需求和方案" class="headerlink" title="二、需求和方案"></a>二、需求和方案</h2><h3 id="1、需求"><a href="#1、需求" class="headerlink" title="1、需求"></a>1、需求</h3><pre><code>1st. 读取本地视频，使用摄像机拍摄，格式为？？2nd. 预览视频，要能够预览视频，方便定位和框选3rd. 能够移动视频的时间轴，通过鼠标拖动和点选，直接定位到相应的时间4th. 框选视频上指定区域为某一特定参数5th. 在4th后，输入参数的名称6th. 分析数据，分析的数据存入到一个csv文件中，格式为  时间,参数1，参数2，……参数n</code></pre><h3 id="2、设计"><a href="#2、设计" class="headerlink" title="2、设计"></a>2、设计</h3><p>这是一个比较简单的软件，思路比较简单<br>总体设计如下：<br>a、主加载模块，用于总体的加载和文件存储的控制等；<br>b、视频播放控制模块，用于视频加载、播放、暂停、进度条读取等方面，使用opencv；<br>c、图像抓取和分析模块，用于抓取图像和分析图像来提取图像中的数字和参数，使用opencv；<br>d、文件存储模块，用于存储csv或用于存储数据库。</p><h3 id="3、进展"><a href="#3、进展" class="headerlink" title="3、进展"></a>3、进展</h3><p>1、主加载模块完成度20%；<br>2、视频播放控制模块完成进度40%；</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;方案一：视频读取&quot;&gt;&lt;a href=&quot;#方案一：视频读取&quot; class=&quot;headerlink&quot; title=&quot;方案一：视频读取&quot;&gt;&lt;/a&gt;方案一：视频读取&lt;/h1&gt;&lt;h2 id=&quot;一、知识和环境准备&quot;&gt;&lt;a href=&quot;#一、知识和环境准备&quot; class=&quot;he
+      
+    
+    </summary>
+    
+    
+      <category term="IT 技术" scheme="https://peapon.github.io/tags/IT-%E6%8A%80%E6%9C%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>创新管理学习感悟</title>
+    <link href="https://peapon.github.io/2018/07/07/%E5%88%9B%E6%96%B0%E7%AE%A1%E7%90%86%E5%AD%A6%E4%B9%A0%E6%84%9F%E6%82%9F/"/>
+    <id>https://peapon.github.io/2018/07/07/创新管理学习感悟/</id>
+    <published>2018-07-07T11:28:57.000Z</published>
+    <updated>2020-04-15T16:06:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="从创新奖开始谈起"><a href="#从创新奖开始谈起" class="headerlink" title="从创新奖开始谈起"></a>从创新奖开始谈起</h1><p>我所服务的企业有创新奖评选的活动，不得不说这是一个好的活动，说明了企业的管理者对创新的重视，并从实际行动上给予了鼓励。</p><p>创新奖的评选是每季度一次，年度一次大奖，每季度所评选的创新奖的冠、亚、季军都可以获得一小笔现金奖励，有时候可能够团队成员去吃一顿好的。而年度的冠、亚、季军则可以获得更好的奖励。</p><p>创新奖的评选方法呢，则是各个产品线推举，每到每个季度末时，研发系统总会要求各产品线推举产品线的一到三各创新进入评选，但是不能过多。</p><p>虽然我自己负责的项目也拿过一次季度的创新奖，但我始终觉得我们的创新奖的评选活动实际上是怪怪的。</p><p>直到最近我在一次成海清博士的培训中接触到这样的一些问题：</p><table><thead><tr><th>问题描述</th><th>是否存在</th></tr></thead><tbody><tr><td>1. 突破性的产品创意很少，或者创意虽然多，但都很平庸，难以对众多产品新创意进行有效的筛选与评审。</td><td></td></tr><tr><td>2. 公司没有专人负责市场研究工作，对客户需求理解不系统、不完整、不深入、不正确，闭门造成现象严重，开发出来的产品难以满足客户需求。</td><td></td></tr><tr><td>3. 没有将客户需求有效的转化为产品功能定义，开发出的产品冗余功能多，产品稳定性差，产品成本高，市场竞争力不强。</td><td></td></tr><tr><td>4. 项目可行性分析不严谨，在开发过程中经常发现关键原材料难以采购，开发出来的产品难以生产或难以维护，新产品开发项目中途夭折多，或者开发进度总是大幅延期，延误上市时机。</td><td></td></tr><tr><td>5. 新产品项目决策评审缺乏规范的评审流程和科学的评审员额，老板个人说了算或者只是形式上的集体觉得，很多没有“钱景”的项目进入开发流程，新产品投资回报率低。</td></tr></tbody></table><p>虽然上面表格中的”算命式”的问题总会让人产生一些共鸣或把自己投射进去，但是作为需求管理者，整理创新（创意）管理中存在的问题和可以改进的点是一件很重要的事情，这也是我在这次培训中获得的感悟，因此，后文将从以下几方面来展开谈创新管理：</p><ol><li>创意管理的过程概述</li><li>创意数量是关键</li><li>用科学的方法筛选创意和管理创意</li><li>创意的实施</li><li>对创意的激励方法的浅析 </li></ol><h1 id="创意管理的过程概述"><a href="#创意管理的过程概述" class="headerlink" title="创意管理的过程概述"></a>创意管理的过程概述</h1><p>这里有一个很好的冷幽默：如果把现在的大多数项目分成前、中、后三个段，大多数情况是这样的：</p><table><thead><tr><th>前</th><th>中</th><th>后</th></tr></thead><tbody><tr><td>很薄弱</td><td>很强大</td><td>没人管</td></tr></tbody></table><p>很大部人对这个也会产生通过，确实是因为很多的产品前端调研不充分，但花很大精力去投入，一旦项目完成，开发团队解散呢，确实没人管，这可以叫项目式的产品管理，其实这是要不得的。我就碰到过一个真实的案例是一个产品上的很重要的物料停产10个月，除了采购无人知晓，采购的处理方法是囤货，就没有进一步的动作了。</p><p>还是要说回创新（创意）管理，如果把产品的生命周期分成前述的三个阶段，那么创新（创意）的管理是要贯穿项目开发各阶段的。</p><p><img src="/images/15311777730922.jpg" alt></p><p>这是一个前端管理的过程，很多企业，很多人能够意识到应该这么做，那么具体实施得如何，效果如何，还有待考察。</p><h1 id="论创意的数量和多面性的重要性"><a href="#论创意的数量和多面性的重要性" class="headerlink" title="论创意的数量和多面性的重要性"></a>论创意的数量和多面性的重要性</h1><h1 id="创意的质量和筛选方法"><a href="#创意的质量和筛选方法" class="headerlink" title="创意的质量和筛选方法"></a>创意的质量和筛选方法</h1><h1 id="如何让创意变成现实"><a href="#如何让创意变成现实" class="headerlink" title="如何让创意变成现实"></a>如何让创意变成现实</h1><h1 id="对创意的激励的方法浅析"><a href="#对创意的激励的方法浅析" class="headerlink" title="对创意的激励的方法浅析"></a>对创意的激励的方法浅析</h1>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;从创新奖开始谈起&quot;&gt;&lt;a href=&quot;#从创新奖开始谈起&quot; class=&quot;headerlink&quot; title=&quot;从创新奖开始谈起&quot;&gt;&lt;/a&gt;从创新奖开始谈起&lt;/h1&gt;&lt;p&gt;我所服务的企业有创新奖评选的活动，不得不说这是一个好的活动，说明了企业的管理者对创新的重视，
+      
+    
+    </summary>
+    
+    
+      <category term="需求管理" scheme="https://peapon.github.io/tags/%E9%9C%80%E6%B1%82%E7%AE%A1%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>浅谈马斯洛需求层次理论</title>
+    <link href="https://peapon.github.io/2018/07/07/%E6%B5%85%E8%B0%88%E9%A9%AC%E6%96%AF%E6%B4%9B%E9%9C%80%E6%B1%82%E5%B1%82%E6%AC%A1%E7%90%86%E8%AE%BA/"/>
+    <id>https://peapon.github.io/2018/07/07/浅谈马斯洛需求层次理论/</id>
+    <published>2018-07-07T11:22:56.000Z</published>
+    <updated>2020-04-15T16:06:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>故事：我弟弟的故事，不安定和浮躁</p><h1 id="马斯洛需求层次理论"><a href="#马斯洛需求层次理论" class="headerlink" title="马斯洛需求层次理论"></a>马斯洛需求层次理论</h1><h1 id="生理层次需求的影响"><a href="#生理层次需求的影响" class="headerlink" title="生理层次需求的影响"></a>生理层次需求的影响</h1><h1 id="自我实现的需求"><a href="#自我实现的需求" class="headerlink" title="自我实现的需求"></a>自我实现的需求</h1><h1 id="人性在现实面前的败退的担忧"><a href="#人性在现实面前的败退的担忧" class="headerlink" title="人性在现实面前的败退的担忧"></a>人性在现实面前的败退的担忧</h1>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;故事：我弟弟的故事，不安定和浮躁&lt;/p&gt;
+&lt;h1 id=&quot;马斯洛需求层次理论&quot;&gt;&lt;a href=&quot;#马斯洛需求层次理论&quot; class=&quot;headerlink&quot; title=&quot;马斯洛需求层次理论&quot;&gt;&lt;/a&gt;马斯洛需求层次理论&lt;/h1&gt;&lt;h1 id=&quot;生理层次需求的影响&quot;&gt;&lt;a
+      
+    
+    </summary>
+    
+    
+      <category term="杂谈" scheme="https://peapon.github.io/tags/%E6%9D%82%E8%B0%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【转载】高效演讲——一本书彻底解决演讲问题</title>
+    <link href="https://peapon.github.io/2018/07/05/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E9%AB%98%E6%95%88%E6%BC%94%E8%AE%B2%E2%80%94%E2%80%94%E4%B8%80%E6%9C%AC%E4%B9%A6%E5%BD%BB%E5%BA%95%E8%A7%A3%E5%86%B3%E6%BC%94%E8%AE%B2%E9%97%AE%E9%A2%98/"/>
+    <id>https://peapon.github.io/2018/07/05/【转载】高效演讲——一本书彻底解决演讲问题/</id>
+    <published>2018-07-05T13:51:33.000Z</published>
+    <updated>2020-04-15T16:06:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>这是一篇笔记和对《高效演讲》的解读，文章写得非常好，感谢原作者，请点击这里查看<a href="http://blog.sina.cn/dpool/blog/s/blog_7239c89a0102wcyo.html" target="_blank" rel="noopener">原文链接</a></p><h1 id="演讲为什么可怕"><a href="#演讲为什么可怕" class="headerlink" title="演讲为什么可怕"></a>演讲为什么可怕</h1><p>人都有过可怕的演讲经历，因为当你走到台前看到很多眼睛时，我们大脑中原始的杏仁体会提醒我们要小心，因为在原始社会，被这么多眼睛盯着，就意味着要被吃了。杏仁体一旦行动，你将脱离理智的大脑的控制，而进入求生的本能部分。血液流向四肢，你此时只有选择战斗或者逃跑。这就是我们演讲时头脑一片空白的原因。</p><h1 id="如何摆脱杏仁体的控制"><a href="#如何摆脱杏仁体的控制" class="headerlink" title="如何摆脱杏仁体的控制"></a>如何摆脱杏仁体的控制</h1><p>这时唯一能够令你放松的方法，是把演讲当做派发礼物的过程。<br>演讲的大忌是“恐惧和乏味”，但人类沟通的一项神秘法则是：当你给与的时候，你会变得更有趣，恐惧感也就消失了。这未必需要你有多么高的学术水平，哪怕你就是说一句谢谢，如果有派发礼物的心态，也会说的更有趣些。</p><h1 id="为什么要学习高效演讲"><a href="#为什么要学习高效演讲" class="headerlink" title="为什么要学习高效演讲"></a>为什么要学习高效演讲</h1><p>我们无法摆脱杏仁体的绑架，所以我们总是想如何才能度过这段难熬的演讲时间，发现了吗？我们过度关注自我了。事实上，演讲时的主角是观众，你是来给大家送礼物的，没太多人真的关注你，除非你能带给他们价值。低效率的演讲不仅仅发生在舞台上，每一个会议，每一次和员工面谈，和孩子面谈，向老板申请假期，甚至回复一封棘手的电子邮件，低效率的沟通妨碍了我们有效的交流，甚至造成误会和争执。大多数人每天将75-90%的时间用于沟通，但我们几乎从来没有受过专业训练。</p><h1 id="高效沟通的三件事情"><a href="#高效沟通的三件事情" class="headerlink" title="高效沟通的三件事情"></a>高效沟通的三件事情</h1><p>演讲内容，演讲风格，演讲状态是高效沟通中最重要的三件事情。<br>个人认为演讲内容是最重要的，风格、状态都是80分以上的部分，只要有好的内容，听众就能听下去并且记住你 。我们以往教授演讲的误区就在于过度关注风格和状态，而忽略或者说不会教内容的准备。</p><h2 id="演讲内容：如何精心准备演讲内容"><a href="#演讲内容：如何精心准备演讲内容" class="headerlink" title="演讲内容：如何精心准备演讲内容"></a>演讲内容：如何精心准备演讲内容</h2><p><strong>一、确定你想要的结果，你想通过演讲获得什么？</strong><br>例如：谈话结束时董事会愿意批准我们开展下一步工作；演讲结束时学生们愿意到我们公司工作；谈话结束时我儿子愿意告诉我他为什么不喜欢学习……总之，越具体越好。没有目的的演讲就是浪费你和大家的时间，如果的确没有目的，那就随便讲吧，反正没人在乎。</p><p><strong>二、为达到谈话目的，你需要让他们知道些什么？</strong><br>例如：董事会需要知道目前的研究进展；需要知道竞争对手的研究进展和投入；需要知道我们将如何另预算更加有效的使用。孩子将知道爸爸和他谈话是为了帮助他；学习问题会影响到他未来的更多选择；爸爸并不是只看重学习，更看重他自我约束的能力。（发现了吗，我们的很多演讲在开始之前都没有做过充分的准备，一边讲一边考虑要怎么说服对方，往往效果不好，事先想好三个一定要说清楚的事情，非常重要！）</p><p><strong>三、为了达到谈话成果，他们需要感觉到什么？</strong><br>人们是在感性的时候才会采取行动的，所以在准备时你就要想好，你希望对方在听完演讲后有什么感觉：兴奋，激动，受启发，乐观，谨慎，痛苦，下定决心，感动，信任。这都是不错的感受，这些感受决定着你的演讲风格和措辞。</p><p><strong>四、找到关联性：听众为什么要关注我？</strong><br>例如：如果不了解领导力，他们的工作会继续困难，得不到幸福的生活。如果不批准预算，我们公司将面临人才不足的严重问题。（这部分是最值得思考的，很多人讲话喜欢一开始做自我介绍，然后讲一大堆自己如何如何的废话，这与观众毫无关系。演讲的开始一定是从关联性切入，多用你，不用我。）</p><h2 id="巧设结构：坡道-发现-甜点"><a href="#巧设结构：坡道-发现-甜点" class="headerlink" title="巧设结构：坡道-发现-甜点"></a>巧设结构：坡道-发现-甜点</h2><h3 id="坡道——发现——甜点"><a href="#坡道——发现——甜点" class="headerlink" title="坡道——发现——甜点"></a>坡道——发现——甜点</h3><p>无论奥巴马、乔布斯还是马云、李连杰，所有好的演讲都是由三个部分构成的：坡道——发现——甜点。<br>坡道是从关联性构造的，用“观众为什么应该知道”做为坡道，会很容易引起全场的兴趣，有时候坡道已经决定了你的成败。发现是演讲的主体，把你准备好的三个要点逐一讲清楚，视时间长短来决定详略。甜点是演讲的收尾，千万不要在问答环节结束演讲，一定要最后自己收尾。这是你把感性发挥到最大的时候，用一个故事，一首诗，一句名言都可以作为很好的甜点。</p><p><strong>坡道：巧妙开场，引起听众最大的兴趣</strong></p><p><strong>第一种开场</strong><br>“女士们先生们上午好！非常欢迎大家来到今天的会场，作为会议的主讲嘉宾，我非常荣幸。在过去十年间，我在人力资源领域进行了大量研究，希望今天的演讲能给大家带来信息和帮助。我准备了三十分钟演讲，还有十分钟提问时间，期间如果您想上厕所可以出门右转……”<br><strong>第二种开场</strong><br>“在座的各位都在人力资源领域工作了多年，我们都被一个共同的问题困扰了多年，也就是究竟怎样才能真正有效的激发我们的员工？除了涨工资之外，到底还有没有别的有效激励方法？为什么很多优秀的公司能够做到让员工充满斗志？……”<br>很明显，第一个开场是失败的，但很不幸，这正是我们大家常用的开场方式：讲一大堆和听众毫无关系的客套话，或者讲演讲的由来，自己的经历……要知道这些都和听众无关！<br>第二个开场是一个常见的坡道，它来自于准备过程中对于听众关联性的分析，用问题做坡道可以很容易的抓住听众的注意力。</p><p><strong>几个重要的原则</strong><br>1、讲话中用一次“我”就要用十次“你”。<br>2、七秒法则：你只有七秒钟去争取听众的注意力，所以第一句话就要和听众有关系。<br>3、开头慎用笑话，因为大家可能不笑。<br>4、不要把精彩的东西放在最后，开头最重要。</p><p><strong>常见的坡道</strong></p><ul><li>以“你们”开头，说出听众的心声</li><li>运用强大的有震撼力的数字</li><li>提出问题。“你们当中有多少人花了人生近一半的时间开会？”“有没有人知道现在北极熊的数量？”</li><li>令观众震撼。“我们正面临一次前所未有的挑战……”</li><li>坦白。“我一直害怕公众演讲，所以我更加努力去学习……”</li><li>运用“想象”这个词。“想象一下未来10年各位的购物习惯……”</li><li>讲述历史轶事。</li><li>讲故事。“今天早上我出门的时候，我儿子问我……”<br>（怎么样，看到这里对自己的演讲是不是更有信心了呢？）</li></ul><p><strong>路线图——带听众了解演讲流程</strong><br>1）告诉人们你的演讲有多长。<br>2）让听众预览你的议程安排。<br>3）设定互动规则。<br>4）当然，如果演讲很短，就抓紧时间开始讲你的“发现”部分吧。</p><h3 id="发现——你需要对方知道的三件事"><a href="#发现——你需要对方知道的三件事" class="headerlink" title="发现——你需要对方知道的三件事"></a>发现——你需要对方知道的三件事</h3><p>无论你需要讲多少事情，都请你把它归纳为三点。因为人的大脑，只能有效的对付三件事。<br>还记得你准备的三件需要对方知道的事情吗？在这部分逐一地清晰具体的讲出来。<br>比如对一个青春期的孩子：“醉酒驾车有什么危害”“你对他的期望是什么”“你允许他开车的承诺和条件又是什么？”。</p><h3 id="甜点——完美收尾，让听众记住你的演讲"><a href="#甜点——完美收尾，让听众记住你的演讲" class="headerlink" title="甜点——完美收尾，让听众记住你的演讲"></a>甜点——完美收尾，让听众记住你的演讲</h3><p>甜点部分不再给观众任何新的信息和观点、数据，因为这时候大家已经准备结束了。这时候要给他们的是完全感性的东西，记住，人们在感性时才会行动。<br>最好的甜点是一则故事、轶事、一个比喻或想象、名人名言和坡道呼应的故事等等。<br>试试看，5分钟，你就可以构造一个婚礼讲话，而且保证言之有物，精彩！<br>总结一个演讲是这样的：坡道→路线图→三个发现要点→问答环节→甜点</p><h2 id="练习运用"><a href="#练习运用" class="headerlink" title="练习运用"></a>练习运用</h2><h3 id="一个婚礼演讲"><a href="#一个婚礼演讲" class="headerlink" title="一个婚礼演讲"></a>一个婚礼演讲</h3><p><strong>听众</strong><br>新人和亲朋好友<br><strong>他们为什么要关注</strong><br>结婚就是为了能幸福，你作为过来人有很多关于幸福婚姻的经验和教训。<br><strong>你希望他们感受到</strong><br>大家的真诚祝福、对父母家人的感激之情。<br><strong>你希望他们听完之后知道</strong><br>1、大家都很爱他们<br>2、婚姻需要更多爱来维系<br>3、对双方父母都要孝顺。</p><h3 id="婚礼演讲框架"><a href="#婚礼演讲框架" class="headerlink" title="婚礼演讲框架"></a>婚礼演讲框架</h3><p><strong>坡道</strong><br>我今天出门时我儿子问我“爸爸，什么是结婚？”   我告诉他“结婚就是两个人决定幸福的生活在一起。”他又问我：“结婚就能幸福吗？”我得承认，这个问题难住了我……<br><strong>发现</strong><br>我做了一下功课，百度了一下结婚怎么才能幸福，发现了三个关键：第一，第二，第三……<br><strong>甜点</strong><br>现在我儿子就坐在台下，你们的婚礼是他第一次看到的婚礼，我相信，是他眼中最幸福的婚礼，祝愿你们成为孩子们幸福的楷模，我们真诚的祝愿你们！</p><h3 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h3><p>利用准备表格，认真准备以下题目：<br>-和儿子谈话，让他减少上网打游戏的时间<br>-对员工演讲，让我们一起提高工作积极性<br>-和配偶谈话，咱俩以后别吵架了<br><strong>坡道</strong><br>在座的各位都是管理层的领导，有的管着一个部门，有的管着一个车间。大家想象一下这样一个画面，你进到你负责的办公场地，看到你手下的员工，一个个都在玩着手机、聊着天，手头的工作想起来一下做一下，这时的你会是个什么样的感受？会不会你也变的很烦躁，感觉负责项目的目标离自己越来越远。。。<br><strong>发现</strong><br>我自己想象了一下，和大家是相同的感受，为了不让这一幕发生，为了让员工能够提高工作积极性，我去阅读了相关的书籍，得到了以下三个行之有效的方法<br><strong>甜点</strong><br>好了，看着各位积极的记着笔记，新的画面已经浮现了在我眼前，办公室里车间里，大家伙都积极的、热火朝天的干着工作，我自己仿佛也充满了满满的斗志，更积极的面对被赋予的工作。希望这样的画面，也能出现在大家的脑海中，并最终化为现实。。。</p><h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>除了以上内容部分外，本书中还涉及了演讲的风格（声音、姿势、动作、表情和眼神）演讲状态（身体模式、心灵之眼、转变信念）以及如何在高危状态下演讲。我认为这些东西通过看书是很难改变的，所以并不实用。如果有兴趣，可以参看原书。<br>本书的重点就是前面讲到的部分，内容打造扎实了，风格和状态才会变得不一样，声音、姿势从来就不是最重要的。想想看，霍金演讲依然获得大量好评。<br>最后，我的建议是，这一切工具都是为了让你更真诚的沟通，而不是用工具替代了真诚。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;这是一篇笔记和对《高效演讲》的解读，文章写得非常好，感谢原作者，请点击这里查看&lt;a href=&quot;http://blog.sina.cn/dpool/blog/s/blog_7239c89a0102wcyo.html&quot; target=&quot;_blank&quot; rel=&quot;noopene
+      
+    
+    </summary>
+    
+    
+      <category term="自我管理" scheme="https://peapon.github.io/tags/%E8%87%AA%E6%88%91%E7%AE%A1%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mac OSX程序破解入门</title>
+    <link href="https://peapon.github.io/2018/07/04/Mac-OSX%E7%A8%8B%E5%BA%8F%E7%A0%B4%E8%A7%A3%E5%85%A5%E9%97%A8/"/>
+    <id>https://peapon.github.io/2018/07/04/Mac-OSX程序破解入门/</id>
+    <published>2018-07-03T16:55:22.000Z</published>
+    <updated>2020-04-15T16:06:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>原文链接在这里<a href="https://www.jianshu.com/p/33e40af6e328" target="_blank" rel="noopener">原文链接</a></p><p><code>本软件破解学习教程,仅用于学习软件原理知识,还请各位童鞋(尤其是软件开发的童鞋)养成知识产权的保护意识,拒绝盗版,尊重他人.本篇通过手动创建一个Mac osx应用,然后进行破解学习,一步一步分析,到最后完成破解目标,通篇没有高深的理论术语,因此仅用来作为初步学习的一个引子,供各位童鞋或爱好者在软件运行原理的学习中提供一个微薄的参考而已...</code></p><h1 id="学前准备"><a href="#学前准备" class="headerlink" title="学前准备:"></a>学前准备:</h1><ol><li><p>Mac OSX下的反汇编工具: Hopper Disassembler (本示例使用v4.0.8)</p></li><li><p>基本的汇编指令(比如mov ,xor ,jmp,je 等)</p></li><li><p>没有其他啦,马上开始动手吧</p></li></ol><h1 id="先手动创建一个简单的Mac-OSX应用"><a href="#先手动创建一个简单的Mac-OSX应用" class="headerlink" title="先手动创建一个简单的Mac OSX应用"></a>先手动创建一个简单的Mac OSX应用</h1><p>关于如何具体创建简单的Mac OSX 应用,请移步我之前翻译的三篇系列入门一步一步,开始上手Mac开发</p><p>或者可以从这里下载示例中的应用demo工程:github.com/Alexiuce/Tip-for-day/tree/master/CrackDemo</p><p>我们创建的这个简单应用,是模仿注册码验证的一个逻辑判断(其实你也可以把这个当作是登录验证,道理是相同的),如果用户输入1234,我们认为是正确的结果,显示验证通过,否则都会显示验证码错误这样的提示信息</p><p>应用的界面大致如下图:</p><p>示例界面<br>从Xcode工程中提取应用<br>运行工程后,会在Products中,生成一个 “项目名称.app”的应用,这个就是我们的目标应用,然后在finder中找到它,并拷贝到桌面备用(我们后续的破解都是针对这个来进行的~)</p><p>提取项目工程中的应用程序<br>先来运行一下破解前的程序,它的样子差不多跟下面图片相似</p><p>破解前的运行情况</p><h1 id="开启破解之旅"><a href="#开启破解之旅" class="headerlink" title="开启破解之旅"></a>开启破解之旅</h1><h2 id="打开Hopper-Disassembler"><a href="#打开Hopper-Disassembler" class="headerlink" title="打开Hopper Disassembler"></a>打开Hopper Disassembler</h2><p>Hopper Disassembler工具的默认启动界面</p><h2 id="将需要破解的应用-就是demo-app-拖入到Hopper中"><a href="#将需要破解的应用-就是demo-app-拖入到Hopper中" class="headerlink" title="将需要破解的应用(就是demo.app)拖入到Hopper中"></a>将需要破解的应用(就是demo.app)拖入到Hopper中</h2><p>拖入我们的demo.app到Hopper中<br>确认选择界面</p><p>确认<br>加载后的界面,入下图</p><p>加载后的界面<br>这个界面的布局和Xcode非常相似,大家不要被一些看不懂的内容界面和工具栏迷惑而感到微微的手足无措(笔者第一次看到这个界面,也是茫然的~),我们下面把基本上常用的会一一介绍,其他的的功能按钮,先当作不存在(催眠式提升信心法~~),好,我们先来看一下工具栏下面的左侧Labels窗口:</p><p>Labels窗口<br>这个Labels窗口中列出的是应用被反编译后可以识别出来Objective-c方法,看到这些熟悉的方法名,小伙伴们是不是一下子感觉又回到Xcode代码中啦,让我们先忘记掉我们之前写过的工程代码,从这个列表里,我们根据方面名称,大致可以推断(破解的一个要素就是要有根据的猜测)出这几个方法的用途:</p><p>[ViewController viewDidLoad] ====&gt;  视图生命周期方法,加载视图的时候调用</p><p>[ViewController checkCode:] ====&gt;  从名字可以看着,这个方法是用来做验证检查的(后面会进一步分析)</p><p>[ViewController textField] : ====&gt;  get方法,获取文本输入控件</p><p>[ViewController setTextField: ] ====&gt; set方法,设置文本输入控件</p><p>[ViewController tintLable]  ==== &gt;  get方法,获取提示文本控件</p><p>[ViewController setTintLabel:]   ====&gt; set方法,设置提示文本控件</p><h2 id="查看checkCode-方法"><a href="#查看checkCode-方法" class="headerlink" title="查看checkCode:方法"></a>查看checkCode:方法</h2><p>我们根据方法名列表,最值得怀疑的就是checkCode:(就像如果破解一个软件的vip身份,那么如果看到isVip就应该给予特别注意一样)<br>查看checkCode:的逻辑(右侧显示的部分很重要)<br>从这个图里的右侧流程部分,我们可以看出checkCode这个方法的执行逻辑是这样的:</p><p>checkCode方法入口—&gt; 执行一些代码(我们先不管这些代码在做什么)—&gt;选择两个分支代码段中的一个执行—&gt; 再执行一些代码后,checkCode方法结束<br>checkCode:方法的逻辑流程图</p><h2 id="假设阶段"><a href="#假设阶段" class="headerlink" title="假设阶段"></a>假设阶段</h2><p>查看汇编代码<br>这三行汇编代码是:</p><p>mov al,byte [rbp+var_29]     ====&gt; 这句汇编的含义相当于我们使用高级语言里的赋值语句,例如 al = 123(这里是为了理解写al = 123来举例,程序运行真实的al值并不是123),我们先把al当作一个变量来看,不去想al寄存器的事情</p><p>cmp al,0x0    ====&gt; 这个汇编的含义是进行两个值的比较 ,我们可以把它想象成一个高级语言的比较函数,后面是两个参数,例如cmp(a,b), 执行后返回比较的结果,汇编执行比较,其实是做减法运算,因此两个数相减会有三种情况,分别是大于零,等于零,小于零,这三种结果,有可以简单分为两个:相等,或不相等</p><p>je loc_10001054  ====&gt; 这个汇编的含义,我们可以认为是 相等(equality), 不相等是jne, 在汇编中,一般cmp后面都会根上类似的判断跳转语句. 因此这行代码下面会有两个分支(参考方法的流程图),如果cmp的比较结果是相等,就执行 loc_10001054 这个分支,否则就执行另外的那个分支(方法流程图中红色线条指向的那个分支)<br>从这个代码逻辑,我们可以简单的猜测出来应用里判断验证码的逻辑是这样的:</p><p>if (输入的内容 == 验证码) {显示正确结果(分支1)}else{显示错误结果分支2)}</p><h2 id="求证阶段"><a href="#求证阶段" class="headerlink" title="求证阶段"></a>求证阶段</h2><p>现在我们面临的问题是,哪个分支才是正确结果的那个部分呢?<br>我们不必去读懂两个分支的汇编代码(如果你有兴趣另说),只需要修改逻辑并根据执行结果来验证就好了,比如,我们去除掉je loc_10001054 这个相等就执行的汇编代码,这样,checkCode的执行逻辑就被我们修改为没有分支loc_10001054的直线流程了.好,先动手试试</p><p>切换工具栏按钮<br>替换掉je loc_10001054这条汇编指令(就是去掉条件判断,不管比较结果如何,都会执行固定的分支)</p><p>替换空指令<br>替换后的结果<br>保存修改后的结果,生成新的可执行文件</p><p>保存修改结果,生成新的可执行文件<br>保存的路径一定不能与demo.app相同!</p><p>保存的路径一定不能与demo.app相同!!</p><p>保存的路径一定不能与demo.app相同!!!</p><p>保存新的可执行文件<br>使用新的可执行文件,替换掉破解前的可执行文件:</p><p>在demo.app上点击右键,显示包内容<br>用破解的文件替换原来的<br>替换后示例<br>运行破解后的demo.app</p><p>破解的运行结果</p><h1 id="小结与讨论"><a href="#小结与讨论" class="headerlink" title="小结与讨论"></a>小结与讨论</h1><p>到这里我们貌似已经完成了破解工作,但其实是有很大的运气成分(我们只选了一个分支就碰巧是验证通过的那个代码分支),大家可以考虑如果我们这个分支是无论怎么输入都是显示错误的那个分支,应该怎么办呢?其实很简单,就是把je换成jne就可以了,有兴趣的可是试试,我这里就不再详细描述了(点选Modify菜单-&gt;Assemble Instruction 可以手动输入新的汇编指令,把je 替换成jne就可以哦)</p><p>最后,给有兴趣的童鞋留个疑问,如果找到原来正确的验证码呢? 大家自己动手看看吧</p><p>作者：代码行者<br>链接：<a href="https://www.jianshu.com/p/33e40af6e328" target="_blank" rel="noopener">https://www.jianshu.com/p/33e40af6e328</a><br>來源：简书<br>简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;原文链接在这里&lt;a href=&quot;https://www.jianshu.com/p/33e40af6e328&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;原文链接&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;本软件破解学习教程,仅用于学习软件原理知识,还请各位童鞋
+      
+    
+    </summary>
+    
+    
+      <category term="IT 技术" scheme="https://peapon.github.io/tags/IT-%E6%8A%80%E6%9C%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>XMind 8u2 和谐过程</title>
+    <link href="https://peapon.github.io/2018/07/03/XMind-8u2-%E5%92%8C%E8%B0%90%E8%BF%87%E7%A8%8B/"/>
+    <id>https://peapon.github.io/2018/07/03/XMind-8u2-和谐过程/</id>
+    <published>2018-07-03T15:33:10.000Z</published>
+    <updated>2020-04-15T16:06:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Briefing-Notes"><a href="#Briefing-Notes" class="headerlink" title="Briefing Notes:"></a>Briefing Notes:</h2><p>This is a MultiOS RCE adaptation of the deconstructed XMind 8 Pro Update 1 v3.7.1 RCE, by Team appnee, for the Windows edition of XMind, which was based on the XMind 3.5.0 RCE serial from CodeCracker @ Team SND.</p><p>Team appnee’s RCE strategy is novel, and elegant, and whilst developed specifically for 3.7.1 on Windows, when generalised, continues to work successfully for 3.7.2, on all desktop operating systems, and may also provide an RCE strategy for later revisions of XMind.</p><p>The patch from that Windows edition RCE created a Java container file and also replaced the XMind initialisation text-file to then reference that Java container file.</p><p>The RCE solutions for XMind, are historically, principally, modified Java container files, and usually, as a consequence, they are Operating System (O/S) agnostic.</p><p>Props and thanks to CodeCracker @ Team SND for the original serial!</p><p>Props and thanks to Team appnee for the current RCE!</p><p>Props and thanks to ph03n1x for the GNU/Linux, and MacOSX, technical instructions!</p><h2 id="RCE-instructions-to-install-amp-activate-XMind-Pro-on-Mac-OS-X"><a href="#RCE-instructions-to-install-amp-activate-XMind-Pro-on-Mac-OS-X" class="headerlink" title="RCE instructions to install &amp; activate XMind Pro on Mac OS X:"></a>RCE instructions to install &amp; activate XMind Pro on Mac OS X:</h2><p>What you will need to know how to do:</p><ol><li>Use a file manager application</li><li>Establish a Terminal window, with a command shell prompt</li><li>Change directory location at the command line and in the file manager GUI (graphical user interface)</li><li>Edit a plain-text file with a text-editor application</li></ol><p>These are all basic, foundation, computer literacy skills, for any operating system; the search engine is your friend.</p><ol><li>Install XMind and then run it once to disable any callbacks (Check for any Updates, or Data Sharing, options in the Preferences, and disable them all). Once completed, quit XMind.</li></ol><p>[Refer to the graphic: ‘/Graphics/XMind-MacOSX-RCE-Activation-Snapshot-1.png’]</p><ol start="2"><li>Modify the ‘XMind.ini’ file, found in the following location:</li></ol><p>/Applications/XMind.app/Contents/Eclipss</p><p>Using a text-editor and add the following line to the very end of the file:</p><p>-javaagent:../RCE/XMindCrack.jar</p><ol start="3"><li>Create the ‘RCE’ sub-folder, (rememering that the “Case” of ‘RCE’ is important), inside the following location:</li></ol><p>/Applications/XMind.app/Contents</p><p>Resulting in:</p><p>/Applications/XMind.app/Contents/RCE</p><p>[Refer to the graphic: ‘/Graphics/XMind-MacOSX-RCE-Activation-Snapshot-2.png’]</p><p>Copy and paste the file ‘XMindCrack.jar’ into that newly created ‘RCE’ sub-folder.</p><ol start="4"><li>Open the MacOSX HOSTS file by running the following command, at the command shell prompt, in a Terminal Window, providing your user password when prompted:</li></ol><p>sudo nano /private/etc/hosts</p><p>Then add the following two entries to the HOSTS file and then save it:</p><p>127.0.0.1 xmind.net<br>127.0.0.1 <a href="http://www.xmind.net" target="_blank" rel="noopener">www.xmind.net</a></p><ol start="5"><li>Run the following command in a Terminal Window, at the command shell prompt, after saving the HOSTS file:</li></ol><p>dscacheutil -flushcache</p><p>Now run XMind again. Open the Preferences, click onto ‘XMind Pro’ and then onto ‘Upgrade’. Click on ‘Enter Key’ and then register using the provided serial. XMind should then be successfully activated.</p><p>[Refer to the graphic: ‘/Graphics/XMind-MacOSX-RCE-Activation-Snapshot-3.png’]</p><h2 id="Credits"><a href="#Credits" class="headerlink" title="Credits:"></a>Credits:</h2><p>Props and thanks to CodeCracker @ Team SND for the original serial!</p><p>Props and thanks to Team appnee for the current RCE!</p><p>Props and thanks to ph03n1x for the GNU/Linux, and MacOSX, technical instructions!</p><h2 id="See-also"><a href="#See-also" class="headerlink" title="See also:"></a>See also:</h2><p>Introduction to the Mac OS X Command Line:</p><p><a href="http://blog.teamtreehouse.com/introduction-to-the-mac-os-x-command-line" target="_blank" rel="noopener">http://blog.teamtreehouse.com/introduction-to-the-mac-os-x-command-line</a></p><p>How to Open a Terminal Window in Mac:</p><p><a href="http://www.wikihow.com/Open-a-Terminal-Window-in-Mac" target="_blank" rel="noopener">http://www.wikihow.com/Open-a-Terminal-Window-in-Mac</a></p><p>Using the sudo command in Terminal:</p><p><a href="https://support.apple.com/en-us/HT202035" target="_blank" rel="noopener">https://support.apple.com/en-us/HT202035</a></p><p>How to modify the HOSTS file, on Windows, MacOSX, and GNU/Linux:</p><p><a href="https://support.rackspace.com/how-to/modify-your-hosts-file/" target="_blank" rel="noopener">https://support.rackspace.com/how-to/modify-your-hosts-file/</a></p><p>[EOF]</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;Briefing-Notes&quot;&gt;&lt;a href=&quot;#Briefing-Notes&quot; class=&quot;headerlink&quot; title=&quot;Briefing Notes:&quot;&gt;&lt;/a&gt;Briefing Notes:&lt;/h2&gt;&lt;p&gt;This is a MultiOS RC
+      
+    
+    </summary>
+    
+    
+      <category term="IT 技术" scheme="https://peapon.github.io/tags/IT-%E6%8A%80%E6%9C%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>需求交付质量讨论</title>
+    <link href="https://peapon.github.io/2018/07/03/%E9%9C%80%E6%B1%82%E4%BA%A4%E4%BB%98%E8%B4%A8%E9%87%8F%E8%AE%A8%E8%AE%BA/"/>
+    <id>https://peapon.github.io/2018/07/03/需求交付质量讨论/</id>
+    <published>2018-07-03T15:32:41.000Z</published>
+    <updated>2020-04-15T16:06:35.000Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+      <category term="需求管理" scheme="https://peapon.github.io/tags/%E9%9C%80%E6%B1%82%E7%AE%A1%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【转载】自我管理的开端</title>
+    <link href="https://peapon.github.io/2018/02/22/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E8%87%AA%E6%88%91%E7%AE%A1%E7%90%86%E7%9A%84%E5%BC%80%E7%AB%AF/"/>
+    <id>https://peapon.github.io/2018/02/22/【转载】自我管理的开端/</id>
+    <published>2018-02-21T16:29:25.000Z</published>
+    <updated>2020-04-15T16:06:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在知乎上搜GTD时发现的一篇回答，觉得很有深度，转过来看看，原文信息如下</p><p>作者：小布吕<br>链接：<a href="https://www.zhihu.com/question/23051794/answer/150177755" target="_blank" rel="noopener">https://www.zhihu.com/question/23051794/answer/150177755</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p><p>从自我认识开始，GTD仅仅是自我管理的一个小分支，GTD的理论和技术就算你全盘理解几乎所有人也没办法实际使用的，你以为颠覆性的行为改变就那么容易？我毕业的学校有“知行合一”的校训，原来不以为然，偶尔开始了解王阳明的体系开始深觉总要，知道对这4个字缓慢认识并开始实践是过了多少年吗？你认为我就明白了这四个字？我这看了这4个字10年的人都这样，你确定你明白了？你确定这4个字就是你理解的意思？你确定这4个字对你有效果？    什么是真正的GTD，就是你在GTD的时候你都不感觉你自己在GTD。听我的，解决生活问题GTD不是万能钥匙，重要在于自我认识的提升。我总建议身边人读书，有的人已经读了很多书我还在建议他读，为什么，同一本书你过一年读起来感受完全不一样，因为你人的格局和境界都在发生变化，以前觉得需要依赖外部系统和外部压力来做的事情，你现在觉得理所应当并且非常快速的就能处理掉，这段我想说，GTD对于烦乱日程和任务管理有效，对于你人生提升无效。   我这里抛出来一些我对自我管理的认识和理解，它包含了自我管理的形而上的道和形而下的技术，供后来人借鉴： </p><h1 id="1-你需不需要日程和任务系统管理"><a href="#1-你需不需要日程和任务系统管理" class="headerlink" title="1 .你需不需要日程和任务系统管理"></a>1 .你需不需要日程和任务系统管理</h1><p>很多人是不需要繁复的日程和任务系统管理管理的，他的认知和他的目标相匹配，任务系统没有压力迫使，随便一个小笔记本完全胜任生活中的信息和代办事项。他们就喜欢体验这种随波逐流的随意，这也是一种人生体验。从深层次来说人们做事情都有代价和收益，这些人来执行一个日程和任务体系，他们的投入大于产出（随波逐流，随遇而安，你让我每天记录要做的事情，分析分解，还要定期回顾？）</p><p>什么样的人需要日程和任务系统管理？简单一个原则，你使用上述系统的收益要大于应用成本，这种收益可以是时间收益，也可以是体验收益，市面热炒的“自律给我自由”，自律并没有给他自由，是自律过程中所获得的知识积累，体重减轻，自我感受改变等一系列变化才给了人自由。高声呼喊自律给我自由的人，是已经对成本和收益进行了评价：自律收益大于自律成本。</p><h1 id="2-自我管理默认的几个人本原则"><a href="#2-自我管理默认的几个人本原则" class="headerlink" title="2.自我管理默认的几个人本原则"></a>2.自我管理默认的几个人本原则</h1><p>自我管理本质是对自己人本的管理，你管理过程违反了为人的客观规律，会无法开展自我管理相关实践，下面列举了相关的自我管理的人本限制（原则）：</p><h2 id="精力是任务和日程的燃料"><a href="#精力是任务和日程的燃料" class="headerlink" title="精力是任务和日程的燃料"></a>精力是任务和日程的燃料</h2><p>意志的动用会消耗精力值。复杂性工作需高精力进行 ，人在筋疲力尽的时候来从事创造性和探索性的活动。在面对复杂问题时的处理过程也建议在精力充足的时候。所以安排事情的时候建议要结合所安排事情的复杂难易程度来确定时间段（结合前后的精力水平），或者特为复杂或者重要的问题进行单独的精力准备。动用意志去克服欲望的时候，你的精力值也在克服中被消耗。精力和体质和体能的训练有着直接联系，增加精力最有效的方式就是体质训练和良好休息。</p><h2 id="颠覆性改变必须借助外部压力和环境"><a href="#颠覆性改变必须借助外部压力和环境" class="headerlink" title="颠覆性改变必须借助外部压力和环境"></a>颠覆性改变必须借助外部压力和环境</h2><p>自我管理的进行对于绝大部分人来说，不可能是颠覆性的。颠覆性的是什么意思，举个简单例子，以往比如凌晨睡觉，早上快上班了才爬起来，遇到麻烦的事情一般喜欢拖几天，屋子几天才收拾一下，体育运动总是间隔的有时候会忘记，想练出一身肌肉，体重减下来，很多想法停在脑子里，偶尔发呆，放在桌子上的CPA资料只看了一点。以上的众多问题，不可能突然一天醒来就大变样，然后一切按新运行的。一般人的颠覆性变化，是要以来外部压力和环境的。比如进入部队去当兵，整个的作息和反应模式都会大变化。比如入住学校准备高考，你的作息和工作被要求保持一致。这些外部压力和环境的变化对于一般人来说是无法获得的，所以正常成年人的颠覆性变化很少发生，如果发生一般伴随着较大的内部或者外部压力。 </p><p>认识到这点怎么办？给各位两个小砖头，可以自己引玉：</p><ol><li>如果你要追求什么，成就什么，期望颠覆性变化的时候，将自己放入一个具有外部压力和环境的氛围中，在此间进行改变。比如准备某个考试就认真报个班，和老师同学多多互动，认真跟从班级内老师的要求。想跨行业就先光着身体蹦进去，你准备学习这个那个几年都没多大用。</li><li>认识到正常人颠覆性变化是不靠谱或者不持续的，所以把个人的纠偏目标放在一些小事和小习惯上，这是自我管理的初阶非量化性的方式。而对大多数人来说，这是最靠谱最有实践意义也最简单的自我管理方式。</li></ol><ul><li>‘懒’或行动力不足多因未描述清事件的轮廓和目的，多为心理上而非行动上。  人们在任务执行过程中的畏难情绪，其实畏的是不明朗的工作任务，如果一个任务不具备可执行性，那么它的执行就会对它的责任人造成或多或少的压力。如果类似的任务一旦积压过多，就会变成难上加难，让人无从下手。    </li></ul><p>解决这个问题的核心是要把不可执行的问题变为可执行的任务。这里定义一个词语为“”执行梯度”，对于单个人来说，只有在一定梯度下的分解任务才在心理上具有可执行性，所以任务的分解工作主要是将大项目标分解为众多小于这个执行梯度的小任务，这其中涉及明确目标，分解目标，分解行动，制定可行计划等工作。</p><ul><li>完美和美，这个是众多拖延症分析的矛头，这里不展开谈了，完美主义要不要也是分人分事，我的建议就是，对于大多数人来说，  小努力、小改善、小幸福足以。</li></ul><h1 id="3-自我管理的一些高阶实践"><a href="#3-自我管理的一些高阶实践" class="headerlink" title="3.自我管理的一些高阶实践"></a>3.自我管理的一些高阶实践</h1><p><strong>量化的意义（高阶自我管理）</strong>：量化会导致维护成本显著提升，你要对自己进行材料采集和整理，在量化后很好做自我管理的方向设定，这一般是高阶的自我管理的实践，不仅依托于GTD系统，还要针对性的制作表格数据进行跟踪。</p><p><strong>遵从内心所求</strong>（源动力源动机已经存在，分析已潜在运行，无需从起点出发），不自欺（感慨一下，这三个字有几个人能做到）。做喜欢的事情自带鸡血。</p><p><strong>遇事客观，认可成就，同时确认损失。</strong>理智才能采取正确行动。一无所有的时候容易情绪用事，有了一大家子家业后多从利益出发，持恒产-无恒产者无恒心。</p><p><strong>以三观处事</strong>，这样简单的培养塑造三观即可，不因人因事自我颠覆。 </p><p><strong>复杂项目执行渐进明细</strong>，复杂问题无法一开始就计划的很明确，渐进明细进行筹划，你能做到上一条以三观处事，那么渐进明细时抉择符合价值观就可。 </p><p><strong>个人时间的重要性</strong>（在没有监视完全自我的一个时间段）老生常谈，不展开。</p><p><strong>责任催人前行</strong>，不展开。<br><strong>有用的实践，而不是正确的堆砌</strong>。自我管理的目的进行自我管理不是为了获得怎样的成就和目的，而是要去达到什么样的状态，而是要成为一个什么样的人。简单说，自我的管和不管就在一瞬间，简而言之，状态有就是大治。</p><p>结语：自我管理的范畴还很多，多读英文资料，少上国内的什么培训班，少交智商税，常用的四象限，番茄钟，敏捷管理（居然被国内某些机构演化成三个青蛙！！青蛙同意吗），驾驶舱，晨间日记，冥想自己翻翻教程，结合自己来实践。还是那句老话，自我管理的根本在于认知突破！</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;在知乎上搜GTD时发现的一篇回答，觉得很有深度，转过来看看，原文信息如下&lt;/p&gt;
+&lt;p&gt;作者：小布吕&lt;br&gt;链接：&lt;a href=&quot;https://www.zhihu.com/question/23051794/answer/150177755&quot; target=&quot;_blan
+      
+    
+    </summary>
+    
+    
+      <category term="自我管理" scheme="https://peapon.github.io/tags/%E8%87%AA%E6%88%91%E7%AE%A1%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>用户画像</title>
+    <link href="https://peapon.github.io/2018/01/24/%E7%94%A8%E6%88%B7%E7%94%BB%E5%83%8F/"/>
+    <id>https://peapon.github.io/2018/01/24/用户画像/</id>
+    <published>2018-01-23T16:10:10.000Z</published>
+    <updated>2020-04-15T16:06:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>这是一篇知乎问答，原贴在<a href="https://www.zhihu.com/question/19853605" target="_blank" rel="noopener">这里</a>。我觉得蛮有用，转过来以备后用。</p><p>作者：知乎用户<br>链接：<a href="https://www.zhihu.com/question/19853605/answer/51552384" target="_blank" rel="noopener">https://www.zhihu.com/question/19853605/answer/51552384</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p><h1 id="什么是用户画像"><a href="#什么是用户画像" class="headerlink" title="什么是用户画像"></a>什么是用户画像</h1><p>Alan Cooper （交互设计之父）最早提出了 persona 的概念:“Personas are a concrete representation of target users.”Persona 是真实用户的虚拟代表,是建立在一系列真实数据(Marketing data,Usability data)之上的目标用户模型。通过用户调研去了解用户,根据他们的目标、行为和观点的差异,将他们区分为不同的类型,然后每种类型中抽取出典型特征,赋予名字、照片、一些人口统计学要素、场景等描述,就形成了一个人物原型(personas)。 一些大公司还是很喜欢用personas做用研的，比如微软，腾讯blabla…</p><h1 id="为何要建立用户画像"><a href="#为何要建立用户画像" class="headerlink" title="为何要建立用户画像"></a>为何要建立用户画像</h1><p>personas?Cooper认为建立 Personas 的好处有Creates a common language Users  are no longer elastic Provides a target - no longer designing for everyone in the worldEnd debates about prioritization and implementation简而言之，用户画像（persona ）为了让团队成员在产品设计的过程中能够抛开个人喜好，将焦点关注在目标用户的动机和行为上进行产品设计。 因为，产品经理为具体的人物做产品设计要远远优于为脑中虚构的东西做设计，也更来得容易。但</p><h2 id="是特别注意的是"><a href="#是特别注意的是" class="headerlink" title="是特别注意的是:"></a>是特别注意的是:</h2><p>1、 用户画像要建立在真实的数据之上<br>2、 当有多个用户画像的时候,需要考虑用户画像的优先级,通常建议不能为超过三个以上的 persona 设计产品,这样容易产生需求冲突。<br>3、 用户画像是处在不断修正中的 </p><h1 id="Persona-一般需要具备哪些元素"><a href="#Persona-一般需要具备哪些元素" class="headerlink" title="Persona 一般需要具备哪些元素?"></a>Persona 一般需要具备哪些元素?</h1><p>姓名 Name<br>照片 Photo<br>年龄Age<br>家庭状况 Personal details / family life<br>收入 Income/Salary<br>工作 Work / job details<br>用户场景/活动 Activities / use scenario<br>计算机技能/知识 Knowledge / skills / abilities<br>目标/动机 Goals / motives / concerns<br>喜好 Likes / dislikes<br>人生态度 Quotes</p><p>注意:对于手机浏览器的用户而言,使用手机浏览器的习惯和用户的生活方式(尤其是喜好、阶级)息息相关。 举几个栗子：当年微软为office做的人物画像（包括了用户的主要活动、使用环境、使用工具等等等…）：<img src="https://pic3.zhimg.com/50/f075406ae779009bfb61fec38408c534_hd.jpg" data-rawwidth="1203" data-rawheight="873" class="origin_image zh-lightbox-thumb" width="1203" data-original="https://pic3.zhimg.com/f075406ae779009bfb61fec38408c534_r.jpg"><img src="https://pic2.zhimg.com/50/65d09923f1b84bdbafbad6e08c82bcc4_hd.jpg" data-rawwidth="1179" data-rawheight="835" class="origin_image zh-lightbox-thumb" width="1179" data-original="https://pic2.zhimg.com/65d09923f1b84bdbafbad6e08c82bcc4_r.jpg"><img src="https://pic4.zhimg.com/50/0d354bcee70991a0ac64a9b8590f2533_hd.jpg" data-rawwidth="1186" data-rawheight="852" class="origin_image zh-lightbox-thumb" width="1186" data-original="https://pic4.zhimg.com/0d354bcee70991a0ac64a9b8590f2533_r.jpg"><img src="https://pic2.zhimg.com/50/809ca17f241ea935324fe9c7aae6a8b5_hd.jpg" data-rawwidth="1178" data-rawheight="852" class="origin_image zh-lightbox-thumb" width="1178" data-original="https://pic2.zhimg.com/809ca17f241ea935324fe9c7aae6a8b5_r.jpg">这样的人物可以是多个的：<img src="https://pic2.zhimg.com/50/b6bc8c6e2cf2b0322bdd2f0b628efeea_hd.jpg" data-rawwidth="1181" data-rawheight="803" class="origin_image zh-lightbox-thumb" width="1181" data-original="https://pic2.zhimg.com/b6bc8c6e2cf2b0322bdd2f0b628efeea_r.jpg">甚至具体到人物的日常作息：<img src="https://pic2.zhimg.com/50/627af418c4e9655b79ba39c4dd8e2fd6_hd.jpg" data-rawwidth="934" data-rawheight="694" class="origin_image zh-lightbox-thumb" width="934" data-original="https://pic2.zhimg.com/627af418c4e9655b79ba39c4dd8e2fd6_r.jpg">使用设备：<img src="https://pic2.zhimg.com/50/3d2d96fee6d733010459ce2524b51c36_hd.jpg" data-rawwidth="932" data-rawheight="592" class="origin_image zh-lightbox-thumb" width="932" data-original="https://pic2.zhimg.com/3d2d96fee6d733010459ce2524b51c36_r.jpg"></p><p>既然写到了这里，再顺便说一下</p><h1 id="如何建立用户画像"><a href="#如何建立用户画像" class="headerlink" title="如何建立用户画像"></a>如何建立用户画像</h1><p>personas?建立 personas 可以分为以下几个步骤(参考):<br>Step1: 研究准备与数据收集<br>Step2: 亲和图<br>Step3: 人物原型框架<br>Step4: 优先级排序<br>Step5: 完善人物原型</p><p>参考阅读:CDC《创建定性用户画像》创建定性用户画像 (写的很具体~~推荐指数五颗星) 参考阅读:Personas Personas | Usability.gov<br>CDC《创建定性用户画像》创建定性用户画像亲和图 KJ 法在用研中的应用 KJ法在用户研究中的应用移动用户分类参考 Mobile Usage Segmentation System</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;这是一篇知乎问答，原贴在&lt;a href=&quot;https://www.zhihu.com/question/19853605&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;这里&lt;/a&gt;。我觉得蛮有用，转过来以备后用。&lt;/p&gt;
+&lt;p&gt;作者：知乎用户&lt;br&gt;链接：
+      
+    
+    </summary>
+    
+    
+      <category term="需求管理" scheme="https://peapon.github.io/tags/%E9%9C%80%E6%B1%82%E7%AE%A1%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>需求确认</title>
+    <link href="https://peapon.github.io/2018/01/09/%E9%9C%80%E6%B1%82%E7%A1%AE%E8%AE%A4/"/>
+    <id>https://peapon.github.io/2018/01/09/需求确认/</id>
+    <published>2018-01-08T22:58:27.000Z</published>
+    <updated>2020-04-15T16:06:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="为什么需要需求确认"><a href="#为什么需要需求确认" class="headerlink" title="为什么需要需求确认"></a>为什么需要需求确认</h1><p><img src="/images/15154525829579.jpg" alt><br>先从这幅图看起，这不是心血来潮弄出来的，这是一个研究给出的结论（Kelly，Sherief and Hops 1992），我只给出了10倍代价的图，这个研究给出的结论是在需求阶段修复错误往往只要30分钟，而在测试过程中修正错误往往需要5~17个小时。<br>换句话说，就是在需求阶段修正错误是值得的，也是必须的。因此发现需求中的错误成了至关重要的活动，这些错误包括不符合用户的需要、没有正确的描述、需求冲突等等，我们把这个过程叫<strong>需求确认。</strong><br>我们要讨论的内容就是需求确认的目的，何时开始需求确认，怎么做。</p><h1 id="需求确认目的"><a href="#需求确认目的" class="headerlink" title="需求确认目的"></a>需求确认目的</h1><p>这个问题很难回答，也很好回答，我们上面已经说过了，需求阶段修正错误可以付出很小的代价，也就是说能省钱。<br>我更喜欢《软件需求》中关于这个目的的描述：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1. 软件需求能够准确地描述了预期的系统能力和特征，并且这些能力和特征能够满足不同干系人的需要。</span><br><span class="line">2. 从业务需求、系统需求、业务规则及其他来源中正确产线需求。</span><br><span class="line">3. 需求是完整的、可行的、可验证的。</span><br><span class="line">4. 所有需求都是必要的，并且整改需求集合满足业务目标。</span><br><span class="line">5. 所有需求彼此是一致的。</span><br><span class="line">6. 需求能够为后续的设计和构建提供充分的依据。</span><br></pre></td></tr></table></figure><h1 id="何时开始"><a href="#何时开始" class="headerlink" title="何时开始"></a>何时开始</h1><p>如果你问我什么时候开始做需求确认，我的答案是越早越好，当然，前提是你完成了需求捕获和初步的需求分析。</p><h1 id="需求确认的过程"><a href="#需求确认的过程" class="headerlink" title="需求确认的过程"></a>需求确认的过程</h1><p>首先我们要抛弃需求评审即是需求确认全部的思想，且需求确认也不是需求工作的终点。需求确认过程的活动应该是多个部分组成的，需求评审是必须的活动；原型可以根据需求的成熟度来决定是否采用原型，当然，也可以把原型理解为需求过程中的一种工具，可以随时使用；而需求测试是最有挑战的活动，很难去推动测试部门建立一种概念测试的观念，在没有实物前提下对需求测试对于很多测试工程师来讲，也是一个挑战。</p><h2 id="需求评审"><a href="#需求评审" class="headerlink" title="需求评审"></a>需求评审</h2><p>需求评审是一个强大的工具，可以帮助需求作者及开发团队发现需求不明确或者不可验证、定义不清晰导致无法设计等问题，那么，需求规格或需求文档的作者这个时候就要摆正心态，想想评审的单词是“Review”，就是让别人给你看一遍的意思。<br>评审的形式也多种多样，我们主要考虑非正式评审的需求走查和正式评审的需求审查</p><h3 id="需求走查"><a href="#需求走查" class="headerlink" title="需求走查"></a>需求走查</h3><p>Walkthrough，这个单词的字面意思是演练、预演、过一遍的意思，所以这个活动的重心也就出来了，那么如何有效的开展走查是一个重要的问题。</p><p><a href="http://blog.csdn.net/zhangmike/article/details/51619937" target="_blank" rel="noopener">这是别人的见解</a></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">系统性的走查目的是为了评估一个软件产品。走查可能也会有让培训软件产品受众的目的。走查的作用还有交流技术、交流不同风格变化。 走查不仅可以发现异常，也可以指出不足之处（例如，软件产品的效率和可读性问题，设计或代码的模块化问题，或无法验证的规格）。参与走查有4个角色，分别是走查组长、记录者、作者、走查成员，走查至少需要2人。任何走查组成员的行政上级都不能参加走查。走查的最主要活动是作者或走查组长详细的展现所评审产物的每个部分，走查组识别并提出发现的异常和问题。走查的标准最少输出物总计有9项。走查不要求产物已经全部完成，可以按需高频开展。 </span><br><span class="line">在本五维需求评审框架中，走查属于有预审的双人即时或者会议形式、技术方面的定期或高频的同级需求文档评审。双人走查是标准允许的最少人数。双人走查与会议形式走查其实存在较大的差异：双人走查可以使用一台普通显示器，利用普通能够坐下两人的工作位置即可，这样就能够高频按需开展，会议形式往往需要会议室，而会议室在多数组织是稀缺资源，如果所有项目团队都开展需求和代码会议走查，那么每二周一次的会议室预订都未必能够保证，所以难以按需开展。代码走查是常听到的词汇，但是需求走查在中文世界很少提到，而在敏捷软件开发中已经显示了其有效性。</span><br></pre></td></tr></table></figure><h3 id="需求审查"><a href="#需求审查" class="headerlink" title="需求审查"></a>需求审查</h3><p>需求审查的单词是“inspection”，这个词也是有两部分，spection是检查的意思，加入前缀in，那么就是深入检查的意思，也就是审查啦。</p><h2 id="需求原型"><a href="#需求原型" class="headerlink" title="需求原型"></a>需求原型</h2><h2 id="需求测试"><a href="#需求测试" class="headerlink" title="需求测试"></a>需求测试</h2><h1 id="需求确认中的常见误区"><a href="#需求确认中的常见误区" class="headerlink" title="需求确认中的常见误区"></a>需求确认中的常见误区</h1><p><strong>需求验证形式化：</strong>许多时候是为了过流程，否则会阻塞开发，因此走一个正儿八经的流程，但实际上并没有达到效果；<br><strong>不重视：</strong>随便找个用户代表签字，责任为先，影响很不好；<br><strong>开会跑偏题：</strong>时常会开成批评会、吵架会、翻书会、语法纠错会。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;为什么需要需求确认&quot;&gt;&lt;a href=&quot;#为什么需要需求确认&quot; class=&quot;headerlink&quot; title=&quot;为什么需要需求确认&quot;&gt;&lt;/a&gt;为什么需要需求确认&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;/images/15154525829579.jpg&quot; alt&gt;
+      
+    
+    </summary>
+    
+    
+      <category term="需求管理" scheme="https://peapon.github.io/tags/%E9%9C%80%E6%B1%82%E7%AE%A1%E7%90%86/"/>
+    
+  </entry>
+  
+</feed>
