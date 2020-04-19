@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?bc15bf0da9980d5bfcbacea37e3096c1"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>MWeb外部模式的图片文件夹处理 | Req Man | 需求管理学习和实践笔记</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="IT 技术">
+    <meta name="description" content="这段文字来源于官方的帮助，详见：MWeb外部模式的详细应用 引入文件夹到 MWeb 中的办法如下图，按 CMD + E 打开外部模式，然后点击左下角的 “+” 按钮，选择要引入的文件夹即可。 另外，你还可以直接把文件夹拖拽到左边的文件夹树形列表中，也可以引入文件夹。还有一种方法就是：直接把文件夹拖拽到 MWeb 的图标中，也可以引入文件夹。 配置引入的文件夹引入文件夹后，还有一项重要的设置，就是引">
+<meta name="keywords" content="IT 技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MWeb外部模式的图片文件夹处理">
+<meta property="og:url" content="https://peapon.github.io/2019/04/21/MWeb外部模式的图片文件夹处理/index.html">
+<meta property="og:site_name" content="Req Man">
+<meta property="og:description" content="这段文字来源于官方的帮助，详见：MWeb外部模式的详细应用 引入文件夹到 MWeb 中的办法如下图，按 CMD + E 打开外部模式，然后点击左下角的 “+” 按钮，选择要引入的文件夹即可。 另外，你还可以直接把文件夹拖拽到左边的文件夹树形列表中，也可以引入文件夹。还有一种方法就是：直接把文件夹拖拽到 MWeb 的图标中，也可以引入文件夹。 配置引入的文件夹引入文件夹后，还有一项重要的设置，就是引">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://peapon.github.io/images/15558223756761.jpg">
+<meta property="og:image" content="https://peapon.github.io/images/15558223937612.jpg">
+<meta property="og:image" content="https://peapon.github.io/2019/04/21/MWeb外部模式的图片文件夹处理/media/pic.jpg">
+<meta property="og:image" content="https://peapon.github.io/images/15558224098027.jpg">
+<meta property="og:updated_time" content="2020-04-15T16:06:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MWeb外部模式的图片文件夹处理">
+<meta name="twitter:description" content="这段文字来源于官方的帮助，详见：MWeb外部模式的详细应用 引入文件夹到 MWeb 中的办法如下图，按 CMD + E 打开外部模式，然后点击左下角的 “+” 按钮，选择要引入的文件夹即可。 另外，你还可以直接把文件夹拖拽到左边的文件夹树形列表中，也可以引入文件夹。还有一种方法就是：直接把文件夹拖拽到 MWeb 的图标中，也可以引入文件夹。 配置引入的文件夹引入文件夹后，还有一项重要的设置，就是引">
+<meta name="twitter:image" content="https://peapon.github.io/images/15558223756761.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Req Man" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">peapon</h5>
+          <a href="mailto:peapon@qq.com" title="peapon@qq.com" class="mail">peapon@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/peapon" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.cnblogs.com/peapon/"  >
+                <i class="icon icon-lg icon-link"></i>
+                博客园
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">MWeb外部模式的图片文件夹处理</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">MWeb外部模式的图片文件夹处理</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-04-21T04:51:38.000Z" itemprop="datePublished" class="page-time">
+  2019-04-21
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-MWeb外部模式的图片文件夹处理"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">MWeb外部模式的图片文件夹处理</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-04-21 12:51:38" datetime="2019-04-21T04:51:38.000Z"  itemprop="datePublished">2019-04-21</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p><strong>这段文字来源于官方的帮助，详见：<a href="https://zh.mweb.im/15304187309476.html" target="_blank" rel="noopener">MWeb外部模式的详细应用</a></strong></p>
+<p>引入文件夹到 MWeb 中的办法<br>如下图，按 CMD + E 打开外部模式，然后点击左下角的 “+” 按钮，选择要引入的文件夹即可。<br><img src="/images/15558223756761.jpg" alt></p>
+<p>另外，你还可以直接把文件夹拖拽到左边的文件夹树形列表中，也可以引入文件夹。<br>还有一种方法就是：直接把文件夹拖拽到 MWeb 的图标中，也可以引入文件夹。</p>
+<p>配置引入的文件夹<br>引入文件夹后，还有一项重要的设置，就是引入文件夹的设置，可以右键引入的文件夹，然后选择 编辑，就会显示如下图的界面：<br><img src="/images/15558223937612.jpg" alt></p>
+<p>一个设置是 “显示名称”，这个是引入的文件夹所特有的，你修改这个名称不会修改到文件夹的名称。还有几个比较重要的设置，都是跟插入图片相关的，第一个就是 “保存插入的图片的文件夹名称：”，这个一看就知道意思，这个跟下面的 “插入的图片的保存位置” 相关联，这个只有 “绝对位置” 与 “相对位置” 两个选项。<br>举个例子，比如说我引入的文件夹为 A，然后有一文件在 “A/folder/file.md” 下，我如果在 “file.md” 中插入一张名为 “pic.jpg” 的图片，则不同的选项的结果为：</p>
+<p>相对位置：图片会保存在 “A/folder/media/pic.jpg”，然后生成的 Markdown 为：<img src="media/pic.jpg" alt>。<br>绝对位置：图片会保存在 “A/media/pic.jpg”，生成的 Markdwon 为：![](/media/pic.jpg。<br>另外一个设置：“把插入的图片自动上传至…”。如果勾选了这个选项，那么上面的设置就无效了，因为你插入的图片都会自动上传至所选择的图片上传服务，然后返回 Markdown 语法。</p>
+<p>根据这个特性，可以让 MWeb 很好地支持 Octpress、Jekyll、hexo、gitbook、VuePress 等等静态网站生成工具的图片插入、预览和管理。</p>
+<p>管理引入后的文件夹<br>文件夹引入后，就可以使用右键对引入的文件夹和文件进行一些常用的操作，如下图所示。<br><img src="/images/15558224098027.jpg" alt></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2020-04-15T16:06:35.000Z" itemprop="dateUpdated">2020-04-16 00:06:35</time>
+</span><br>
+
+
+        
+    </div>
+    <footer>
+        <a href="https://peapon.github.io">
+            <img src="/img/avatar.png" alt="peapon">
+            peapon
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IT-技术/">IT 技术</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://peapon.github.io/2019/04/21/MWeb外部模式的图片文件夹处理/&title=《MWeb外部模式的图片文件夹处理》 — Req Man&pic=https://peapon.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://peapon.github.io/2019/04/21/MWeb外部模式的图片文件夹处理/&title=《MWeb外部模式的图片文件夹处理》 — Req Man&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://peapon.github.io/2019/04/21/MWeb外部模式的图片文件夹处理/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《MWeb外部模式的图片文件夹处理》 — Req Man&url=https://peapon.github.io/2019/04/21/MWeb外部模式的图片文件夹处理/&via=https://peapon.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://peapon.github.io/2019/04/21/MWeb外部模式的图片文件夹处理/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/05/02/一个假产品经理对产品经理的理解/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">一个假产品经理对产品经理的理解</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/04/20/在macOS-Mojave上搭建树莓派的Qt开发环境/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">在macOS Mojave上搭建树莓派的Qt开发环境</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>peapon &copy; 2017 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://peapon.github.io/2019/04/21/MWeb外部模式的图片文件夹处理/&title=《MWeb外部模式的图片文件夹处理》 — Req Man&pic=https://peapon.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://peapon.github.io/2019/04/21/MWeb外部模式的图片文件夹处理/&title=《MWeb外部模式的图片文件夹处理》 — Req Man&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://peapon.github.io/2019/04/21/MWeb外部模式的图片文件夹处理/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《MWeb外部模式的图片文件夹处理》 — Req Man&url=https://peapon.github.io/2019/04/21/MWeb外部模式的图片文件夹处理/&via=https://peapon.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://peapon.github.io/2019/04/21/MWeb外部模式的图片文件夹处理/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACpklEQVR42u3aS3LCMBAFwNz/0qQquxTBvPnIYdFeUYAtNQtJvJmvr/h6/FyvXj9fz58+33v95Os5LF94eHh4rannE72e4itYbz7JO9dzw8PDwzvHSzaDKjsfJd948jnj4eHhfQLvevjegTvZYPLDNx4eHt4n8/IQYXJXNbbAw8PDu5OXL+K9KU7ChZuyFjw8PLyYNy+A3f/61voeHh4eXrwlVKPb6jKdfPMxuPDw8PBO8HpFpmpD1VbTVTXswMPDwzvNS6ZYDRSqTQP5z1QYEQ8PD2+V1wtDe4fp3YaDhX8MeHh4eANeviX0Nom1Haza6ICHh4d3gDcpPiXBQe871ZjjzSh4eHh4q7xJgSo/fO9mqoX54OHh4R3g9W7eai/ohbajyhgeHh7emFf+Y38gkM2P1/ls/8ha8PDw8JZ4k2V3MmQeeawd9PHw8PBWeb2pTPATTF5mw8PDwzvNS468vTL/ZLnvHcrx8PDwzvEmS3MUAbSuXij8pqcMDw8Pb5WXl6mqLVnJgt5rFIjmiYeHh3eAl8ev+QDVcloeT1TbGvDw8PBO8PLGpqTstNsEUL33TT6Nh4eHt8pL2qomkUE12tj6UfDw8PBO8HrxQTJAvpTPY9zyQ/Hw8PCWeHmUkJfwzxXSetsSHh4e3pw3bwLY3UiqwQceHh7e5/CqgUXSEJA/P28mwMPDw7ufNynzTyKJKqY3Lh4eHt4J3qN4TVKN3rE7j0L+eBoeHh7eAd68TtRrL8i3ouvtBA8PD++/eFulqeoWUh0x35B+fYqHh4d3jFcNJvKtIkcmQcNoT8PDw8O7nZdPorqI954QHe7x8PDwPoA3CSMmP0femtA8UuPh4eEVeb1ooHr8zZuuJt0QeHh4eKd583/0eYF/t0VgobKHh4eHV+N9AwMQfYJcKUv1AAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

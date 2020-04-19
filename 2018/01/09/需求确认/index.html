@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?bc15bf0da9980d5bfcbacea37e3096c1"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>需求确认 | Req Man | 需求管理学习和实践笔记</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="需求管理">
+    <meta name="description" content="为什么需要需求确认先从这幅图看起，这不是心血来潮弄出来的，这是一个研究给出的结论（Kelly，Sherief and Hops 1992），我只给出了10倍代价的图，这个研究给出的结论是在需求阶段修复错误往往只要30分钟，而在测试过程中修正错误往往需要5~17个小时。换句话说，就是在需求阶段修正错误是值得的，也是必须的。因此发现需求中的错误成了至关重要的活动，这些错误包括不符合用户的需要、没有正确">
+<meta name="keywords" content="需求管理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="需求确认">
+<meta property="og:url" content="https://peapon.github.io/2018/01/09/需求确认/index.html">
+<meta property="og:site_name" content="Req Man">
+<meta property="og:description" content="为什么需要需求确认先从这幅图看起，这不是心血来潮弄出来的，这是一个研究给出的结论（Kelly，Sherief and Hops 1992），我只给出了10倍代价的图，这个研究给出的结论是在需求阶段修复错误往往只要30分钟，而在测试过程中修正错误往往需要5~17个小时。换句话说，就是在需求阶段修正错误是值得的，也是必须的。因此发现需求中的错误成了至关重要的活动，这些错误包括不符合用户的需要、没有正确">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://peapon.github.io/images/15154525829579.jpg">
+<meta property="og:updated_time" content="2020-04-15T16:06:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="需求确认">
+<meta name="twitter:description" content="为什么需要需求确认先从这幅图看起，这不是心血来潮弄出来的，这是一个研究给出的结论（Kelly，Sherief and Hops 1992），我只给出了10倍代价的图，这个研究给出的结论是在需求阶段修复错误往往只要30分钟，而在测试过程中修正错误往往需要5~17个小时。换句话说，就是在需求阶段修正错误是值得的，也是必须的。因此发现需求中的错误成了至关重要的活动，这些错误包括不符合用户的需要、没有正确">
+<meta name="twitter:image" content="https://peapon.github.io/images/15154525829579.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Req Man" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">peapon</h5>
+          <a href="mailto:peapon@qq.com" title="peapon@qq.com" class="mail">peapon@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/peapon" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.cnblogs.com/peapon/"  >
+                <i class="icon icon-lg icon-link"></i>
+                博客园
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">需求确认</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">需求确认</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-01-08T22:58:27.000Z" itemprop="datePublished" class="page-time">
+  2018-01-09
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#为什么需要需求确认"><span class="post-toc-number">1.</span> <span class="post-toc-text">为什么需要需求确认</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#需求确认目的"><span class="post-toc-number">2.</span> <span class="post-toc-text">需求确认目的</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#何时开始"><span class="post-toc-number">3.</span> <span class="post-toc-text">何时开始</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#需求确认的过程"><span class="post-toc-number">4.</span> <span class="post-toc-text">需求确认的过程</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#需求评审"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">需求评审</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#需求走查"><span class="post-toc-number">4.1.1.</span> <span class="post-toc-text">需求走查</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#需求审查"><span class="post-toc-number">4.1.2.</span> <span class="post-toc-text">需求审查</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#需求原型"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">需求原型</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#需求测试"><span class="post-toc-number">4.3.</span> <span class="post-toc-text">需求测试</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#需求确认中的常见误区"><span class="post-toc-number">5.</span> <span class="post-toc-text">需求确认中的常见误区</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-需求确认"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">需求确认</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-01-09 06:58:27" datetime="2018-01-08T22:58:27.000Z"  itemprop="datePublished">2018-01-09</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="为什么需要需求确认"><a href="#为什么需要需求确认" class="headerlink" title="为什么需要需求确认"></a>为什么需要需求确认</h1><p><img src="/images/15154525829579.jpg" alt><br>先从这幅图看起，这不是心血来潮弄出来的，这是一个研究给出的结论（Kelly，Sherief and Hops 1992），我只给出了10倍代价的图，这个研究给出的结论是在需求阶段修复错误往往只要30分钟，而在测试过程中修正错误往往需要5~17个小时。<br>换句话说，就是在需求阶段修正错误是值得的，也是必须的。因此发现需求中的错误成了至关重要的活动，这些错误包括不符合用户的需要、没有正确的描述、需求冲突等等，我们把这个过程叫<strong>需求确认。</strong><br>我们要讨论的内容就是需求确认的目的，何时开始需求确认，怎么做。</p>
+<h1 id="需求确认目的"><a href="#需求确认目的" class="headerlink" title="需求确认目的"></a>需求确认目的</h1><p>这个问题很难回答，也很好回答，我们上面已经说过了，需求阶段修正错误可以付出很小的代价，也就是说能省钱。<br>我更喜欢《软件需求》中关于这个目的的描述：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1. 软件需求能够准确地描述了预期的系统能力和特征，并且这些能力和特征能够满足不同干系人的需要。</span><br><span class="line">2. 从业务需求、系统需求、业务规则及其他来源中正确产线需求。</span><br><span class="line">3. 需求是完整的、可行的、可验证的。</span><br><span class="line">4. 所有需求都是必要的，并且整改需求集合满足业务目标。</span><br><span class="line">5. 所有需求彼此是一致的。</span><br><span class="line">6. 需求能够为后续的设计和构建提供充分的依据。</span><br></pre></td></tr></table></figure>
+<h1 id="何时开始"><a href="#何时开始" class="headerlink" title="何时开始"></a>何时开始</h1><p>如果你问我什么时候开始做需求确认，我的答案是越早越好，当然，前提是你完成了需求捕获和初步的需求分析。</p>
+<h1 id="需求确认的过程"><a href="#需求确认的过程" class="headerlink" title="需求确认的过程"></a>需求确认的过程</h1><p>首先我们要抛弃需求评审即是需求确认全部的思想，且需求确认也不是需求工作的终点。需求确认过程的活动应该是多个部分组成的，需求评审是必须的活动；原型可以根据需求的成熟度来决定是否采用原型，当然，也可以把原型理解为需求过程中的一种工具，可以随时使用；而需求测试是最有挑战的活动，很难去推动测试部门建立一种概念测试的观念，在没有实物前提下对需求测试对于很多测试工程师来讲，也是一个挑战。</p>
+<h2 id="需求评审"><a href="#需求评审" class="headerlink" title="需求评审"></a>需求评审</h2><p>需求评审是一个强大的工具，可以帮助需求作者及开发团队发现需求不明确或者不可验证、定义不清晰导致无法设计等问题，那么，需求规格或需求文档的作者这个时候就要摆正心态，想想评审的单词是“Review”，就是让别人给你看一遍的意思。<br>评审的形式也多种多样，我们主要考虑非正式评审的需求走查和正式评审的需求审查</p>
+<h3 id="需求走查"><a href="#需求走查" class="headerlink" title="需求走查"></a>需求走查</h3><p>Walkthrough，这个单词的字面意思是演练、预演、过一遍的意思，所以这个活动的重心也就出来了，那么如何有效的开展走查是一个重要的问题。</p>
+<p><a href="http://blog.csdn.net/zhangmike/article/details/51619937" target="_blank" rel="noopener">这是别人的见解</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">系统性的走查目的是为了评估一个软件产品。走查可能也会有让培训软件产品受众的目的。走查的作用还有交流技术、交流不同风格变化。 走查不仅可以发现异常，也可以指出不足之处（例如，软件产品的效率和可读性问题，设计或代码的模块化问题，或无法验证的规格）。参与走查有4个角色，分别是走查组长、记录者、作者、走查成员，走查至少需要2人。任何走查组成员的行政上级都不能参加走查。走查的最主要活动是作者或走查组长详细的展现所评审产物的每个部分，走查组识别并提出发现的异常和问题。走查的标准最少输出物总计有9项。走查不要求产物已经全部完成，可以按需高频开展。 </span><br><span class="line">在本五维需求评审框架中，走查属于有预审的双人即时或者会议形式、技术方面的定期或高频的同级需求文档评审。双人走查是标准允许的最少人数。双人走查与会议形式走查其实存在较大的差异：双人走查可以使用一台普通显示器，利用普通能够坐下两人的工作位置即可，这样就能够高频按需开展，会议形式往往需要会议室，而会议室在多数组织是稀缺资源，如果所有项目团队都开展需求和代码会议走查，那么每二周一次的会议室预订都未必能够保证，所以难以按需开展。代码走查是常听到的词汇，但是需求走查在中文世界很少提到，而在敏捷软件开发中已经显示了其有效性。</span><br></pre></td></tr></table></figure>
+<h3 id="需求审查"><a href="#需求审查" class="headerlink" title="需求审查"></a>需求审查</h3><p>需求审查的单词是“inspection”，这个词也是有两部分，spection是检查的意思，加入前缀in，那么就是深入检查的意思，也就是审查啦。</p>
+<h2 id="需求原型"><a href="#需求原型" class="headerlink" title="需求原型"></a>需求原型</h2><h2 id="需求测试"><a href="#需求测试" class="headerlink" title="需求测试"></a>需求测试</h2><h1 id="需求确认中的常见误区"><a href="#需求确认中的常见误区" class="headerlink" title="需求确认中的常见误区"></a>需求确认中的常见误区</h1><p><strong>需求验证形式化：</strong>许多时候是为了过流程，否则会阻塞开发，因此走一个正儿八经的流程，但实际上并没有达到效果；<br><strong>不重视：</strong>随便找个用户代表签字，责任为先，影响很不好；<br><strong>开会跑偏题：</strong>时常会开成批评会、吵架会、翻书会、语法纠错会。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2020-04-15T16:06:35.000Z" itemprop="dateUpdated">2020-04-16 00:06:35</time>
+</span><br>
+
+
+        
+    </div>
+    <footer>
+        <a href="https://peapon.github.io">
+            <img src="/img/avatar.png" alt="peapon">
+            peapon
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/需求管理/">需求管理</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://peapon.github.io/2018/01/09/需求确认/&title=《需求确认》 — Req Man&pic=https://peapon.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://peapon.github.io/2018/01/09/需求确认/&title=《需求确认》 — Req Man&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://peapon.github.io/2018/01/09/需求确认/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《需求确认》 — Req Man&url=https://peapon.github.io/2018/01/09/需求确认/&via=https://peapon.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://peapon.github.io/2018/01/09/需求确认/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/01/24/用户画像/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">用户画像</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/01/09/使用原型/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">使用原型</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>peapon &copy; 2017 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://peapon.github.io/2018/01/09/需求确认/&title=《需求确认》 — Req Man&pic=https://peapon.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://peapon.github.io/2018/01/09/需求确认/&title=《需求确认》 — Req Man&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://peapon.github.io/2018/01/09/需求确认/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《需求确认》 — Req Man&url=https://peapon.github.io/2018/01/09/需求确认/&via=https://peapon.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://peapon.github.io/2018/01/09/需求确认/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJklEQVR42u3aQXLDMAgF0Nz/0u02i1r5gNMZS8+rThpbPC8IIL1e8fXzdq3/e3Wtv5+scsOFgYHxWEay/PqTyV3Vzy+pGBgYBzCuMtjVd5JEOQk6jw0DAwNjHXR+rQH568PAwMCoMiZt8DpNY2BgYPSa2PWjk6DzUvKLvTgGBsYDGXm6/P+/v7K/gYGB8ShGrxHNB2pJWNUk+8eKGBgYWzPuKvWSYxlJoJN4MDAwdmVU28ho7BWP5HoDuFcSBAYGxkaMPJnOx16TEVs0sMPAwNiU0awlBxuQ1cNhhVSLgYGxNWMSYrWt7YX7YRUMDIytGfPl82IuGbQl8ZR/PTAwMB7O6DWWvRlXtXAs/ABgYGBszchLsUlJl29YVl8BBgbGCYz8ob32NU/No8McGBgYWzN6m5TVDc48oLx9xcDAOIeRBFRNf5PBXG/7EwMD4wRGNV32joLlq1Sfj4GBcQ5jsjGQj+qSjcxyysbAwNia0WtE55sE5SNf+VoYGBibMvISLUl/vTRaPTp2OXTDwMDYmpGUd3nSLJ/vaB0Cw8DAwKgmxF6R1zuucXlyBAMDYztGb3C/LtHyu3rbnLftP2BgYDyEkV/3jvirL6XaBmNgYOzHuHdYNmpEYzAGBsaZjDzx3TXorxaRH5AYGBgY8Uguv6ucUpOOHAMDA6OaBG8tFr+ScDEwMB7FSJrY6HhWkVcdzGFgYJzJyFvH6pGL/Jm9TQUMDIwDGL9AQDf1Rru3EgAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?bc15bf0da9980d5bfcbacea37e3096c1"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Req Man | 需求管理学习和实践笔记</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="需求管理,产品经理,黑苹果">
+    <meta name="keywords" content="需求管理,产品经理,黑苹果">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Req Man">
+<meta property="og:url" content="https://peapon.github.io/page/3/index.html">
+<meta property="og:site_name" content="Req Man">
+<meta property="og:locale" content="zh-CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Req Man">
+    
+        <link rel="alternate" type="application/atom+xml" title="Req Man" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">peapon</h5>
+          <a href="mailto:peapon@qq.com" title="peapon@qq.com" class="mail">peapon@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/peapon" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.cnblogs.com/peapon/"  >
+                <i class="icon icon-lg icon-link"></i>
+                博客园
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Req Man</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header index-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Req Man</h1>
+        <h5 class="subtitle">
+            
+                需求管理学习和实践笔记
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+<div class="container body-wrap">
+
+    <ul class="post-list">
+    
+        <li class="post-list-item fade">
+            <article id="post-需求确认"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-01-09 06:58:27" datetime="2018-01-08T22:58:27.000Z"  itemprop="datePublished">2018-01-09</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/01/09/需求确认/">需求确认</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        为什么需要需求确认先从这幅图看起，这不是心血来潮弄出来的，这是一个研究给出的结论（Kelly，Sherief and Hops 1992），我只给出了10倍代价的图，这个研究给出的结论是在需求阶段修复错误往往只要30分钟，而在测试过程中修正错误往往需要5~17个小时。换句话说，就是在需求阶段修正错误是值得的，也是必须的。因此发现需求中的错误成了至关重要的活动，这些错误包括不符合用户的需要、没...
+    
+
+        <a href="/2018/01/09/需求确认/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/需求管理/">需求管理</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-使用原型"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-01-09 05:45:01" datetime="2018-01-08T21:45:01.000Z"  itemprop="datePublished">2018-01-09</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/01/09/使用原型/">使用原型</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        原型是一个强大的方法，他可以引入所有重要的客户关注点——《软件需求》第三版P264
+
+    
+
+        <a href="/2018/01/09/使用原型/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/需求管理/">需求管理</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-Java-程序破解思路"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-01-03 21:37:43" datetime="2018-01-03T13:37:43.000Z"  itemprop="datePublished">2018-01-03</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/01/03/Java-程序破解思路/">Java 程序破解思路</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        本文提供的方法仅供学习用，不对结果负责。
+总体思路
+定位授权或加密类
+分析加密/授权方法
+修改Jar包文件
+重新打包
+
+这里提供一种提供试用版软件的破解方法。假设程序需要输入试用License文件才能试用。具体的方法步骤如下。
+定位加密文件和类定位的方法是苦功夫，至少我是这么干的，打开你安装的程序的文件夹，找一找有点像的jar包名称，如active，license等，这个靠人品了，具体的软件...
+    
+
+        <a href="/2018/01/03/Java-程序破解思路/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IT-技术/">IT 技术</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-如何定义性能需求"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-01-02 16:24:46" datetime="2018-01-02T08:24:46.000Z"  itemprop="datePublished">2018-01-02</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/01/02/如何定义性能需求/">如何定义性能需求</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        本文来源于InfoQ，感谢原作者的贡献如何定义性能需求
+JVM监控解决方案提供商Plumbr的官方博客上发表了一篇题为《如何定义性能需求》的文章。文章指出，随着企业信息化程度的提高，业务人员对软件功能性需求的描述越来越好。但涉及到易用性、兼容性或性能等非功能性需求的时候，他们经常会不得要领。比如，他们可能会提出“它的运行速度要快”这样的性能需求。在更好的情况下，他们可能会提出下面这样的性能需...
+    
+
+        <a href="/2018/01/02/如何定义性能需求/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/需求管理/">需求管理</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-简单的逻辑学阅读体会"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-12-08 07:55:30" datetime="2017-12-07T23:55:30.000Z"  itemprop="datePublished">2017-12-08</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/12/08/简单的逻辑学阅读体会/">简单的逻辑学阅读体会</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        
+    
+
+        <a href="/2017/12/08/简单的逻辑学阅读体会/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-软件需求编写指南"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-12-06 05:56:57" datetime="2017-12-05T21:56:57.000Z"  itemprop="datePublished">2017-12-06</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/12/06/软件需求编写指南/">软件需求编写指南</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        软件需求规格的特性软件需求规格应该包含的范畴来源：IEEE830-1998(编写指南)
+软件需求规格应该包含的范畴
+
+ 功能性需求
+ 外部接口
+ 性能需求
+ 属性
+ 设计约束
+
+软件需求规格编写总体注意事项来源：IEEE830-1998(编写指南)章节 4.2
+
+ 应该定义所有的软件需求
+ 不应该定义设计实现的细节
+ 不应该对软件施加额外的限制，专注于软件需要做什么
+
+来源：IEEE83...
+    
+
+        <a href="/2017/12/06/软件需求编写指南/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/需求管理/">需求管理</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-MagicApp说明"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-12-06 05:41:00" datetime="2017-12-05T21:41:00.000Z"  itemprop="datePublished">2017-12-06</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/12/06/MagicApp说明/">MagicApp说明</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        MagicApp是日常处理的程序，协助进行日常工作处理
+批量重命名模块说明该模块是根据指定Excel中的指定三列，以某一列为条件查找第二列的文件名称，并在指定的文件夹中查找文件，文件夹中的文件名称格式为column1.colum2,找到文件后重命名为column3+column2。列可以在config.xml文件中设置：
+12345678&lt;config&gt;	&lt;Columns&...
+    
+
+        <a href="/2017/12/06/MagicApp说明/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IT-技术/">IT 技术</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-网络诊断三部曲"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-11-01 22:03:40" datetime="2017-11-01T14:03:40.000Z"  itemprop="datePublished">2017-11-01</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/11/01/网络诊断三部曲/">网络诊断三部曲</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        查信号强度网络现场勘察和延迟分析
+现场勘查，获取平面图；
+获取网络类型，确定是零漫游、AP+AP还是AC+AP，这两点是基础信息获取；
+在Windows命令行或终端中ping任意一台设备，延迟大于500ms时，表示网络基本不可用，小于200ms表示网络状况可以；
+如果网络中存在干扰，ping包的延时特点是时间长短不一，而且差异明显，如可能会出现10+ms，有的会达到几百ms
+ping命令pi...
+    
+
+        <a href="/2017/11/01/网络诊断三部曲/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IT-技术/">IT 技术</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-敏捷软件需求管理"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-10-23 10:29:39" datetime="2017-10-23T02:29:39.000Z"  itemprop="datePublished">2017-10-23</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/10/23/敏捷软件需求管理/">敏捷软件需求管理</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        严格的来讲，这个标题的说法并不是很严肃，这篇文章的目的不是建立一个敏捷软件需求管理的流程，而是去探索一种需求管理的实践，解决现在工作中遇到的困惑和困难。为了将问题解释的更清楚，我需要先从流程定义说起。
+流程定义上面这个图是一个典型的IPD（集成产品开发）流程图，从大的视角来看，这就是一个典型的瀑布模型，需要有前一个阶段的成果作为后一阶段的输入，后一阶段的工作才能开展，这样当然没有错，不过有时...
+    
+
+        <a href="/2017/10/23/敏捷软件需求管理/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/需求管理/">需求管理</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-使用GitHub-Pages创建博客和图片上传问题解决"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-10-22 20:44:11" datetime="2017-10-22T12:44:11.000Z"  itemprop="datePublished">2017-10-22</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/10/22/使用GitHub-Pages创建博客和图片上传问题解决/">使用GitHub Pages创建博客和图片上传问题解决</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        搭建博客博客的搭建过程完全参照小茗同学的博客园中的使用hexo+github搭建免费个人博客详细教程里边的详细介绍。请逐步跟文档进行操作。我只对一些要点做总结。
+    
+
+        <a href="/2017/10/22/使用GitHub-Pages创建博客和图片上传问题解决/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IT-技术/">IT 技术</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+    </ul>
+
+    
+<nav id="page-nav">
+    <div class="inner">
+    <a class="extend prev" rel="prev" href="/page/2/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">下一页</a>
+    </div>
+</nav>
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>peapon &copy; 2017 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://peapon.github.io/page/3/&title=Req Man&pic=https://peapon.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://peapon.github.io/page/3/&title=Req Man&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://peapon.github.io/page/3/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=Req Man&url=https://peapon.github.io/page/3/&via=https://peapon.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://peapon.github.io/page/3/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABu0lEQVR42u3aQW4DMQgF0Nz/0qnUbZvkA2M6lZ5XUdOx32SBMPB4xOv5vfK/z78dLVxc3DH3+Xb93Lr6bfWpVwZcXNx97vtA0zvs1X++//zBhouLezNuNQ3qhUJcXNz/xX11zCTpwcXFvTM3SVOqSUxS2Th4V8PFxR1wqwXTE58P1ndxcXGL3Gdx5TscOR0XF3eFm5QzksJHL4T1CiW4uLib3ISSPzvJuQp3NVxc3APcaht13ibJE6ZfzsLFxV3hzg+rDnX1rkAXTIXg4uJ26htR2EoOrv4QzXNxcXEPc/PLTzXRmTRZCx1aXFzcS7lVaD5aMSmq4uLi3oc72e6qHT7shouLu8Kdz0RNmjF5GwYXF3eTmxdA8yvN+8DUC1i4uLib3PxOkV91kteohjBcXNxN7okGSW/oKgp2uLi4i9zegFShVzNYuLi4f8XNV7VokpdFohfGxcVd4VYDSrUU0nv2svouLi7ugJsEoEmgqRZSP1yrcHFxF7nVOmt1eGs+2oWLi3tPbh6AeonOxYEMFxd3kVsNczkoSq1wcXEXub2hzAm9FxBxcXF3uL2CafIy1WZJNT3CxcU9wP0C47Q4v5/qepMAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

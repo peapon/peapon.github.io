@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?bc15bf0da9980d5bfcbacea37e3096c1"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Mac下驱动BCM20702A0 USB蓝牙 | Req Man | 需求管理学习和实践笔记</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="IT 技术">
+    <meta name="description" content="偶然搞了一个USB蓝牙，查到Mac下能识别，无法驱动，就去找了一下。方法很简单，就是把蓝牙的PID和VID加入到驱动里边去，具体方法和步骤如下：">
+<meta name="keywords" content="IT 技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mac下驱动BCM20702A0 USB蓝牙">
+<meta property="og:url" content="https://peapon.github.io/2017/10/22/Mac下驱动BCM20702A0 USB蓝牙/index.html">
+<meta property="og:site_name" content="Req Man">
+<meta property="og:description" content="偶然搞了一个USB蓝牙，查到Mac下能识别，无法驱动，就去找了一下。方法很简单，就是把蓝牙的PID和VID加入到驱动里边去，具体方法和步骤如下：">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://peapon.github.io/images/14991847725023.jpg">
+<meta property="og:updated_time" content="2020-04-15T16:06:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mac下驱动BCM20702A0 USB蓝牙">
+<meta name="twitter:description" content="偶然搞了一个USB蓝牙，查到Mac下能识别，无法驱动，就去找了一下。方法很简单，就是把蓝牙的PID和VID加入到驱动里边去，具体方法和步骤如下：">
+<meta name="twitter:image" content="https://peapon.github.io/images/14991847725023.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Req Man" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">peapon</h5>
+          <a href="mailto:peapon@qq.com" title="peapon@qq.com" class="mail">peapon@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/peapon" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.cnblogs.com/peapon/"  >
+                <i class="icon icon-lg icon-link"></i>
+                博客园
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Mac下驱动BCM20702A0 USB蓝牙</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Mac下驱动BCM20702A0 USB蓝牙</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-10-22T05:44:43.000Z" itemprop="datePublished" class="page-time">
+  2017-10-22
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-Mac下驱动BCM20702A0 USB蓝牙"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Mac下驱动BCM20702A0 USB蓝牙</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-10-22 13:44:43" datetime="2017-10-22T05:44:43.000Z"  itemprop="datePublished">2017-10-22</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>偶然搞了一个USB蓝牙，查到Mac下能识别，无法驱动，就去找了一下。方法很简单，就是把蓝牙的PID和VID加入到驱动里边去，具体方法和步骤如下：<br><a id="more"></a></p>
+<ol>
+<li>进入到/System/Libary/Extensions目录</li>
+<li>备份IOBluetoothFamily.kext</li>
+<li>在IOBluetoothFamily.kext右击，选择显示包内容</li>
+<li>进入Contents/Plugins</li>
+<li>右击BroadcomBluetoothHostControllerUSBTransport.kext，选择显示包内容</li>
+<li>进入Contents</li>
+<li>将Info.plist拖到桌面进行修改</li>
+<li>在下面的代码中把PID和VID做对应的修改即可</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;key&gt;PID 8684 0x21EC VID 2652 0xA5C&lt;/key&gt;</span><br><span class="line">		&lt;dict&gt;</span><br><span class="line">			&lt;key&gt;CFBundleIdentifier&lt;/key&gt;</span><br><span class="line">			&lt;string&gt;com.apple.iokit.BroadcomBluetoothHostControllerUSBTransport&lt;/string&gt;</span><br><span class="line">			&lt;key&gt;Dongles&lt;/key&gt;</span><br><span class="line">			&lt;dict&gt;</span><br><span class="line">				&lt;key&gt;GMYLE&lt;/key&gt;</span><br><span class="line">				&lt;string&gt;Micro Nano&lt;/string&gt;</span><br><span class="line">				&lt;key&gt;IOGear&lt;/key&gt;</span><br><span class="line">				&lt;string&gt;GBU-521&lt;/string&gt;</span><br><span class="line">				&lt;key&gt;Kinivo&lt;/key&gt;</span><br><span class="line">				&lt;string&gt;BTD-400&lt;/string&gt;</span><br><span class="line">				&lt;key&gt;MediaLink&lt;/key&gt;</span><br><span class="line">				&lt;string&gt;PANBT400 (4.0)&lt;/string&gt;</span><br><span class="line">				&lt;key&gt;MediaLink 2&lt;/key&gt;</span><br><span class="line">				&lt;string&gt;MUA-BA3&lt;/string&gt;</span><br><span class="line">				&lt;key&gt;Plugable&lt;/key&gt;</span><br><span class="line">				&lt;string&gt;4.0 LE&lt;/string&gt;</span><br><span class="line">				&lt;key&gt;Targus&lt;/key&gt;</span><br><span class="line">				&lt;string&gt;ACB10US 4.0&lt;/string&gt;</span><br><span class="line">				&lt;key&gt;UtechSmart&lt;/key&gt;</span><br><span class="line">				&lt;string&gt;4.0 (BCM20702)&lt;/string&gt;</span><br><span class="line">			&lt;/dict&gt;</span><br><span class="line">			&lt;key&gt;IOClass&lt;/key&gt;</span><br><span class="line">			&lt;string&gt;BroadcomBluetoothHostControllerUSBTransport&lt;/string&gt;</span><br><span class="line">			&lt;key&gt;IOProviderClass&lt;/key&gt;</span><br><span class="line">			&lt;string&gt;IOUSBHostDevice&lt;/string&gt;</span><br><span class="line">			&lt;key&gt;idProduct&lt;/key&gt;</span><br><span class="line">			&lt;integer&gt;8684&lt;/integer&gt;</span><br><span class="line">			&lt;key&gt;idVendor&lt;/key&gt;</span><br><span class="line">			&lt;integer&gt;2652&lt;/integer&gt;</span><br><span class="line">		&lt;/dict&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/14991847725023.jpg" alt></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2020-04-15T16:06:35.000Z" itemprop="dateUpdated">2020-04-16 00:06:35</time>
+</span><br>
+
+
+        
+    </div>
+    <footer>
+        <a href="https://peapon.github.io">
+            <img src="/img/avatar.png" alt="peapon">
+            peapon
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IT-技术/">IT 技术</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://peapon.github.io/2017/10/22/Mac下驱动BCM20702A0 USB蓝牙/&title=《Mac下驱动BCM20702A0 USB蓝牙》 — Req Man&pic=https://peapon.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://peapon.github.io/2017/10/22/Mac下驱动BCM20702A0 USB蓝牙/&title=《Mac下驱动BCM20702A0 USB蓝牙》 — Req Man&source=偶然搞了一个USB蓝牙，查到Mac下能识别，无法驱动，就去找了一下。方法很简单，就是把蓝牙的PID和VID加入到驱动里边去，具体方法和步骤如下：" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://peapon.github.io/2017/10/22/Mac下驱动BCM20702A0 USB蓝牙/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Mac下驱动BCM20702A0 USB蓝牙》 — Req Man&url=https://peapon.github.io/2017/10/22/Mac下驱动BCM20702A0 USB蓝牙/&via=https://peapon.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://peapon.github.io/2017/10/22/Mac下驱动BCM20702A0 USB蓝牙/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/10/22/使用GitHub-Pages创建博客和图片上传问题解决/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">使用GitHub Pages创建博客和图片上传问题解决</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/10/22/【转载】怎样进行需求评审/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">【转载】怎样进行需求评审</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>peapon &copy; 2017 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://peapon.github.io/2017/10/22/Mac下驱动BCM20702A0 USB蓝牙/&title=《Mac下驱动BCM20702A0 USB蓝牙》 — Req Man&pic=https://peapon.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://peapon.github.io/2017/10/22/Mac下驱动BCM20702A0 USB蓝牙/&title=《Mac下驱动BCM20702A0 USB蓝牙》 — Req Man&source=偶然搞了一个USB蓝牙，查到Mac下能识别，无法驱动，就去找了一下。方法很简单，就是把蓝牙的PID和VID加入到驱动里边去，具体方法和步骤如下：" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://peapon.github.io/2017/10/22/Mac下驱动BCM20702A0 USB蓝牙/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Mac下驱动BCM20702A0 USB蓝牙》 — Req Man&url=https://peapon.github.io/2017/10/22/Mac下驱动BCM20702A0 USB蓝牙/&via=https://peapon.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://peapon.github.io/2017/10/22/Mac下驱动BCM20702A0 USB蓝牙/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACt0lEQVR42u3a227DQAgFwP7/T7dSXytvD7AkrTR+inKxdzaSwcDHR3x8fh9P7/x8/fRp/s7PT8/fGR14eHh4raU/HfkFzmeoMvL1nK+Ih4eHt8c7B4PeBc7hIblKEop+seDh4eG9lXdeRLIFPRgeHh7ef+flaXSU8rYKInh4eHh/gZcnx0mBNQkJefHiRbUWPDw8vJg3uSm/6/Vifw8PDw9v0FXPi7O9dlevQFxYLR4eHt4CL0lbbzX485GsXhgoPDHg4eHhDXiT8uuE1DvDE/vx+3h4eHgLvF7RoVewyBc9/yYeHh7eHi8pIkwKE72yxXkrm3EPDw8P7xJvoynVCye3EvrF3h0eHh5ecJPNd+hWS6wXch5/i4eHh7fAS2DVAsQk7e6l1KMBLDw8PLwib96amm/cqOp8PgMeHh7eAq93c++VJ/L3o0VXR6/w8PDwLvF6DbBq+SAJFfkZyrUWPDw8vAVezsiT43wpedus+mfg4eHhbfCqHfbCqNPgyMe2orQeDw8Pb42X3+J7F+6Fk2pq/hgY8PDw8C7x8of/vFSRNLR6YwHVdB8PDw9vj5enwr1bfz4WUH3dHLrCw8PDG/NyRnWzkpt4tZHWrFLj4eHhXeJNGkt5+jtq/8cJNx4eHt4redVH/fl4Vh4kqhuNh4eHt83LW03VYsE5WU/O3Bu9wsPDw3sl7xZjUszNf5ucBw8PD2+DV33Ur7amJoXavIgcrRwPDw/vEu+zePS2Iy/UVkNIYegKDw8P7xKvt6zeGFZO6o1kNWF4eHh4LV4SDOZF3skG5f8SHh4e3it58/S3OlLQS+WbM2V4eHh4b+JVQ0i1DZYPChTOg4eHh/cHeL0Et7dZ1cGsC4EBDw8PL+ZVixHRqVstsepI1i/NOTw8PLwF3t0GWLUQfN6mpA026uzh4eHh1Xhfim+IvdDwr+0AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

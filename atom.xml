@@ -41,6 +41,32 @@
   </entry>
   
   <entry>
+    <title>Axure 幻灯片轮播实现--简略版</title>
+    <link href="https://peapon.github.io/2020/04/12/Axure-%E5%B9%BB%E7%81%AF%E7%89%87%E8%BD%AE%E6%92%AD%E5%AE%9E%E7%8E%B0-%E7%AE%80%E7%95%A5%E7%89%88/"/>
+    <id>https://peapon.github.io/2020/04/12/Axure-幻灯片轮播实现-简略版/</id>
+    <published>2020-04-12T10:15:24.000Z</published>
+    <updated>2020-04-19T14:19:32.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ol><li>在页面中添加”动态面板”</li><li>为“动态面板”添加“状态”</li><li>每一个“状态”中添加一个“图像”区</li><li>在“图像”区中载入本地图片</li><li>为页面添加一个“页面载入”的交互</li></ol><h2 id="详细描述和截图"><a href="#详细描述和截图" class="headerlink" title="详细描述和截图"></a>详细描述和截图</h2><h3 id="添加动态面板"><a href="#添加动态面板" class="headerlink" title="添加动态面板"></a>添加动态面板</h3><p>添加动态面板，添加动态面板后双击动态面板进入到面板编辑模式<br><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/images/15866867889164.jpg" alt title>                </div>                <div class="image-caption"></div>            </figure></p><h3 id="添加状态"><a href="#添加状态" class="headerlink" title="添加状态"></a>添加状态</h3><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/images/15866868829802.jpg" alt title>                </div>                <div class="image-caption"></div>            </figure><h3 id="添加图像"><a href="#添加图像" class="headerlink" title="添加图像"></a>添加图像</h3><p>图片添加这里分两步</p><ul><li>添加图像控件</li><li>导入图片，见后边两张图</li></ul><p><img src="/images/15866870674953.jpg" alt><img src="/images/15866871219188.jpg" alt></p><h3 id="为页面新建交互"><a href="#为页面新建交互" class="headerlink" title="为页面新建交互"></a>为页面新建交互</h3><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/images/15866873180604.jpg" alt title>                </div>                <div class="image-caption"></div>            </figure><p>页面新建交互的属性是：</p><ul><li>交互事件：页面加载</li><li>交互目标：设置面板状态</li><li>面板状态切换：下一项</li><li>进入和退出动画：向左移动（可以自行根据需要设置）</li><li>动画时间：3000ms</li><li>循环时间：3000ms</li></ul><p>如此一来，就实现了Axure 来做一个幻灯片轮播的效果了。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;步骤&quot;&gt;&lt;a href=&quot;#步骤&quot; class=&quot;headerlink&quot; title=&quot;步骤&quot;&gt;&lt;/a&gt;步骤&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;在页面中添加”动态面板”&lt;/li&gt;
+&lt;li&gt;为“动态面板”添加“状态”&lt;/li&gt;
+&lt;li&gt;每一个“状态”中添加一个“图像”区&lt;/
+      
+    
+    </summary>
+    
+    
+      <category term="需求管理" scheme="https://peapon.github.io/tags/%E9%9C%80%E6%B1%82%E7%AE%A1%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
     <title>浅谈用户思维</title>
     <link href="https://peapon.github.io/2019/05/29/%E6%B5%85%E8%B0%88%E7%94%A8%E6%88%B7%E6%80%9D%E7%BB%B4/"/>
     <id>https://peapon.github.io/2019/05/29/浅谈用户思维/</id>
@@ -443,29 +469,6 @@
       
         &lt;p&gt;这是一篇知乎问答，原贴在&lt;a href=&quot;https://www.zhihu.com/question/19853605&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;这里&lt;/a&gt;。我觉得蛮有用，转过来以备后用。&lt;/p&gt;
 &lt;p&gt;作者：知乎用户&lt;br&gt;链接：
-      
-    
-    </summary>
-    
-    
-      <category term="需求管理" scheme="https://peapon.github.io/tags/%E9%9C%80%E6%B1%82%E7%AE%A1%E7%90%86/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>需求确认</title>
-    <link href="https://peapon.github.io/2018/01/09/%E9%9C%80%E6%B1%82%E7%A1%AE%E8%AE%A4/"/>
-    <id>https://peapon.github.io/2018/01/09/需求确认/</id>
-    <published>2018-01-08T22:58:27.000Z</published>
-    <updated>2020-04-15T16:06:35.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="为什么需要需求确认"><a href="#为什么需要需求确认" class="headerlink" title="为什么需要需求确认"></a>为什么需要需求确认</h1><p><img src="/images/15154525829579.jpg" alt><br>先从这幅图看起，这不是心血来潮弄出来的，这是一个研究给出的结论（Kelly，Sherief and Hops 1992），我只给出了10倍代价的图，这个研究给出的结论是在需求阶段修复错误往往只要30分钟，而在测试过程中修正错误往往需要5~17个小时。<br>换句话说，就是在需求阶段修正错误是值得的，也是必须的。因此发现需求中的错误成了至关重要的活动，这些错误包括不符合用户的需要、没有正确的描述、需求冲突等等，我们把这个过程叫<strong>需求确认。</strong><br>我们要讨论的内容就是需求确认的目的，何时开始需求确认，怎么做。</p><h1 id="需求确认目的"><a href="#需求确认目的" class="headerlink" title="需求确认目的"></a>需求确认目的</h1><p>这个问题很难回答，也很好回答，我们上面已经说过了，需求阶段修正错误可以付出很小的代价，也就是说能省钱。<br>我更喜欢《软件需求》中关于这个目的的描述：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1. 软件需求能够准确地描述了预期的系统能力和特征，并且这些能力和特征能够满足不同干系人的需要。</span><br><span class="line">2. 从业务需求、系统需求、业务规则及其他来源中正确产线需求。</span><br><span class="line">3. 需求是完整的、可行的、可验证的。</span><br><span class="line">4. 所有需求都是必要的，并且整改需求集合满足业务目标。</span><br><span class="line">5. 所有需求彼此是一致的。</span><br><span class="line">6. 需求能够为后续的设计和构建提供充分的依据。</span><br></pre></td></tr></table></figure><h1 id="何时开始"><a href="#何时开始" class="headerlink" title="何时开始"></a>何时开始</h1><p>如果你问我什么时候开始做需求确认，我的答案是越早越好，当然，前提是你完成了需求捕获和初步的需求分析。</p><h1 id="需求确认的过程"><a href="#需求确认的过程" class="headerlink" title="需求确认的过程"></a>需求确认的过程</h1><p>首先我们要抛弃需求评审即是需求确认全部的思想，且需求确认也不是需求工作的终点。需求确认过程的活动应该是多个部分组成的，需求评审是必须的活动；原型可以根据需求的成熟度来决定是否采用原型，当然，也可以把原型理解为需求过程中的一种工具，可以随时使用；而需求测试是最有挑战的活动，很难去推动测试部门建立一种概念测试的观念，在没有实物前提下对需求测试对于很多测试工程师来讲，也是一个挑战。</p><h2 id="需求评审"><a href="#需求评审" class="headerlink" title="需求评审"></a>需求评审</h2><p>需求评审是一个强大的工具，可以帮助需求作者及开发团队发现需求不明确或者不可验证、定义不清晰导致无法设计等问题，那么，需求规格或需求文档的作者这个时候就要摆正心态，想想评审的单词是“Review”，就是让别人给你看一遍的意思。<br>评审的形式也多种多样，我们主要考虑非正式评审的需求走查和正式评审的需求审查</p><h3 id="需求走查"><a href="#需求走查" class="headerlink" title="需求走查"></a>需求走查</h3><p>Walkthrough，这个单词的字面意思是演练、预演、过一遍的意思，所以这个活动的重心也就出来了，那么如何有效的开展走查是一个重要的问题。</p><p><a href="http://blog.csdn.net/zhangmike/article/details/51619937" target="_blank" rel="noopener">这是别人的见解</a></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">系统性的走查目的是为了评估一个软件产品。走查可能也会有让培训软件产品受众的目的。走查的作用还有交流技术、交流不同风格变化。 走查不仅可以发现异常，也可以指出不足之处（例如，软件产品的效率和可读性问题，设计或代码的模块化问题，或无法验证的规格）。参与走查有4个角色，分别是走查组长、记录者、作者、走查成员，走查至少需要2人。任何走查组成员的行政上级都不能参加走查。走查的最主要活动是作者或走查组长详细的展现所评审产物的每个部分，走查组识别并提出发现的异常和问题。走查的标准最少输出物总计有9项。走查不要求产物已经全部完成，可以按需高频开展。 </span><br><span class="line">在本五维需求评审框架中，走查属于有预审的双人即时或者会议形式、技术方面的定期或高频的同级需求文档评审。双人走查是标准允许的最少人数。双人走查与会议形式走查其实存在较大的差异：双人走查可以使用一台普通显示器，利用普通能够坐下两人的工作位置即可，这样就能够高频按需开展，会议形式往往需要会议室，而会议室在多数组织是稀缺资源，如果所有项目团队都开展需求和代码会议走查，那么每二周一次的会议室预订都未必能够保证，所以难以按需开展。代码走查是常听到的词汇，但是需求走查在中文世界很少提到，而在敏捷软件开发中已经显示了其有效性。</span><br></pre></td></tr></table></figure><h3 id="需求审查"><a href="#需求审查" class="headerlink" title="需求审查"></a>需求审查</h3><p>需求审查的单词是“inspection”，这个词也是有两部分，spection是检查的意思，加入前缀in，那么就是深入检查的意思，也就是审查啦。</p><h2 id="需求原型"><a href="#需求原型" class="headerlink" title="需求原型"></a>需求原型</h2><h2 id="需求测试"><a href="#需求测试" class="headerlink" title="需求测试"></a>需求测试</h2><h1 id="需求确认中的常见误区"><a href="#需求确认中的常见误区" class="headerlink" title="需求确认中的常见误区"></a>需求确认中的常见误区</h1><p><strong>需求验证形式化：</strong>许多时候是为了过流程，否则会阻塞开发，因此走一个正儿八经的流程，但实际上并没有达到效果；<br><strong>不重视：</strong>随便找个用户代表签字，责任为先，影响很不好；<br><strong>开会跑偏题：</strong>时常会开成批评会、吵架会、翻书会、语法纠错会。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;为什么需要需求确认&quot;&gt;&lt;a href=&quot;#为什么需要需求确认&quot; class=&quot;headerlink&quot; title=&quot;为什么需要需求确认&quot;&gt;&lt;/a&gt;为什么需要需求确认&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;/images/15154525829579.jpg&quot; alt&gt;
       
     
     </summary>

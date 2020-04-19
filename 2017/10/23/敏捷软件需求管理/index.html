@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?bc15bf0da9980d5bfcbacea37e3096c1"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>敏捷软件需求管理 | Req Man | 需求管理学习和实践笔记</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="需求管理">
+    <meta name="description" content="严格的来讲，这个标题的说法并不是很严肃，这篇文章的目的不是建立一个敏捷软件需求管理的流程，而是去探索一种需求管理的实践，解决现在工作中遇到的困惑和困难。为了将问题解释的更清楚，我需要先从流程定义说起。 流程定义上面这个图是一个典型的IPD（集成产品开发）流程图，从大的视角来看，这就是一个典型的瀑布模型，需要有前一个阶段的成果作为后一阶段的输入，后一阶段的工作才能开展，这样当然没有错，不过有时候会显">
+<meta name="keywords" content="需求管理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="敏捷软件需求管理">
+<meta property="og:url" content="https://peapon.github.io/2017/10/23/敏捷软件需求管理/index.html">
+<meta property="og:site_name" content="Req Man">
+<meta property="og:description" content="严格的来讲，这个标题的说法并不是很严肃，这篇文章的目的不是建立一个敏捷软件需求管理的流程，而是去探索一种需求管理的实践，解决现在工作中遇到的困惑和困难。为了将问题解释的更清楚，我需要先从流程定义说起。 流程定义上面这个图是一个典型的IPD（集成产品开发）流程图，从大的视角来看，这就是一个典型的瀑布模型，需要有前一个阶段的成果作为后一阶段的输入，后一阶段的工作才能开展，这样当然没有错，不过有时候会显">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://peapon.github.io/images/15087675480546.jpg">
+<meta property="og:image" content="https://peapon.github.io/images/15087696829401.jpg">
+<meta property="og:updated_time" content="2020-04-15T16:06:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="敏捷软件需求管理">
+<meta name="twitter:description" content="严格的来讲，这个标题的说法并不是很严肃，这篇文章的目的不是建立一个敏捷软件需求管理的流程，而是去探索一种需求管理的实践，解决现在工作中遇到的困惑和困难。为了将问题解释的更清楚，我需要先从流程定义说起。 流程定义上面这个图是一个典型的IPD（集成产品开发）流程图，从大的视角来看，这就是一个典型的瀑布模型，需要有前一个阶段的成果作为后一阶段的输入，后一阶段的工作才能开展，这样当然没有错，不过有时候会显">
+<meta name="twitter:image" content="https://peapon.github.io/images/15087675480546.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Req Man" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">peapon</h5>
+          <a href="mailto:peapon@qq.com" title="peapon@qq.com" class="mail">peapon@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/peapon" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.cnblogs.com/peapon/"  >
+                <i class="icon icon-lg icon-link"></i>
+                博客园
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">敏捷软件需求管理</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">敏捷软件需求管理</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-10-23T02:29:39.000Z" itemprop="datePublished" class="page-time">
+  2017-10-23
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#流程定义"><span class="post-toc-number">1.</span> <span class="post-toc-text">流程定义</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#需求层次"><span class="post-toc-number">2.</span> <span class="post-toc-text">需求层次</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#软件需求为什么重要"><span class="post-toc-number">3.</span> <span class="post-toc-text">软件需求为什么重要</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#产品的类型"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">产品的类型</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#软件开发的工作量的评估"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">软件开发的工作量的评估</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#典型软件生命周期模型简介"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">典型软件生命周期模型简介</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#定义我们自己的流程"><span class="post-toc-number">4.</span> <span class="post-toc-text">定义我们自己的流程</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#流程框架和概述"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">流程框架和概述</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#流程操作指引"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">流程操作指引</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#产品需求定义"><span class="post-toc-number">4.2.1.</span> <span class="post-toc-text">产品需求定义</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#软件需求基线的定义"><span class="post-toc-number">4.2.2.</span> <span class="post-toc-text">软件需求基线的定义</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#软件需求基线评审"><span class="post-toc-number">4.2.3.</span> <span class="post-toc-text">软件需求基线评审</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#提交TR阶段软件需求"><span class="post-toc-number">4.2.4.</span> <span class="post-toc-text">提交TR阶段软件需求</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#启动模块需求细化工作"><span class="post-toc-number">4.2.5.</span> <span class="post-toc-text">启动模块需求细化工作</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#安排轮次开发的需求内容"><span class="post-toc-number">4.2.6.</span> <span class="post-toc-text">安排轮次开发的需求内容</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#需求实现"><span class="post-toc-number">4.2.7.</span> <span class="post-toc-text">需求实现</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#需求Demo和验收"><span class="post-toc-number">4.2.8.</span> <span class="post-toc-text">需求Demo和验收</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#多语言字符串清单并评审"><span class="post-toc-number">4.2.9.</span> <span class="post-toc-text">多语言字符串清单并评审</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#总结"><span class="post-toc-number">5.</span> <span class="post-toc-text">总结</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-敏捷软件需求管理"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">敏捷软件需求管理</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-10-23 10:29:39" datetime="2017-10-23T02:29:39.000Z"  itemprop="datePublished">2017-10-23</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>严格的来讲，这个标题的说法并不是很严肃，这篇文章的目的不是建立一个敏捷软件需求管理的流程，而是去探索一种需求管理的实践，解决现在工作中遇到的困惑和困难。为了将问题解释的更清楚，我需要先从流程定义说起。</p>
+<h1 id="流程定义"><a href="#流程定义" class="headerlink" title="流程定义"></a>流程定义</h1><p><img src="/images/15087675480546.jpg" alt><br>上面这个图是一个典型的IPD（集成产品开发）流程图，从大的视角来看，这就是一个典型的瀑布模型，需要有前一个阶段的成果作为后一阶段的输入，后一阶段的工作才能开展，这样当然没有错，不过有时候会显得低效和无法满足项目的需求。<br>同样，我也拿出我们研发层的各阶段的定义，进而进一步探讨。<br><img src="/images/15087696829401.jpg" alt></p>
+<p>从图和表中点后可以看到，需求分析集中在项目的前期的阶段，理所当然，需求就要作为后续工作的输入，因此需求很重要，这都知道，所以在图中也设置了需求的技术评审，但需求的技术评审并不能保证全部的质量。</p>
+<p><strong>总结来说，需求很重要，但需求又大多数集中于前端部分，不好管控，怎么保证需求高质量的分析，发现和实现都是比较困难的事情。</strong></p>
+<h1 id="需求层次"><a href="#需求层次" class="headerlink" title="需求层次"></a>需求层次</h1><p>产品开发规程中，对需求层次的定义是：</p>
+<div id="flowchart-0" class="flow-chart"></div>
+
+<ol>
+<li>用户需求是顶层需求，直接反应用户的需要，要能反映出临床用户的需要，作为临床确认的依据；</li>
+<li>产品需求是对用户需求的细化，除了要考虑用户的临床需要，临床场景，还需要考虑公司的业务目标，产品的竞争等因素，主要用于定义产品是什么样子；</li>
+<li>子系统需求是对产品需求的细化，考虑技术因素，用什么样的技术等来满足产品需求，以达到产品需求的定义。</li>
+</ol>
+<h1 id="软件需求为什么重要"><a href="#软件需求为什么重要" class="headerlink" title="软件需求为什么重要"></a>软件需求为什么重要</h1><p>我们公司大部分产品都是软件密集型产品。我们先来看看软件密集型产品的定义。</p>
+<p>软件密集型定义：</p>
+<blockquote>
+<p>所谓的系统就是客户要的东西，软件通常只是客户要的东西中其中的一部分，而不是全部，除了软件还有其他东西，比如客户要一个数控机床，除了软件之外还有机械部分，还有硬件部分。 软件密集型系统，应该是指系统中软件是主要部分，在开发软件的成本占系统成本的大部分。</p>
+</blockquote>
+<h2 id="产品的类型"><a href="#产品的类型" class="headerlink" title="产品的类型"></a>产品的类型</h2><p>从定义来看，毫无疑问，拿监护仪来作为分析对象的话，我们的产品肯定是软件密集型产品无疑。因此无论是在产品的使用和产品的开发上，软件都占了很重要的一部分。</p>
+<h2 id="软件开发的工作量的评估"><a href="#软件开发的工作量的评估" class="headerlink" title="软件开发的工作量的评估"></a>软件开发的工作量的评估</h2><p>软件行业中各工种所占比重或权重，有几种估算方法。</p>
+<p>常规估计法：</p>
+<blockquote>
+<p>软件各个生命阶段时间大致分布：<br>计划阶段占2%~3%；<br>需求分析占10%~25%;<br>软件设计占20%~25%;<br>编码占15%~20%；<br>测试和调试占30%~40%</p>
+</blockquote>
+<p>差别估计法：</p>
+<blockquote>
+<p>差别估计法：总比重是53<br>计划和需求：6<br>产品设计：10<br>详细设计：12<br>编码单元设计：16<br>集成和系统测试：9</p>
+</blockquote>
+<p>IBM估算模型：</p>
+<blockquote>
+<p>IBM估算模型：（总比重10）<br>软件计划：1<br>需求分析：1.5<br>设计：3.0<br>编码：1.0<br>测试：3.5</p>
+</blockquote>
+<p>虽然这是对软件行业中需求的评估，但我们开发的系统是软件密集型系统，所以有一定的代表性。典型的项目中，需求的工作量需要占到10%~25%，就算我们采信IBM的估算模型，需求分析工作量也需要占到15%，但目前我们是不够的，当然，也不能说我们现在的投入不够15%我们就不去把需求做好，而是想办法做到尽可能的好。</p>
+<p>可以看出，一个正经的软件产品开发流程，理性的去评估软件需求分析的工作量是很重要的，不仅影响到需求分析的产出，也影响到软件设计的输入。</p>
+<h2 id="典型软件生命周期模型简介"><a href="#典型软件生命周期模型简介" class="headerlink" title="典型软件生命周期模型简介"></a>典型软件生命周期模型简介</h2><p>传统的<a href="http://wiki.mbalib.com/wiki/瀑布模型" target="_blank" rel="noopener">瀑布模型</a>讲究的是每一个阶段性的工作成果，并把上一阶段的成果作为下一阶段的输入，这种模型的典型问题就是上一阶段的延迟和延期会导致下一阶段的延迟和延期，环环相扣，导致项目最终延期。</p>
+<p>近年比较流行的迭代模型，摒弃了传统的需求分析，设计，编码，测试的流程，而是将整个生命周期变成若干个冲刺（Sprint）阶段，而每一个阶段都是由以上若干或者全部传统的流程组成，在每一个阶段中，都会包含下面四个阶段：初始阶段，细化阶段，构建阶段，交付阶段。</p>
+<ol>
+<li>在初始阶段中，确认本次冲刺的范围，边界，系统选择的架构，计划，以及所需要的资源等信息。</li>
+<li>在细化阶段中，对问题进行建域，创建开发案例，创建模板以及准备工具等。</li>
+<li>在构建阶段的主要任务就是完成构建的开发并且进行测试，将完成的构建集成为产品，并且测试所有的功能（CI）。</li>
+<li>在交付阶段，主要是完成本次冲刺，将软件产品交付给相关的干系人。</li>
+</ol>
+<blockquote>
+<p>五种生命周期模型请参考 <a href="http://blog.csdn.net/ziwen00/article/details/40583107" target="_blank" rel="noopener">似水流年的博客</a></p>
+</blockquote>
+<h1 id="定义我们自己的流程"><a href="#定义我们自己的流程" class="headerlink" title="定义我们自己的流程"></a>定义我们自己的流程</h1><h2 id="流程框架和概述"><a href="#流程框架和概述" class="headerlink" title="流程框架和概述"></a>流程框架和概述</h2><p>现阶段来说，影响我们软件需求交付质量的是把一件庞大的工作就是作为一件庞大的工作来做，而且要求一次性交付。这种一锤子买卖是影响到需求分析和设计人员交付的质量的，同时也影响需求评审人员对于需求的理解。要让一个评审人员在几个小时或几天内消化一个需要花一年以上或者几年的产品，有一定的困难，这种情况下，很难保证后续有人会改变主意，进而导致发生已经确定的需求的变更，应该说是在所难免的。</p>
+<p>那么我们定义自己的流程，需要吸收迭代模型把大事“化小”（划小）的思维，将一个规模特别大的事情，划分成若干件规模可控的事情来进行。也就是把软件需求的工作打散，放到开发阶段去做去完成，这样来保证项目最后产品的交付时间。当然，打散并不意味这我们前期就不需要做需求分析了，我们先看看流程图。</p>
+<div id="flowchart-1" class="flow-chart"></div>
+
+<h2 id="流程操作指引"><a href="#流程操作指引" class="headerlink" title="流程操作指引"></a>流程操作指引</h2><p>根据产品开发规程的定义，各种角色一定要在各个阶段完成各阶段的内容和输出，应该理解，这样的定义从框架性的流程上来讲是没有问题的，是合理的，否则就不好把控了，同时这也符合医疗仪器开发本身流程的严肃性，满足FDA guidance中提出的Define，Document，Do的3D思维。</p>
+<h3 id="产品需求定义"><a href="#产品需求定义" class="headerlink" title="产品需求定义"></a>产品需求定义</h3><p>产品需求的输出要在项目前期进行输出，应该是毫无疑问的，产品需求决定这项目的范围，因此，让项目团队明白自己要开发一个什么样的产品，大的方向是什么，这是需求工程师的职责。尤其是我们开发的大多数产品都不仅仅只涉及到软件，还涉及到硬件、结构、工业设计、算法、附件等领域，因此让大家能够有一个工作的基础很重要。</p>
+<p>产品需求定义中，需要定义出产品的定义、产品的配置、产品能够提供的服务、产品的功能性需求、产品的重要非功能性需求、产品的安全及环境要求、产品的整机外观等要求、产品需要使用到的附件要求、产品升级、保养维护等要求以及产品需要满足的法规和政策的要求，详细内容可以参考《XXX产品需求模板》的定义。</p>
+<h3 id="软件需求基线的定义"><a href="#软件需求基线的定义" class="headerlink" title="软件需求基线的定义"></a>软件需求基线的定义</h3><blockquote>
+<p>基线(Baseline)，基线是 软件文档或 源码(或其它产出物)的一个稳定版本,它是进一步开发的基础.所以,当基线形成后,项目负责SCM的人需要通知相关人员基线已经形成,并且哪儿可以找到这基线了的版本.这个过程可被认为内部的发布.至于对外的正式发布,更是应当从基线了的版本中发布. </p>
+</blockquote>
+<p>软件需求基线是一个基础稳定版本的需求，我们这里提出的基线定义并不完完全全是跟严格意义的基线的定义一样，实际上我们这里定义的基线是软件项目范围的基线。对于这个版本的软件需求，要求是覆盖产品需求中应该分解到软件需求的所有内容，可以粗，不可漏，可以指导软件系统进行概要和系统设计，能够满足TR1阶段的要求。<br>在表达方式上，可以将整体按照模块划分为多个文档（推荐），而这个基线文档的多个章节，对多个模块的主要功能做抽象，可以用用例图或功能树或列表的表达方式，可以参考我另外一篇文章<a href="https://peapon.github.io/2017/10/22/需求建模和表述的技术/">需求建模和表达的技术</a>。</p>
+<h3 id="软件需求基线评审"><a href="#软件需求基线评审" class="headerlink" title="软件需求基线评审"></a>软件需求基线评审</h3><p>在评审上，这篇需求应该是一个高层次的定义，应组织以下评审人员应该涵盖产品经理、产品线经理、需求技术经理、软件技术经理、项目经理、软件系统工程师、开发代表、测试代表、市场代表进行会议评审，在这个评审上，大家对软件系统的范围达成一致。在责任上，除了需求工程师的主体责任外，需求技术经理、软件技术经理及系统工程师应该对需求所表达的内容负责重要的审核责任，识别出技术风险和需求镀金。</p>
+<h3 id="提交TR阶段软件需求"><a href="#提交TR阶段软件需求" class="headerlink" title="提交TR阶段软件需求"></a>提交TR阶段软件需求</h3><p>同时，该文档应该进行PLM的线上评审，并按照《评审审查表》的定义选取相应的角色进行线上的评审，并完成TR1的软件需求的受控和归档。</p>
+<h3 id="启动模块需求细化工作"><a href="#启动模块需求细化工作" class="headerlink" title="启动模块需求细化工作"></a>启动模块需求细化工作</h3><p>这实际上是第三阶段工作的总称，模块需求细化的前提是划分好了模块，我们在前一阶段需求基线化的时候，我们是需要做好这件事情的。当然，<strong>这件事情应由需求工程师来主导，软件系统工程师参与，立足于对系统功能的分解来完成，而不是系统的设计的模块化，因此这里讲的是需求模块化</strong>。如果说这个阶段发现需求模块化的程度是不够的，我们需要再进行这个工作，否则，后续的工作开展会比较困难。</p>
+<h3 id="安排轮次开发的需求内容"><a href="#安排轮次开发的需求内容" class="headerlink" title="安排轮次开发的需求内容"></a>安排轮次开发的需求内容</h3><p>在每一轮需求的实现，也就是敏捷模型里边说的冲刺的时候，所开发的需求的规模都应该是可控和可开发的。也就说，在每一轮开发中，需求应该被定义到可开发的程度，并被开发人员理解，能够被转化为设计语言，建议的执行方式是：</p>
+<div id="flowchart-2" class="flow-chart"></div>
+
+<p>这个阶段的工作实际上是整个软件开发的关键，在这里，这个团队明确了本轮次的开发任务和冲刺目标，所以这个阶段对软件项目经理的要求是很高的，对各个岗位的工程师要求是团队<strong>要对完成目标达成共识</strong>。职责如下:</p>
+<ol>
+<li>需求工程师：保证本轮次要开发的需求已经得到细化，并提交PLM同行技术评审，在轮次开的的第一周组织软件工程师进行需求的解读和分解，将需求传达下去；</li>
+<li>软件工程师：在轮次开发的第一周参与需求的解读和分解，积极理解需求。设想需求设计和需求实现的方案，如果存在需求问题，及时发现；</li>
+<li>测试工程师：在轮次开发的第一周参与需求的解读和分解，积极理解需求。设想测试的方案和测试用例的编写，如果存在需求问题，及时发现；</li>
+<li>系统工程师：理解需求，考虑系统设计方案</li>
+<li>软件项目经理：确保轮次的第一周的开发资源参与需求解读；</li>
+<li>软件技术经理：审核软件需求，从技术的角度评估需求的可实现性等问题；</li>
+<li>需求技术经理：审核软件需求，审核需求的完整性和合理性。</li>
+</ol>
+<p>形式方面的建议，建议主要的需求工程师、软件工程师、测试工程师闭关进行需求的解读和分解，确保需求得到恰当的理解。</p>
+<h3 id="需求实现"><a href="#需求实现" class="headerlink" title="需求实现"></a>需求实现</h3><p>该阶段的任务由软件项目经理主导，该阶段中，需求工程师要保持与开发团队沟通，及时跟进落实情况，及时发现问题和进行修正。在该阶段中，需求工程师要进行下一阶段所需开发的需求进行细化，及时排除可能出现的障碍。</p>
+<h3 id="需求Demo和验收"><a href="#需求Demo和验收" class="headerlink" title="需求Demo和验收"></a>需求Demo和验收</h3><p>需求开发完成后，及时得到需求的确认和反馈，对于开发团队来说，是非常重要的，在这一阶段，也就是开发工作完成后，软件项目经理应该组织需求工程师、产品经理、整机项目经理、产品线经理、市场代表、需求技术经理、软件技术经理机型需求Demo，演示开发完成情况。这一阶段同时需求工程师要完成需求完整状态的检查，输出该轮次的需求状态表。</p>
+<h3 id="多语言字符串清单并评审"><a href="#多语言字符串清单并评审" class="headerlink" title="多语言字符串清单并评审"></a>多语言字符串清单并评审</h3><p>在完成Demo后，软件项目经理需要将本轮次新增的字符串导出为指定格式的多语言字符串表交付需求工程师，需求工程师完成中文解释的添加，并提交PLM进行同行技术评审，字符串处理方法请参考《监护多语言字符串管理规范》。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>应当理解，把需求能够落实到产品中，也是一项非常重要的工作，所以需求工程师在这里要主动积极的把需求传达下去，因此在需求传达的路径上，需求工程师要负主要责任。<br>同样的，开发团队应该理解，我们一致的目标是把需求实现，达到产品的要求，以实现临床应用和企业的目标，开发团队在这里应该摒弃专业组的界限，为共同的目标服务。</p>
+<p><strong>软件需求是一个沟通的过程，我们尽量前期阐述明确，减少后期的沟通工作和变更。</strong></p>
+<p><script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">op=>operation: 用户需求
+op1=>operation: 产品需求
+op2=>operation: 软件（子系统）需求
+
+op(right)->op1(right)->op2</textarea><textarea id="flowchart-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script><textarea id="flowchart-1-code" style="display: none">st=>start: 开始
+e=>end: 结束
+op=>operation: 1. 产品需求定义
+op1=>operation: 2. 软件需求基线定义
+op2=>operation: 2.1 软件需求基线评审
+cond=>condition: 2.2 基线范围完整？
+op3=>operation: 2.3 提交TR1阶段软件需求
+op4=>operation: 3. 启动需求细化工作
+cond1=>condition: 3.1 软件需求是否模块化
+op5=>operation: 3.2 安排轮次开发内的需求内容
+op6=>operation: 3.3 模块级需求细化
+op7=>operation: 3.4 模块级需求评审
+op8=>operation: 4. 需求实现
+op9=>operation: 5. 需求Demo和验收
+op10=>operation: 5.1 输出需求状态清单
+op11=>operation: 6. 输出字符串清单并评审
+
+st->op
+op->op1
+op1->op2(right)->cond(no,left)->op1
+cond(yes,right)->op3
+op3->op4->cond1(no)->op4
+cond1(yes)->op5
+op5->op6
+op6->op7
+op7->op8
+op8->op9
+op9->op10
+op10->op11
+op11->e</textarea><textarea id="flowchart-1-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-1-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-1-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-1", options);</script><textarea id="flowchart-2-code" style="display: none">op0=>operation: 需求定义（上一轮次计划本轮次开发的需求）
+op1=>operation: 召开轮次启动会（明确本轮次开发的内容，确定下一轮次开发内容）
+op2=>operation: 需求分解和解读
+
+op0->op1->op2</textarea><textarea id="flowchart-2-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-2-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-2-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-2", options);</script></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2020-04-15T16:06:35.000Z" itemprop="dateUpdated">2020-04-16 00:06:35</time>
+</span><br>
+
+
+        
+    </div>
+    <footer>
+        <a href="https://peapon.github.io">
+            <img src="/img/avatar.png" alt="peapon">
+            peapon
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/需求管理/">需求管理</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://peapon.github.io/2017/10/23/敏捷软件需求管理/&title=《敏捷软件需求管理》 — Req Man&pic=https://peapon.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://peapon.github.io/2017/10/23/敏捷软件需求管理/&title=《敏捷软件需求管理》 — Req Man&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://peapon.github.io/2017/10/23/敏捷软件需求管理/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《敏捷软件需求管理》 — Req Man&url=https://peapon.github.io/2017/10/23/敏捷软件需求管理/&via=https://peapon.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://peapon.github.io/2017/10/23/敏捷软件需求管理/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/11/01/网络诊断三部曲/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">网络诊断三部曲</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/10/22/使用GitHub-Pages创建博客和图片上传问题解决/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">使用GitHub Pages创建博客和图片上传问题解决</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>peapon &copy; 2017 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://peapon.github.io/2017/10/23/敏捷软件需求管理/&title=《敏捷软件需求管理》 — Req Man&pic=https://peapon.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://peapon.github.io/2017/10/23/敏捷软件需求管理/&title=《敏捷软件需求管理》 — Req Man&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://peapon.github.io/2017/10/23/敏捷软件需求管理/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《敏捷软件需求管理》 — Req Man&url=https://peapon.github.io/2017/10/23/敏捷软件需求管理/&via=https://peapon.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://peapon.github.io/2017/10/23/敏捷软件需求管理/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLElEQVR42u3aOY7DMBAEQP//09p0AUNCN0cORBUjw9bBcjCYg59PvI5/6/v75N7JW25bGBgYj2Ucl+t7K2eY69d/P+Hs+rMrz/aGgYHxHsb8cS0+4SV3YWBgYLSpYRumz/4mDAwMjDXGdfC9t2DGwMDAWCtik3Vd3LZF8k9qcQwMjAcyJkHw159/Mt/AwMB4FOMYrLyUXSuDi51gYGBszWiDYDIMSJLCNn5GYwMMDIxNGXmwa0PnBJznfnXMxsDAeCDj+oY2FF5f07bP1g5hYGBgvIExTxDXSPnBsmIwgIGBsREjH2FOUrc8lLcJKAYGxnsY8y22B8jmzbjodBsGBsbDGZPNjQ6bBr8WIRsDA+MFjLUhZf7rWpGcl7UYGBh7M9oXT1K9/K68uMXAwHgb4whWnt7loTNp7S0es8DAwNiIsdbkahtnaylmMajAwMDYlNG+fpIO5puu/0oMDIytGW3YbQ+T5c+8q8GHgYGxH6Ntga018fMydW20iYGBsTdj7bhD22Jrx5n5CBMDA+MNjLVw2Q4A2tQwP/wR1eIYGBgPZ0wSxPo1cRNtsd2GgYGxKeMoV5LktYc22qMVUajFwMDYiNGmbpNhZHtl/hkDA+MNjDzIti2zPHTm44SiiMXAwNiOkWxurZV/b3vu9HoMDAyM8thEO3Joi2cMDAyM+WCgDdM3tNswMDBewFgbTObNsl+02Ea1OAYGxqMY7bGtyRggTzrbMI2BgbEp4w8lUYSaFoj+gQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
