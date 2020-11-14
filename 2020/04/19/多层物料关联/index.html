@@ -1,99 +1,205 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head><meta name="generator" content="Hexo 3.9.0">
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    
+
+    
+
+    
 
 
 
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>多层物料关联递归关联处理 | Req Man | 需求管理学习和实践笔记</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Python">
+    <meta name="description" content="临时要处理一堆BOM相关的问题，但是一个个核对效率太慢，所以打算用Python写个小脚本解决这个问题。 问题背景某机型的全配BOM的层级是一个多级递进和回归的表格，表格示意如下    层级 料号 类型 名称     0 xxx xxxx xxx   1 xx xxx xxx     层级间的递进关系如图所示 要解决的问题和要达到的目的为了便于在物料处理过程中能够快速的反查底层物料影响哪一些模块，因">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多层物料关联递归关联处理">
+<meta property="og:url" content="https://peapon.github.io/2020/04/19/多层物料关联/index.html">
+<meta property="og:site_name" content="Req Man">
+<meta property="og:description" content="临时要处理一堆BOM相关的问题，但是一个个核对效率太慢，所以打算用Python写个小脚本解决这个问题。 问题背景某机型的全配BOM的层级是一个多级递进和回归的表格，表格示意如下    层级 料号 类型 名称     0 xxx xxxx xxx   1 xx xxx xxx     层级间的递进关系如图所示 要解决的问题和要达到的目的为了便于在物料处理过程中能够快速的反查底层物料影响哪一些模块，因">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://peapon.github.io/images/15872938817513.jpg">
+<meta property="og:image" content="https://peapon.github.io/images/%E5%9B%BE%E5%83%8F.jpeg">
+<meta property="og:updated_time" content="2020-11-14T15:24:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="多层物料关联递归关联处理">
+<meta name="twitter:description" content="临时要处理一堆BOM相关的问题，但是一个个核对效率太慢，所以打算用Python写个小脚本解决这个问题。 问题背景某机型的全配BOM的层级是一个多级递进和回归的表格，表格示意如下    层级 料号 类型 名称     0 xxx xxxx xxx   1 xx xxx xxx     层级间的递进关系如图所示 要解决的问题和要达到的目的为了便于在物料处理过程中能够快速的反查底层物料影响哪一些模块，因">
+<meta name="twitter:image" content="https://peapon.github.io/images/15872938817513.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Req Man" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
 
-    <meta name="keywords" content="Python,">
+    <!-- custom head -->
+    
 
-
-
-    <meta name="description" content="临时要处理一堆BOM相关的问题，但是一个个核对效率太慢，所以打算用Python写个小脚本解决这个问题。
-问题背景某机型的全配BOM的层级是一个多级递进和回归的表格，表格示意如下
-
-
-
-层级
-料号
-类型
-名称
-
-
-
-
-0
-xxx
-xxxx
-xxx
-
-
-1
-xx
-xxx
-xxx
-
-
-
-
-层级间的递...">
-
-
-<meta name="Robots" content="all">
-
-
-    <title>Req Man | 多层物料关联递归关联处理</title>
-
-
-<link rel="icon" href="/images/favicon.ico">
-<link rel="stylesheet" href="/css/font-awesome.min.css">
-<link rel="stylesheet" href="/css/atom-one-dark.css">
-<link rel="stylesheet" href="/css/style.css">
-<script src="/js/highlight.min.js"></script>
 </head>
+
 <body>
-    <div class="main-container">
-        <header class="header">
-    <div class="global-width">
-        <nav class="nav-box">
-            
-                <a class="nav-item" href="/">首页</a>
-            
-                <a class="nav-item" href="/resume">简历</a>
-            
-                <a class="nav-item" href="/mood" target="_blank">心情</a>
-            
-                <a class="nav-item" href="/amusement/tetris" target="_blank">娱乐</a>
-            
-                <a class="nav-item" href="/about">不榖</a>
-            
-        </nav>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">peapon</h5>
+          <a href="mailto:634206017@qq.com" title="634206017@qq.com" class="mail">634206017@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/yscoder" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/ysweb" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">多层物料关联递归关联处理</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
     </div>
 </header>
+<header class="content-header post-header">
 
-        <section class="content global-width">
-            <div class="main">
-                <article class="box post">
-    <div class="post-title align-center detail-title">多层物料关联递归关联处理</div>
-    <div class="post-meta align-center">
-        
-        <i class="fa fa-calendar"></i> <time>2020-04-19</time>
-        <span class="dotted">|</span>
-        <i class="fa fa-user"></i> 
-        
+    <div class="container fade-scale">
+        <h1 class="title">多层物料关联递归关联处理</h1>
+        <h5 class="subtitle">
             
+                <time datetime="2020-04-19T10:57:19.000Z" itemprop="datePublished" class="page-time">
+  2020-04-19
+</time>
+
+
             
-                <i class="fa fa-tags"></i>
-                <a class="tag-link" href="/tags/Python/">Python</a>
-            
-        
+        </h5>
     </div>
 
-    <div class="post-content">
-        <p>临时要处理一堆BOM相关的问题，但是一个个核对效率太慢，所以打算用Python写个小脚本解决这个问题。</p>
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#问题背景"><span class="post-toc-number">1.</span> <span class="post-toc-text">问题背景</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#要解决的问题和要达到的目的"><span class="post-toc-number">2.</span> <span class="post-toc-text">要解决的问题和要达到的目的</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#用到的工具"><span class="post-toc-number">3.</span> <span class="post-toc-text">用到的工具</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#处理过程"><span class="post-toc-number">4.</span> <span class="post-toc-text">处理过程</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">5.</span> <span class="post-toc-text">总结</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#处理的示例代码"><span class="post-toc-number">6.</span> <span class="post-toc-text">处理的示例代码</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-多层物料关联"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">多层物料关联递归关联处理</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-04-19 18:57:19" datetime="2020-04-19T10:57:19.000Z"  itemprop="datePublished">2020-04-19</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>临时要处理一堆BOM相关的问题，但是一个个核对效率太慢，所以打算用Python写个小脚本解决这个问题。</p>
 <h2 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h2><p>某机型的全配BOM的层级是一个多级递进和回归的表格，表格示意如下</p>
 <table>
 <thead>
@@ -149,99 +255,299 @@ xxx
 </ol>
 <figure class="highlight plain"><figcaption><span>xlrd</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">import xlwt</span><br><span class="line"></span><br><span class="line">dict = &#123;0:&quot;&quot;&#125;</span><br><span class="line"></span><br><span class="line">pre_level=0</span><br><span class="line">pre_id=&quot;&quot;</span><br><span class="line">cur_level=0</span><br><span class="line">cur_id=&quot;&quot;</span><br><span class="line"></span><br><span class="line">parent_id=&quot;&quot;</span><br><span class="line">data = xlrd.open_workbook(&quot;/Volumes/Doc/code/test.xls&quot;)</span><br><span class="line"></span><br><span class="line">table = data.sheets()[0]          #通过索引顺序获取</span><br><span class="line">print(table.nrows)</span><br><span class="line"></span><br><span class="line">print(&quot;-------------current--------------&quot;)</span><br><span class="line">for i in range(0,table.nrows):</span><br><span class="line">    rvalue = table.row_values(i)</span><br><span class="line">    cur_level = rvalue[0]</span><br><span class="line">    cur_id = rvalue[1]</span><br><span class="line">    print(&quot;curleve:%d, curid:%s&quot;%(cur_level,cur_id))</span><br><span class="line">    if cur_level &gt; pre_level:</span><br><span class="line">        dict[cur_level]=pre_id</span><br><span class="line">    parent_id = dict[cur_level]</span><br><span class="line">    pre_level = cur_level</span><br><span class="line">    pre_id = cur_id</span><br><span class="line">    print(&quot;Current Level:%d, Current ID:%s, Parent ID:%s&quot;%(cur_level,cur_id,parent_id))</span><br><span class="line">print(&quot;-------------current--------------&quot;)</span><br><span class="line"></span><br><span class="line">print(&quot;Dict&quot;)</span><br><span class="line">for key in dict:</span><br><span class="line">    print(&quot;key:%d, value:%s&quot; %(key,dict[key]))</span><br></pre></td></tr></table></figure>
 
-    </div>
-</article>
-            </div>
-            <div class="aside">
+        </div>
+
+        <blockquote class="post-copyright">
     
-        <div class="box widget">
-    <div class="introduction">
-        <p><img src="/images/avatar.jpg" alt="head-sculpture"></p>
-        <p class="name">
-            博落回
-        </p>
-        <p class="slogan">流连矣 忘景幻云催 峦栈醺醺说旧梦 重山迟迟映霞辉 向晚共邀归 —— 忆江南</p>
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2020-11-14T15:24:28.000Z" itemprop="dateUpdated">2020-11-14 23:24:28</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2020/04/19/多层物料关联/" target="_blank" rel="external">https://peapon.github.io/2020/04/19/多层物料关联/</a>
+        
     </div>
+    
+    <footer>
+        <a href="https://peapon.github.io">
+            <img src="/img/avatar.jpg" alt="peapon">
+            peapon
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
 </div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
     
-        
-<div class="box widget">
-    <div class="title">最新</div>
-    <ul class="item-box">
-        
-            
-                <li><a href="/2020/04/19/多层物料关联/">多层物料关联递归关联处理</a></li>
-            
-        
-            
-                <li><a href="/2020/04/12/Axure-幻灯片轮播实现-简略版/">Axure 幻灯片轮播实现--简略版</a></li>
-            
-        
-            
-                <li><a href="/2019/05/29/浅谈用户思维/">浅谈用户思维</a></li>
-            
-        
-            
-                <li><a href="/2019/05/27/7Edit-安装和使用/">7Edit 安装和使用</a></li>
-            
-        
-            
-                <li><a href="/2019/05/26/为什么要创建EMR-信息化-MedCon/">为什么要创建EMR 信息化(MedCon)</a></li>
-            
-        
-            
-                <li><a href="/2019/05/11/读《情商管理课——优秀的人如何掌控情绪》/">读《情商管理课——优秀的人如何掌控情绪》</a></li>
-            
-        
-            
-                <li><a href="/2019/05/02/一个假产品经理对产品经理的理解/">一个假产品经理对产品经理的理解</a></li>
-            
-        
-            
-                <li><a href="/2019/04/21/MWeb外部模式的图片文件夹处理/">MWeb外部模式的图片文件夹处理</a></li>
-            
-        
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://peapon.github.io/2020/04/19/多层物料关联/&title=《多层物料关联递归关联处理》 — Req Man&pic=https://peapon.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://peapon.github.io/2020/04/19/多层物料关联/&title=《多层物料关联递归关联处理》 — Req Man&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://peapon.github.io/2020/04/19/多层物料关联/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《多层物料关联递归关联处理》 — Req Man&url=https://peapon.github.io/2020/04/19/多层物料关联/&via=https://peapon.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://peapon.github.io/2020/04/19/多层物料关联/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
     </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
 </div>
 
-    
-        
-    
-        
-  <div class="box widget">
-    <div class="title">归档</div>
-    <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">2020-04</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">2019-05</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">2019-04</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">2019-03</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">2018-07</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">2018-02</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">2018-01</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">2017-12</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">2017-11</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">2017-10</a><span class="archive-list-count">11</span></li></ul>
-  </div>
 
-    
-        
-    <div class="box widget">
-        <div class="title">标签</div>
-        <div class="item-box cloud-label">
-            <a href="/tags/IT-技术/" style="font-size: 17.5px;">IT 技术</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/Rasp/" style="font-size: 12.5px;">Rasp</a> <a href="/tags/医疗信息化/" style="font-size: 10px;">医疗信息化</a> <a href="/tags/帮助/" style="font-size: 10px;">帮助</a> <a href="/tags/杂谈/" style="font-size: 10px;">杂谈</a> <a href="/tags/自我管理/" style="font-size: 15px;">自我管理</a> <a href="/tags/需求管理/" style="font-size: 20px;">需求管理</a>
+
         </div>
     </div>
 
     
-</div>
-        </section>
-        <footer class="footer">
-    <div class="global-width footer-box">
-        <div class="copyright">
-            <span>Copyright &copy; 2019</span>
-            <span class="dotted">|</span>
-            <span>Powered by <a href="https://hexo.io/">Hexo</a></span>
-            <span class="dotted">|</span>
-            <span>Theme by <a href="javascript:">Loren</a></span>
-            <span class="dotted">|</span>
-            <span><a href="http://www.beian.miit.gov.cn">浙ICP备18016660号-1</a></span>
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2020/04/12/Axure-幻灯片轮播实现-简略版/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Axure 幻灯片轮播实现--简略版</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
         </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>peapon &copy; 2015 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
     </div>
 </footer>
-    </div>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://peapon.github.io/2020/04/19/多层物料关联/&title=《多层物料关联递归关联处理》 — Req Man&pic=https://peapon.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://peapon.github.io/2020/04/19/多层物料关联/&title=《多层物料关联递归关联处理》 — Req Man&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://peapon.github.io/2020/04/19/多层物料关联/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《多层物料关联递归关联处理》 — Req Man&url=https://peapon.github.io/2020/04/19/多层物料关联/&via=https://peapon.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://peapon.github.io/2020/04/19/多层物料关联/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACIUlEQVR42u3aQW7DMAwFUd//0i7QbRN1PqkEMDVaBY5r+SkAS5G6Ljzu37H+dj3W9/+9fn1iyJAh47EMMj2ZbH0Pf+l396yXRoYMGScw1kF2DeMBmjyHzCJDhgwZ6eN4qvdP0JQhQ4aMrwRcklamCyFDhgwZfBNbm7KfGm7ei8uQIeOBjLQx8M3PH+xvyJAh4yGMOxxk+jRl5OH17VvJkCFjNIMkZ+vrabK4i3rxl5MhQ8YIBid1img86eTLKkOGjBMYnVBba1LygMtnlCFDxgmM2jaST8/Dbq2ZKkOGjNmMWsJXSwH5NjVtecqQIWM2Iz360D+cwRNNsqF90d+QIUPGUEaawPEXTV+rWMiTIUPGkYz0mAU/r7WrwSBDhozTGLwczzG1o2PF58iQIeMwBv/jGqyzBKjcJkOGjKGMfrsxbT2S9gDZ3L7IcGXIkDGOkU5JJv5EcS1ol8qQIWMcY2/I400CHkDRdRkyZIxmpAcjSEmONwz4dfR/Q4YMGUMZPDhuC4thqzL+HWTIkDGUkQbH4pGIsGwXYGTIkDGaUdtkpmW4dK5iQ0KGDBlDGXc4Oo3JXYFVhgwZpzH44AWy2nGN+NCqDBkyDmOkQXZXoS1NH4stTBkyZAxipAfF0pJcMdLzJZAhQ4aMxlazH2rRMsmQIUNG457aNjgO/TJkyDiAkZb4easgDdPFJZMhQ8ZoRn8DmbYtyREKvlgyZMgYzfgBzd5gvs318tkAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
 
 <script>
-    hljs.initHighlightingOnLoad();
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
 </script>
+
+
+
 </body>
 </html>

@@ -1,70 +1,195 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head><meta name="generator" content="Hexo 3.9.0">
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    
+
+    
+
+    
 
 
 
-
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Req Man | 需求管理学习和实践笔记</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
     <meta name="keywords" content="需求管理,产品经理,黑苹果">
+    <meta name="keywords" content="需求管理,产品经理,黑苹果">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Req Man">
+<meta property="og:url" content="https://peapon.github.io/index.html">
+<meta property="og:site_name" content="Req Man">
+<meta property="og:locale" content="zh-CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Req Man">
+    
+        <link rel="alternate" type="application/atom+xml" title="Req Man" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
 
+    <!-- custom head -->
+    
 
-
-    <meta name="description" content>
-
-
-<meta name="Robots" content="all">
-
-
-    <title>Req Man</title>
-
-
-<link rel="icon" href="/images/favicon.ico">
-<link rel="stylesheet" href="/css/font-awesome.min.css">
-<link rel="stylesheet" href="/css/atom-one-dark.css">
-<link rel="stylesheet" href="/css/style.css">
-<script src="/js/highlight.min.js"></script>
 </head>
+
 <body>
-    <div class="main-container">
-        <header class="header">
-    <div class="global-width">
-        <nav class="nav-box">
-            
-                <a class="nav-item" href="/">首页</a>
-            
-                <a class="nav-item" href="/resume">简历</a>
-            
-                <a class="nav-item" href="/mood" target="_blank">心情</a>
-            
-                <a class="nav-item" href="/amusement/tetris" target="_blank">娱乐</a>
-            
-                <a class="nav-item" href="/about">不榖</a>
-            
-        </nav>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">peapon</h5>
+          <a href="mailto:634206017@qq.com" title="634206017@qq.com" class="mail">634206017@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect active">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/yscoder" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/ysweb" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Req Man</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
     </div>
 </header>
+<header class="content-header index-header">
 
-        <section class="content global-width">
-            <div class="main">
-                
+    <div class="container fade-scale">
+        <h1 class="title">Req Man</h1>
+        <h5 class="subtitle">
+            
+                需求管理学习和实践笔记
+            
+        </h5>
+    </div>
+
     
-        <article class="box post post-item">
-            <div class="post-title"><a href="/2020/04/19/多层物料关联/">多层物料关联递归关联处理</a></div>
-            <div class="post-meta">
-                
-                <i class="fa fa-calendar"></i> <time>2020-04-19</time>
-                <span class="dotted">|</span>
-                <i class="fa fa-user"></i> 
-            </div>
 
-            <div class="post-excerpt">
-                <a href="/2020/04/19/多层物料关联/">
-                    <p>
-                        
-                            临时要处理一堆BOM相关的问题，但是一个个核对效率太慢，所以打算用Python写个小脚本解决这个问题。
+
+</header>
+
+<div class="container body-wrap">
+
+    <ul class="post-list">
+    
+        <li class="post-list-item fade">
+            <article id="post-多层物料关联"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2020-04-19 18:57:19" datetime="2020-04-19T10:57:19.000Z"  itemprop="datePublished">2020-04-19</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2020/04/19/多层物料关联/">多层物料关联递归关联处理</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        临时要处理一堆BOM相关的问题，但是一个个核对效率太慢，所以打算用Python写个小脚本解决这个问题。
 问题背景某机型的全配BOM的层级是一个多级递进和回归的表格，表格示意如下
 
 
@@ -92,66 +217,52 @@ xxx
 
 
 层级间的递进关系如图所示
-要解决的问题和要达到的目的为了便于在物料处理过程中能够快速的反查底层物料影响哪一些模块，因此打算把数据导入到Access数据库，并用Parent ID的关系把他们串起来，便于反查。
-因此就想简单的用Python写两个脚本来实现这个功能，其中比较难处理的就是前面说的这部分的处理。
-因此对处理过程做一个记录，本文只对物料多层级关联处理这一部分。
-用到的工具
-Python 3.7
-xlrd – 用来读取Excel数据
-Visual Studio Code – Python IDE
-
-处理过程这个问题的处理有两部分：
-
-正向读取数据的后的物料之间的关联，这个比较简单，只需要记住上一层及的物料的料号作为父亲料号即可；
-回溯时候的父亲料号处理：
-
-从低层级物料回溯到高层级物料的处理，要使用高层级物料已经记录的父亲节点料号；
-从回溯后的高层级物料分解是，要使用临近高层级的物料作为父亲物料
-
-因此这里是处理的重点。
-总结要处理这个问题，主要要用到的知识点是：
-
-Python 对Excel的处理，这里主要用到了读取的操作，比较简单，可以执行搜索；
-Python的字典，由于我没有用递归算法，递归在这里也不是很实用，所以我用到了字典来处理，字典就是‘键-值’对；
-对于已经出现过的层级，记录在字典中，当搜索进行到下一层级时，取上一级作为父亲节点；
-当回溯时，从字典中取出已经存在的父亲节点的料号，即可完成处理。
-
-处理的示例代码
-
-xlrd1234567891011121314151617181920212223242526272829303132import xlwtdict = &#123;0:&quot;&quot;&#125;pre_level=0pre_id=&quot;&quot;cur_level=0cur_id=&quot;&quot;parent_id=&quot;&quot;data = xlrd.open_workbook(&quot;/Volumes/Doc/code/test.xls&quot;)table = data.sheets()[0]          #通过索引顺序获取print(table.nrows)print(&quot;-------------current--------------&quot;)for i in range(0,table.nrows):    rvalue = table.row_values(i)    cur_level = rvalue[0]    cur_id = rvalue[1]    print(&quot;curleve:%d, curid:%s&quot;%(cur_level,cur_id))    if cur_level &gt; pre_level:        dict[cur_level]=pre_id    parent_id = dict[cur_level]    pre_level = cur_level    pre_id = cur_id    print(&quot;Current Level:%d, Current ID:%s, Parent ID:%s&quot;%(cur_level,cur_id,parent_id))print(&quot;-------------current--------------&quot;)print(&quot;Dict&quot;)for key in dict:    print(&quot;key:%d, value:%s&quot; %(key,dict[key]))
-
-                        
-                    </p>
-                </a>
-            </div>
-
-            
-                <div class="post-footer">
-                    
-                    
-                        <i class="fa fa-tags"></i>
-                        <a class="tag-link" href="/tags/Python/">Python</a>
-                    
-                </div>
-            
-        </article>
+要解决的问题和要达到的目的为了便于在物料处理过程中能够快速的反查底层物料影响哪一些模...
     
 
+        <a href="/2020/04/19/多层物料关联/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
     
-        <article class="box post post-item">
-            <div class="post-title"><a href="/2020/04/12/Axure-幻灯片轮播实现-简略版/">Axure 幻灯片轮播实现--简略版</a></div>
-            <div class="post-meta">
-                
-                <i class="fa fa-calendar"></i> <time>2020-04-12</time>
-                <span class="dotted">|</span>
-                <i class="fa fa-user"></i> 
-            </div>
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
 
-            <div class="post-excerpt">
-                <a href="/2020/04/12/Axure-幻灯片轮播实现-简略版/">
-                    <p>
-                        
-                            步骤
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-Axure-幻灯片轮播实现-简略版"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2020-04-12 18:15:24" datetime="2020-04-12T10:15:24.000Z"  itemprop="datePublished">2020-04-12</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2020/04/12/Axure-幻灯片轮播实现-简略版/">Axure 幻灯片轮播实现--简略版</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        步骤
 在页面中添加”动态面板”
 为“动态面板”添加“状态”
 每一个“状态”中添加一个“图像”区
@@ -170,499 +281,543 @@ xlrd1234567891011121314151617181920212223242526272829303132import xlwtdict = &#1
 页面新建交互的属性是：
 
 交互事件：页面加载
-交互目标：设置面板状态
-面板状态切换：下一项
-进入和退出动画：向左移动（可以自行根据需要设置）
-动画时间：3000ms
-循环时间：3000ms
-
-如此一来，就实现了Axure 来做一个幻灯片轮播的效果了。
-
-                        
-                    </p>
-                </a>
-            </div>
-
-            
-                <div class="post-footer">
-                    
-                    
-                        <i class="fa fa-tags"></i>
-                        <a class="tag-link" href="/tags/需求管理/">需求管理</a>
-                    
-                </div>
-            
-        </article>
+交互...
     
 
+        <a href="/2020/04/12/Axure-幻灯片轮播实现-简略版/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
     
-        <article class="box post post-item">
-            <div class="post-title"><a href="/2019/05/29/浅谈用户思维/">浅谈用户思维</a></div>
-            <div class="post-meta">
-                
-                <i class="fa fa-calendar"></i> <time>2019-05-29</time>
-                <span class="dotted">|</span>
-                <i class="fa fa-user"></i> 
-            </div>
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/需求管理/">需求管理</a></li></ul>
 
-            <div class="post-excerpt">
-                <a href="/2019/05/29/浅谈用户思维/">
-                    <p>
-                        
-                            最近几个月，iM3产品团队一直扑在了包括在中国、土耳其、西班牙、泰国等不同地域、不同医院、不同客户需求的10来个项目上，虽然项目各不相同，但他们都有一个共同的特点——就是都在用iM3为临床客户创造价值、简化工作、提高效率。
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-浅谈用户思维"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2019-05-29 07:14:47" datetime="2019-05-28T23:14:47.000Z"  itemprop="datePublished">2019-05-29</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2019/05/29/浅谈用户思维/">浅谈用户思维</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        最近几个月，iM3产品团队一直扑在了包括在中国、土耳其、西班牙、泰国等不同地域、不同医院、不同客户需求的10来个项目上，虽然项目各不相同，但他们都有一个共同的特点——就是都在用iM3为临床客户创造价值、简化工作、提高效率。
 “这就是有价值的创新。”在厦门某三甲医院护理部主任试用了iM3之后如是评价，这是一个来自于终端客户对iM3中所包含的用户思维的肯定。
-什么是用户思维我想先从4月底的产品经理交流会上的一个案例开始来探讨什么是用户思维。
-请大家思考这样一个问题：你购买iPhone的原因是什么？
-现场有两个答案：
-为什么需要用户思维如何才能拥有用户思维虽然到现在我还不能说iM3 取得了全面的胜利，但用户思维已经取得了全面的胜利。
-
-                        
-                    </p>
-                </a>
-            </div>
-
-            
-                <div class="post-footer">
-                    
-                    
-                        <i class="fa fa-tags"></i>
-                        <a class="tag-link" href="/tags/需求管理/">需求管理</a>
-                    
-                </div>
-            
-        </article>
+什么是用户思维我想先从4月底的产品经...
     
 
+        <a href="/2019/05/29/浅谈用户思维/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
     
-        <article class="box post post-item">
-            <div class="post-title"><a href="/2019/05/27/7Edit-安装和使用/">7Edit 安装和使用</a></div>
-            <div class="post-meta">
-                
-                <i class="fa fa-calendar"></i> <time>2019-05-27</time>
-                <span class="dotted">|</span>
-                <i class="fa fa-user"></i> 
-            </div>
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/需求管理/">需求管理</a></li></ul>
 
-            <div class="post-excerpt">
-                <a href="/2019/05/27/7Edit-安装和使用/">
-                    <p>
-                        
-                            
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-7Edit-安装和使用"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2019-05-27 00:18:06" datetime="2019-05-26T16:18:06.000Z"  itemprop="datePublished">2019-05-27</time>
+
+        
 
 
+    </div>
 
-                        
-                    </p>
-                </a>
-            </div>
-
-            
-        </article>
     
 
-    
-        <article class="box post post-item">
-            <div class="post-title"><a href="/2019/05/26/为什么要创建EMR-信息化-MedCon/">为什么要创建EMR 信息化(MedCon)</a></div>
-            <div class="post-meta">
-                
-                <i class="fa fa-calendar"></i> <time>2019-05-26</time>
-                <span class="dotted">|</span>
-                <i class="fa fa-user"></i> 
-            </div>
 
-            <div class="post-excerpt">
-                <a href="/2019/05/26/为什么要创建EMR-信息化-MedCon/">
-                    <p>
-                        
-                            起源背景我本人是在医疗器械企业的研发部门工作的，从事研发和产品相关的工作近10年，我的经历可以大致分为下面几个阶段：
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2019/05/27/7Edit-安装和使用/">7Edit 安装和使用</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        
+
+
+
+    
+
+        <a href="/2019/05/27/7Edit-安装和使用/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-为什么要创建EMR-信息化-MedCon"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2019-05-26 19:46:46" datetime="2019-05-26T11:46:46.000Z"  itemprop="datePublished">2019-05-26</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2019/05/26/为什么要创建EMR-信息化-MedCon/">为什么要创建EMR 信息化(MedCon)</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        起源背景我本人是在医疗器械企业的研发部门工作的，从事研发和产品相关的工作近10年，我的经历可以大致分为下面几个阶段：
 
 软件开发，软件工程师，负责基于Windows平台的软件的研发；
 项目管理，软件工程师&amp;软件项目经理，人少则仕，项目经理跑了，就要去做项目管理的工作；
 需求管理，需求管理与产品稍微挂钩，做一个简单的尝试。
 
-我这些年的工作，多多少少都涉及到一个共同的话题——医疗信息化，也许这正好就是这几年的势头。当然，我在所服务的企业内部也经历了信息化发展的几个阶段：
-
-发端，由当时我的上级编写的一个简单HL7程序，而我去实施的首个案例；
-发展，在实施了几个案例后，我们发现我们的方案的缺陷，我带头调研了北美市场的EMR状况及IHE等进展，并提出开发网关的设想并得到实施；
-战略提升，截止到我们规划的一款产品上市时，公司已经把公司产品的信息化和设备的互操作性提升为公司战略。
-
-为什么EMR 信息化既然我所服务的企业都已经把信息化上升为企业战略了，那为什么现在才创建这个EMR 信息化呢，原因很简单，我们并没有一个完全成熟的解决方案。我目睹了公司信息化产品的发展，了解其中的艰难，知道其中的弯路，而且还要帮助提升产品的信息化程度，所以，希望借用一些公开平台作为载体，记录学习和实施过程中的一些要点，以帮助后续需要用到这些信息的人。我所披露的都是公开和公有的信息，我相信业界一定有科学家一样的大神存在，但我还是想系统的归纳，作为后续其他人查找信息的入口。
-目标EMR 信息化的目标，是为了在中国创建一个更好的解读国内外信息化标准的技术交流平台。
-内容EMR信息化初期规划的内容包含以下几部分：
-
-Mirth Connect的使用和解析；
-HL7简要解析；
-中国医院信息互联互通标准解析；
-HIMSS初步解析；
-ATSM解析；
-IEC 11073标准的解析。
-
-对于医疗信息化标准的解析，国内的厂商多数是处于封闭的发展状态，而且很多时候也没有精力去做这一块，所以国内真正要找一块信息化相关的内容，难度还是不小的，我希望能够通过我的努力，稍微改善一下这样的状况。这一系列的事情，我会根据我解读的情况，以系列文章的形式来整理出来，最终能到什么程度我也不清楚，所以我会选择一个难度最小的，也就是Mirth Connect入手。
-假定我假定读这些文章的人对医疗信息化、HL7这些东西都有一个简单的了解，至少听说过，因此在有些术语上，我不会特别深入的去解释。
-
-                        
-                    </p>
-                </a>
-            </div>
-
-            
-                <div class="post-footer">
-                    
-                    
-                        <i class="fa fa-tags"></i>
-                        <a class="tag-link" href="/tags/医疗信息化/">医疗信息化</a>
-                    
-                </div>
-            
-        </article>
+我这些年的工作，多多少少都涉及到一个共同的话题——医疗信息化...
     
 
+        <a href="/2019/05/26/为什么要创建EMR-信息化-MedCon/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
     
-        <article class="box post post-item">
-            <div class="post-title"><a href="/2019/05/11/读《情商管理课——优秀的人如何掌控情绪》/">读《情商管理课——优秀的人如何掌控情绪》</a></div>
-            <div class="post-meta">
-                
-                <i class="fa fa-calendar"></i> <time>2019-05-11</time>
-                <span class="dotted">|</span>
-                <i class="fa fa-user"></i> 
-            </div>
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/医疗信息化/">医疗信息化</a></li></ul>
 
-            <div class="post-excerpt">
-                <a href="/2019/05/11/读《情商管理课——优秀的人如何掌控情绪》/">
-                    <p>
-                        
-                            在一次偶然的机会，应该是图书打折的机会，我买到了左岸老师编著的《情商管理科——优秀的人如何掌控情绪》这本书。说实话，我对这本书的期望还是蛮大的，因为我不是一个优秀的人，而且变成一个优秀的人是大家共性的追求，所以我是满怀期待读完这本书的。先给这本书定个位，这是一本鸡汤加故事会，当然，这是这种书的典型套路，说一个鼓舞人心的道理当然需要一个相辅相成的故事，因此在了解清楚这本书的定位后，去读这本书就轻松很多了。这并不是说这本书读完对我没有帮助，帮助还是有的。首先，这本书的框架是这样的：认识自己，管理情绪，激励自己；认识他人，善待他人，创造美好的人际关系，这说的很有道理啊，这就是一个人变得受欢迎的标准公式啊：认识自己，善待他人。那么书中有哪些我觉得有意思的呢？认识他人，我觉得每一点说的都很有道理，当我把左岸老师提出的那些点放回到自己身上时，仿佛又对我自己有了重新的认识，所以我摘录一下：
-认识他人的小窍门眼神（看）眼睛是心灵的窗户嘛，透过窗户就能观察到很多事情了。那么如何从眼神中读出他的含义呢：
+    </div>
+    
+</article>
 
-眼神镇定，表示对方胸有成竹，也就是淡定，泰然自若；
-眼神散乱，表示六神无主，也许是面临巨大困难需要帮助；
-眼神阴沉，表示对方心情欠佳，不要招惹。
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-读《情商管理课——优秀的人如何掌控情绪》"
+  class="article-card article-type-post" itemprop="blogPost">
 
-听说话的弦外之音（听）说话都是有目的的，打发时间？获取同情？获取帮助？抱怨？等等，总之，说话就是有目的的，而往往说话很多时候都不会直接了当，很多时候都有些保留，尤其是在不太熟悉的人之间的交际的时候，那么要怎么听出对方的心声呢：
+    <div class="post-meta">
+        <time class="post-time" title="2019-05-11 09:05:08" datetime="2019-05-11T01:05:08.000Z"  itemprop="datePublished">2019-05-11</time>
 
-反常，如果一个人平时不会轻声细语，而突然反常，事出突然必有妖嘛，这个时候就静静的听吧；
-如果一个人总爱牢骚和跟别人聊天，那么这个人缺乏主见；
-说话时眼神飘忽不定，坐立不安，那么这个人在这种场景下缺乏自信；
-如果对方欲言又止，那就需要追问一下啦。
+        
 
-习惯动作（看）人都有习惯性的动作，咬手指、双手抱胸、抹鼻子等等等等，每一样呢都以自己的意思，左岸老师指导我们可以通过观察这些小动作去观察别人，认识别人：
 
-指手画脚的人易冲动；
-经常以手掩口的人易情绪低落；
-时常轻拍别人肩膀的人显然比较骄傲；
-经常把指关节弄得啪啪响的人，对面对的事情充满恐惧；
-抓头发的人易健忘，易受情绪支配；
-拖着鞋走路的人意志易消沉，易得过且过。
+    </div>
 
-好像都有点道理。
-声音（听）声音的频率可以反应一个人的内心活动和状态，悠然自得的声音和充满恐惧的声音显然是不一样的，这个很容易理解，那怎么通过声音去了解他人呢：
-
-说话声音凝重且深沉，情绪稳定，一般知识广博，思想成熟；
-声音锋利尖锐，情绪一般不稳定，具备极强的攻击性；
-声音刚毅，情绪比较健康，有很强的纪律性和组织性；
-声音圆滑而缓和，情绪平稳，不容易大起大落，为人诚恳、认清，具同理心，处事圆滑，容易受他人指责；
-声柔而顺畅，性格温和，淡泊名利，与世无争，希望过得平淡；
-声音急躁，情绪不好，易怒，易生气，做事没有详尽计划安排，急于求成。
-
-有点像算命。
-倾听（听）所有管理学、沟通课程，都会告诉你倾听的重要性，那么能听出什么呢？
-
-说话者的人品；
-说话者意向；
-说话者的见识和学识；
-说话者的气质。
-
-认识他人的小窍门，总结来说，多看，多听，少说。好了，我就写这么多，所以呢，多读书，还是有好处的，一本无论是怎么样的书，总有一个让你有所收获的地方
-
-                        
-                    </p>
-                </a>
-            </div>
-
-            
-                <div class="post-footer">
-                    
-                    
-                        <i class="fa fa-tags"></i>
-                        <a class="tag-link" href="/tags/自我管理/">自我管理</a>
-                    
-                </div>
-            
-        </article>
     
 
-    
-        <article class="box post post-item">
-            <div class="post-title"><a href="/2019/05/02/一个假产品经理对产品经理的理解/">一个假产品经理对产品经理的理解</a></div>
-            <div class="post-meta">
-                
-                <i class="fa fa-calendar"></i> <time>2019-05-02</time>
-                <span class="dotted">|</span>
-                <i class="fa fa-user"></i> 
-            </div>
 
-            <div class="post-excerpt">
-                <a href="/2019/05/02/一个假产品经理对产品经理的理解/">
-                    <p>
-                        
-                            我是2014年底至2015年除被秦工从中央站拽过来做需求管理的，细数过来也有几个年头了，在这几年中，也做了几款产品的规划和需求管理工作。虽然我一直不知道秦工看中我身上什么特质，但在做需求管理这几年中，确实给予了我很大的帮助。如果说中央站是我涉及到产品管理的开端，那么从开发转岗需求管理是真正开始深入的涉猎产品管理。为什么没有用进入或者是精通产品管理呢，因为至今我都觉得我所做的，也只是产品很少的一部分。那说道对产品管理具体的认识的话，要回溯到2015年，秦工在需求组后边那个小角落跟我们需求组几个人开了一个非正式的会议说，你们需求组要做的是：产品策划、需求管理、产品发布、抱怨跟踪、产品改进，这不就是产品管理的全过程吗？而从事需求管理这些年，需求组的同事确实在做其中的一部分工作，所以我们一直都自封为Fake Product Manager，要管的多，实际写到职能的少，所以是Fake的，有时候，我也能接到组内同事的投诉，为什么我们要管这么多。接下来我就我个人的经验来谈谈，我们为什么要管这么多。
-好的产品本来的样子4月底，邱总邀请了一直跟我们合作不错的合作公司的产品经理Michael Gao来给我们做了一次产品管理的分享，会上Michael问了一个很有趣的问题
-到临床中去毛主席说过：“在我党的一切实际工作中，凡属正确的领导，必须是从群众中来，到群众中去。”
-摇滚的力量我在谈摇滚的时候，不是在谈摇滚，而是要讲一个故事。
-做好“传声筒”我在谈传声筒的时候，不是在说传声筒，而是在讲需求管理。
-客户爽一点，自己苦一点我在谈让客户爽一点，自己苦一点的时候，真的是在谈让客户爽一点，自己苦一点。
-吃水不忘挖井人我在谈挖井人的时候，我就是在谈开发团队。
-结语:人人都是产品经理，人人都须是产品经理。
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2019/05/11/读《情商管理课——优秀的人如何掌控情绪》/">读《情商管理课——优秀的人如何掌控情绪》</a>
+    </h3>
+  
 
-                        
-                    </p>
-                </a>
-            </div>
 
-            
-                <div class="post-footer">
-                    
-                    
-                        <i class="fa fa-tags"></i>
-                        <a class="tag-link" href="/tags/需求管理/">需求管理</a>
-                    
-                </div>
-            
-        </article>
-    
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        <article class="box post post-item">
-            <div class="post-title"><a href="/2019/04/21/MWeb外部模式的图片文件夹处理/">MWeb外部模式的图片文件夹处理</a></div>
-            <div class="post-meta">
-                
-                <i class="fa fa-calendar"></i> <time>2019-04-21</time>
-                <span class="dotted">|</span>
-                <i class="fa fa-user"></i> 
-            </div>
+        在一次偶然的机会，应该是图书打折的机会，我买到了左岸老师编著的《情商管理科——优秀的人如何掌控情绪》这本书。说实话，我对这本书的期望还是蛮大的，因为我不是一个优秀的人，而且变成一个优秀的人是大家共性的追求，所以我是满怀期待读完这本书的。先给这本书定个位，这是一本鸡汤加故事会，当然，这是这种书的典型套路，说一个鼓舞人心的道理当然需要一个相辅相成的故事，因此在了解清楚这本书的定位后，去读这本书就...
+    
 
-            <div class="post-excerpt">
-                <a href="/2019/04/21/MWeb外部模式的图片文件夹处理/">
-                    <p>
-                        
-                            这段文字来源于官方的帮助，详见：MWeb外部模式的详细应用
+        <a href="/2019/05/11/读《情商管理课——优秀的人如何掌控情绪》/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自我管理/">自我管理</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-一个假产品经理对产品经理的理解"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2019-05-02 21:53:48" datetime="2019-05-02T13:53:48.000Z"  itemprop="datePublished">2019-05-02</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2019/05/02/一个假产品经理对产品经理的理解/">一个假产品经理对产品经理的理解</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        我是2014年底至2015年除被秦工从中央站拽过来做需求管理的，细数过来也有几个年头了，在这几年中，也做了几款产品的规划和需求管理工作。虽然我一直不知道秦工看中我身上什么特质，但在做需求管理这几年中，确实给予了我很大的帮助。如果说中央站是我涉及到产品管理的开端，那么从开发转岗需求管理是真正开始深入的涉猎产品管理。为什么没有用进入或者是精通产品管理呢，因为至今我都觉得我所做的，也只是产品很少的...
+    
+
+        <a href="/2019/05/02/一个假产品经理对产品经理的理解/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/需求管理/">需求管理</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-MWeb外部模式的图片文件夹处理"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2019-04-21 12:51:38" datetime="2019-04-21T04:51:38.000Z"  itemprop="datePublished">2019-04-21</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2019/04/21/MWeb外部模式的图片文件夹处理/">MWeb外部模式的图片文件夹处理</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        这段文字来源于官方的帮助，详见：MWeb外部模式的详细应用
 引入文件夹到 MWeb 中的办法如下图，按 CMD + E 打开外部模式，然后点击左下角的 “+” 按钮，选择要引入的文件夹即可。
 另外，你还可以直接把文件夹拖拽到左边的文件夹树形列表中，也可以引入文件夹。还有一种方法就是：直接把文件夹拖拽到 MWeb 的图标中，也可以引入文件夹。
-配置引入的文件夹引入文件夹后，还有一项重要的设置，就是引入文件夹的设置，可以右键引入的文件夹，然后选择 编辑，就会显示如下图的界面：
-一个设置是 “显示名称”，这个是引入的文件夹所特有的，你修改这个名称不会修改到文件夹的名称。还有几个比较重要的设置，都是跟插入图片相关的，第一个就是 “保存插入的图片的文件夹名称：”，这个一看就知道意思，这个跟下面的 “插入的图片的保存位置” 相关联，这个只有 “绝对位置” 与 “相对位置” 两个选项。举个例子，比如说我引入的文件夹为 A，然后有一文件在 “A/folder/file.md” 下，我如果在 “file.md” 中插入一张名为 “pic.jpg” 的图片，则不同的选项的结果为：
-相对位置：图片会保存在 “A/folder/media/pic.jpg”，然后生成的 Markdown 为：。绝对位置：图片会保存在 “A/media/pic.jpg”，生成的 Markdwon 为：![](/media/pic.jpg。另外一个设置：“把插入的图片自动上传至…”。如果勾选了这个选项，那么上面的设置就无效了，因为你插入的图片都会自动上传至所选择的图片上传服务，然后返回 Markdown 语法。
-根据这个特性，可以让 MWeb 很好地支持 Octpress、Jekyll、hexo、gitbook、VuePress 等等静态网站生成工具的图片插入、预览和管理。
-管理引入后的文件夹文件夹引入后，就可以使用右键对引入的文件夹和文件进行一些常用的操作，如下图所示。
-
-                        
-                    </p>
-                </a>
-            </div>
-
-            
-                <div class="post-footer">
-                    
-                    
-                        <i class="fa fa-tags"></i>
-                        <a class="tag-link" href="/tags/IT-技术/">IT 技术</a>
-                    
-                </div>
-            
-        </article>
+配置引入的文件夹引入文件夹后，还有一项重要的设置，...
     
 
-    
-        <article class="box post post-item">
-            <div class="post-title"><a href="/2019/04/20/在macOS-Mojave上搭建树莓派的Qt开发环境/">在macOS Mojave上搭建树莓派的Qt开发环境</a></div>
-            <div class="post-meta">
-                
-                <i class="fa fa-calendar"></i> <time>2019-04-20</time>
-                <span class="dotted">|</span>
-                <i class="fa fa-user"></i> 
-            </div>
-
-            <div class="post-excerpt">
-                <a href="/2019/04/20/在macOS-Mojave上搭建树莓派的Qt开发环境/">
-                    <p>
-                        
-                            做这件事的原因有两个：第一是，接上一篇《为树莓派3B+编译Qt 5.11.2》中的Ubuntu 18.10是在虚拟机中搭建的，所以每次要进行开发时，都需要再启动一个虚拟机，有点麻烦，不想这样做，也就是懒；第二是，Mac是Unix-like系统，理论上只要找到合适的编译器，也就可以在Mac上配置环境而使用在虚拟机中编译的Qt。所以带着勇闯雷区的勇气就开始了我的尝试之旅了。
-树莓派部分树莓派部分我们已经在Ubuntu中做好了一切准备，所以我们不需要再做什么了，具体参考为树莓派3B+编译Qt 5.11.2。
-主机准备我的电脑的信息如下：
-工作目录和工具链准备这部分的工作呢，和在Ubuntu上准备是一样的，具体如下：
-123mkdir ~/raspicd ~/raspigit clone https://github.com/raspberrypi/tools
-虽然我们不用tool下的gcc编译器，但我不确定是否用到其他环境，所以我们还是完整的下载。
-准备正确的工具链和sysroot下载Mac下用的工具链armv8-rpi3-linux-gnueabihf-gcc-8.1.0-macos-high-sierra这个工具链是在mac下可以使用来编译Qt的交叉编译器,先git clone下这个工具链。
-1git clone git@github.com:yc2986/armv8-rpi3-linux-gnueabihf-gcc-8.1.0-macos-high-sierra.git
-下载完工具链后，把armv8-rpi3-linux-gnueabihf拷贝到~/raspi/tools目录下。
-准备sysroot还是需要在raspi下创建sysroot，并同步树莓派上面的库
-12345mkdir sysroot sysroot/usr sysroot/optrsync -avz -e &quot;ssh -p 22&quot; pi@raspberrypi.local:/lib sysrootrsync -avz -e &quot;ssh -p 22&quot; pi@raspberrypi.local:/usr/include sysroot/usrrsync -avz -e &quot;ssh -p 22&quot; pi@raspberrypi.local:/usr/lib sysroot/usrrsync -avz -e &quot;ssh -p 22&quot; pi@raspberrypi.local:/opt/vc sysroot/opt
-把raspberrypi.local换成树莓派的IP。还有一种办法就是直接同步Ubuntu 下配置好的sysroot，具体方法如下：
-1rsync -avz -e &quot;ssh -p 22&quot; penn@Penn 92.168.3.113:/home/penn/raspi/sysroot ./
-这条命令是把Ubuntu端的sysroot同步到Mac的raspi目录。
-还有一步非常非常重要的步骤，不然编译器的环境不完整，需要将~/raspi/tools/armv8-rpi3-linux-gnueabihf/armv8-rpi3-linux-gnueabihf/sysroot下所有的目录及文件拷到~/raspi/sysroot下，选择合并处理。
-编译Qmake下载源代码
-123wget http://download.qt.io/official_releases/qt/5.11/5.11.2/single/qt-everywhere-src-5.11.2.tar.xztar xvf  qt-everywhere-src-5.11.2.tar.xzcd  qt-everywhere-src-5.11.2
-做完前面的工作，mac端的编译环境就准备好了，我们需要用到qt的编译器qmake，这个需要我们自己编译出来，步骤不重复叙述，configure要说一下。
-1./configure -release -no-opengl -device linux-rasp-pi3-g++ -device-option CROSS_COMPILE=~/raspi/tools/armv8-rpi3-linux-gnueabihf/bin/armv8-rpi3-linux-gnueabihf- -sysroot ~/raspi/sysroot/ -opensource -confirm-license -skip qtwayland -skip qtlocation -skip qtscript -make libs -prefix /usr/local/qt5pi -extprefix ~/raspi/qt5pi -hostprefix ~/raspi/qt5 -no-use-gold-linker -v -no-gbm
-这里注意，我们用了-no-opengl选项，因为我们在Ubuntu上已经编译了，而且这里我们也只是需要生成一个qmake及相关环境，我们并不用mac下编译出来的库。
-12make -j4make install
-做完上面的步骤后，执行下面的命令确认是否正确编译了qmake
-12cd ~/rasp/qt5./bin/qmake -v
-如果正确编译了qmake，能够得到下面的信息
-QMake version 3.1
-配置开发环境QtCreator的配置是跟Ubuntu下是一样的，参考为树莓派3B-编译Qt-5-11-2/#搭建开发环境
-GDB要特别说明一下，这里的GDB有点区别，GDB设置的路径为
-1/usr/local/Cellar/gdb/8.2.1/bin/gdb
-测试环境是否可用创建一个Qt Widgets Application名字为WidgetsDemo，然后编译执行，在VNC到树莓派，可以看到我们的程序已经上传到输煤派了。
-好了，到这里在macOS mojave下搭建Qt的交叉编译环境也就完成了，希望你也能成功。
-
-                        
-                    </p>
-                </a>
-            </div>
-
-            
-                <div class="post-footer">
-                    
-                    
-                        <i class="fa fa-tags"></i>
-                        <a class="tag-link" href="/tags/Rasp/">Rasp</a>
-                    
-                </div>
-            
-        </article>
-    
-
-    
-        <article class="box post post-item">
-            <div class="post-title"><a href="/2019/04/17/RX-580解决270度旋转问题/">RX 580解决270度旋转问题</a></div>
-            <div class="post-meta">
-                
-                <i class="fa fa-calendar"></i> <time>2019-04-17</time>
-                <span class="dotted">|</span>
-                <i class="fa fa-user"></i> 
-            </div>
-
-            <div class="post-excerpt">
-                <a href="/2019/04/17/RX-580解决270度旋转问题/">
-                    <p>
-                        
-                            暂时没解决。
-
-                        
-                    </p>
-                </a>
-            </div>
-
-            
-                <div class="post-footer">
-                    
-                    
-                        <i class="fa fa-tags"></i>
-                        <a class="tag-link" href="/tags/IT-技术/">IT 技术</a>
-                    
-                </div>
-            
-        </article>
-    
-
-
-
-    <nav class="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
-    </nav>
-
-            </div>
-            <div class="aside">
-    
-        <div class="box widget">
-    <div class="introduction">
-        <p><img src="/images/avatar.jpg" alt="head-sculpture"></p>
-        <p class="name">
-            博落回
-        </p>
-        <p class="slogan">流连矣 忘景幻云催 峦栈醺醺说旧梦 重山迟迟映霞辉 向晚共邀归 —— 忆江南</p>
+        <a href="/2019/04/21/MWeb外部模式的图片文件夹处理/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
     </div>
-</div>
     
+    <div class="post-footer">
         
-<div class="box widget">
-    <div class="title">最新</div>
-    <ul class="item-box">
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IT-技术/">IT 技术</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-在macOS-Mojave上搭建树莓派的Qt开发环境"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2019-04-20 22:39:27" datetime="2019-04-20T14:39:27.000Z"  itemprop="datePublished">2019-04-20</time>
+
         
-            
-                <li><a href="/2020/04/19/多层物料关联/">多层物料关联递归关联处理</a></li>
-            
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2019/04/20/在macOS-Mojave上搭建树莓派的Qt开发环境/">在macOS Mojave上搭建树莓派的Qt开发环境</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        做这件事的原因有两个：第一是，接上一篇《为树莓派3B+编译Qt 5.11.2》中的Ubuntu 18.10是在虚拟机中搭建的，所以每次要进行开发时，都需要再启动一个虚拟机，有点麻烦，不想这样做，也就是懒；第二是，Mac是Unix-like系统，理论上只要找到合适的编译器，也就可以在Mac上配置环境而使用在虚拟机中编译的Qt。所以带着勇闯雷区的勇气就开始了我的尝试之旅了。
+树莓派部分树莓派部分...
+    
+
+        <a href="/2019/04/20/在macOS-Mojave上搭建树莓派的Qt开发环境/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
         
-            
-                <li><a href="/2020/04/12/Axure-幻灯片轮播实现-简略版/">Axure 幻灯片轮播实现--简略版</a></li>
-            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Rasp/">Rasp</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-RX-580解决270度旋转问题"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2019-04-17 19:15:15" datetime="2019-04-17T11:15:15.000Z"  itemprop="datePublished">2019-04-17</time>
+
         
-            
-                <li><a href="/2019/05/29/浅谈用户思维/">浅谈用户思维</a></li>
-            
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2019/04/17/RX-580解决270度旋转问题/">RX 580解决270度旋转问题</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        暂时没解决。
+
+    
+
+        <a href="/2019/04/17/RX-580解决270度旋转问题/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
         
-            
-                <li><a href="/2019/05/27/7Edit-安装和使用/">7Edit 安装和使用</a></li>
-            
-        
-            
-                <li><a href="/2019/05/26/为什么要创建EMR-信息化-MedCon/">为什么要创建EMR 信息化(MedCon)</a></li>
-            
-        
-            
-                <li><a href="/2019/05/11/读《情商管理课——优秀的人如何掌控情绪》/">读《情商管理课——优秀的人如何掌控情绪》</a></li>
-            
-        
-            
-                <li><a href="/2019/05/02/一个假产品经理对产品经理的理解/">一个假产品经理对产品经理的理解</a></li>
-            
-        
-            
-                <li><a href="/2019/04/21/MWeb外部模式的图片文件夹处理/">MWeb外部模式的图片文件夹处理</a></li>
-            
-        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IT-技术/">IT 技术</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
     </ul>
-</div>
 
     
-        
-    
-        
-  <div class="box widget">
-    <div class="title">归档</div>
-    <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">2020-04</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">2019-05</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">2019-04</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">2019-03</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">2018-07</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">2018-02</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">2018-01</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">2017-12</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">2017-11</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">2017-10</a><span class="archive-list-count">11</span></li></ul>
-  </div>
-
-    
-        
-    <div class="box widget">
-        <div class="title">标签</div>
-        <div class="item-box cloud-label">
-            <a href="/tags/IT-技术/" style="font-size: 17.5px;">IT 技术</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/Rasp/" style="font-size: 12.5px;">Rasp</a> <a href="/tags/医疗信息化/" style="font-size: 10px;">医疗信息化</a> <a href="/tags/帮助/" style="font-size: 10px;">帮助</a> <a href="/tags/杂谈/" style="font-size: 10px;">杂谈</a> <a href="/tags/自我管理/" style="font-size: 15px;">自我管理</a> <a href="/tags/需求管理/" style="font-size: 20px;">需求管理</a>
-        </div>
+<nav id="page-nav">
+    <div class="inner">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
     </div>
+</nav>
 
-    
+
 </div>
-        </section>
+
         <footer class="footer">
-    <div class="global-width footer-box">
-        <div class="copyright">
-            <span>Copyright &copy; 2019</span>
-            <span class="dotted">|</span>
-            <span>Powered by <a href="https://hexo.io/">Hexo</a></span>
-            <span class="dotted">|</span>
-            <span>Theme by <a href="javascript:">Loren</a></span>
-            <span class="dotted">|</span>
-            <span><a href="http://www.beian.miit.gov.cn">浙ICP备18016660号-1</a></span>
-        </div>
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>peapon &copy; 2015 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
     </div>
 </footer>
-    </div>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://peapon.github.io/&title=Req Man&pic=https://peapon.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://peapon.github.io/&title=Req Man&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://peapon.github.io/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=Req Man&url=https://peapon.github.io/&via=https://peapon.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://peapon.github.io/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAAAAAAZai4+AAABU0lEQVR42u3aQQ6DMAxEUe5/abpFqgp/bKhE/LOqgJLHAmwmbBse+2Ect/C92xNDlqyFWPvp+HXMOfp7L59LlqzJLHI6Phl5cFwYZMmSFbJInZUlS9a9LFKY0wZalixZvGlOS/WfenlZspZg8VSn//uRfEuWrJez9nCQkky2X8wiS9YwFr+B00JO2uuLI2XJGsMiNz95ca0tgv78lyxZsk7DnTQkSs8Qr5rKkrUEi4dEacEmxTv+4ECWrKVZvNnlpyOTtQImWbKWZtWWM9OQKA5/ZckawOo0zZ0Li5tmWbKGsXjTnJZwElfJkiWL4GoNd/wokSVrDKvzwUEtxkV7ZckaxupES2Sy4ju0LFkjWZ3ohy+6kAuQJUsWb5qLZfXpXl6WrGGszutrcWlTlixZYXmuvabeFunKkvVyFm980+JNljllyZJVq5t8shtyLFmyVmZ9ANN67jaShF0bAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
 
 <script>
-    hljs.initHighlightingOnLoad();
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
 </script>
+
+
+
 </body>
 </html>

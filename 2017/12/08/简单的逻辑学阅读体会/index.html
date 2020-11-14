@@ -1,159 +1,490 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head><meta name="generator" content="Hexo 3.9.0">
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    
+
+    
+
+    
 
 
 
-
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>简单的逻辑学阅读体会 | Req Man | 需求管理学习和实践笔记</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content>
     <meta name="keywords" content="需求管理,产品经理,黑苹果">
+<meta property="og:type" content="article">
+<meta property="og:title" content="简单的逻辑学阅读体会">
+<meta property="og:url" content="https://peapon.github.io/2017/12/08/简单的逻辑学阅读体会/index.html">
+<meta property="og:site_name" content="Req Man">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-04-15T16:06:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="简单的逻辑学阅读体会">
+    
+        <link rel="alternate" type="application/atom+xml" title="Req Man" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
 
+    <!-- custom head -->
+    
 
-
-    <meta name="description" content>
-
-
-<meta name="Robots" content="all">
-
-
-    <title>Req Man | 简单的逻辑学阅读体会</title>
-
-
-<link rel="icon" href="/images/favicon.ico">
-<link rel="stylesheet" href="/css/font-awesome.min.css">
-<link rel="stylesheet" href="/css/atom-one-dark.css">
-<link rel="stylesheet" href="/css/style.css">
-<script src="/js/highlight.min.js"></script>
 </head>
+
 <body>
-    <div class="main-container">
-        <header class="header">
-    <div class="global-width">
-        <nav class="nav-box">
-            
-                <a class="nav-item" href="/">首页</a>
-            
-                <a class="nav-item" href="/resume">简历</a>
-            
-                <a class="nav-item" href="/mood" target="_blank">心情</a>
-            
-                <a class="nav-item" href="/amusement/tetris" target="_blank">娱乐</a>
-            
-                <a class="nav-item" href="/about">不榖</a>
-            
-        </nav>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">peapon</h5>
+          <a href="mailto:634206017@qq.com" title="634206017@qq.com" class="mail">634206017@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/yscoder" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/ysweb" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">简单的逻辑学阅读体会</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
     </div>
 </header>
+<header class="content-header post-header">
 
-        <section class="content global-width">
-            <div class="main">
-                <article class="box post">
-    <div class="post-title align-center detail-title">简单的逻辑学阅读体会</div>
-    <div class="post-meta align-center">
-        
-        <i class="fa fa-calendar"></i> <time>2017-12-08</time>
-        <span class="dotted">|</span>
-        <i class="fa fa-user"></i> 
-        
+    <div class="container fade-scale">
+        <h1 class="title">简单的逻辑学阅读体会</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-12-07T23:55:30.000Z" itemprop="datePublished" class="page-time">
+  2017-12-08
+</time>
+
+
+            
+        </h5>
     </div>
 
-    <div class="post-content">
-        
-    </div>
-</article>
-            </div>
-            <div class="aside">
     
-        <div class="box widget">
-    <div class="introduction">
-        <p><img src="/images/avatar.jpg" alt="head-sculpture"></p>
-        <p class="name">
-            博落回
-        </p>
-        <p class="slogan">流连矣 忘景幻云催 峦栈醺醺说旧梦 重山迟迟映霞辉 向晚共邀归 —— 忆江南</p>
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+
+<article id="post-简单的逻辑学阅读体会"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">简单的逻辑学阅读体会</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-12-08 07:55:30" datetime="2017-12-07T23:55:30.000Z"  itemprop="datePublished">2017-12-08</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2020-04-15T16:06:35.000Z" itemprop="dateUpdated">2020-04-16 00:06:35</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2017/12/08/简单的逻辑学阅读体会/" target="_blank" rel="external">https://peapon.github.io/2017/12/08/简单的逻辑学阅读体会/</a>
+        
     </div>
+    
+    <footer>
+        <a href="https://peapon.github.io">
+            <img src="/img/avatar.jpg" alt="peapon">
+            peapon
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
 </div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
     
-        
-<div class="box widget">
-    <div class="title">最新</div>
-    <ul class="item-box">
-        
-            
-                <li><a href="/2020/04/19/多层物料关联/">多层物料关联递归关联处理</a></li>
-            
-        
-            
-                <li><a href="/2020/04/12/Axure-幻灯片轮播实现-简略版/">Axure 幻灯片轮播实现--简略版</a></li>
-            
-        
-            
-                <li><a href="/2019/05/29/浅谈用户思维/">浅谈用户思维</a></li>
-            
-        
-            
-                <li><a href="/2019/05/27/7Edit-安装和使用/">7Edit 安装和使用</a></li>
-            
-        
-            
-                <li><a href="/2019/05/26/为什么要创建EMR-信息化-MedCon/">为什么要创建EMR 信息化(MedCon)</a></li>
-            
-        
-            
-                <li><a href="/2019/05/11/读《情商管理课——优秀的人如何掌控情绪》/">读《情商管理课——优秀的人如何掌控情绪》</a></li>
-            
-        
-            
-                <li><a href="/2019/05/02/一个假产品经理对产品经理的理解/">一个假产品经理对产品经理的理解</a></li>
-            
-        
-            
-                <li><a href="/2019/04/21/MWeb外部模式的图片文件夹处理/">MWeb外部模式的图片文件夹处理</a></li>
-            
-        
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://peapon.github.io/2017/12/08/简单的逻辑学阅读体会/&title=《简单的逻辑学阅读体会》 — Req Man&pic=https://peapon.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://peapon.github.io/2017/12/08/简单的逻辑学阅读体会/&title=《简单的逻辑学阅读体会》 — Req Man&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://peapon.github.io/2017/12/08/简单的逻辑学阅读体会/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《简单的逻辑学阅读体会》 — Req Man&url=https://peapon.github.io/2017/12/08/简单的逻辑学阅读体会/&via=https://peapon.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://peapon.github.io/2017/12/08/简单的逻辑学阅读体会/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
     </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
 </div>
 
-    
-        
-    
-        
-  <div class="box widget">
-    <div class="title">归档</div>
-    <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">2020-04</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">2019-05</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">2019-04</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">2019-03</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">2018-07</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">2018-02</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">2018-01</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">2017-12</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">2017-11</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">2017-10</a><span class="archive-list-count">11</span></li></ul>
-  </div>
 
-    
-        
-    <div class="box widget">
-        <div class="title">标签</div>
-        <div class="item-box cloud-label">
-            <a href="/tags/IT-技术/" style="font-size: 17.5px;">IT 技术</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/Rasp/" style="font-size: 12.5px;">Rasp</a> <a href="/tags/医疗信息化/" style="font-size: 10px;">医疗信息化</a> <a href="/tags/帮助/" style="font-size: 10px;">帮助</a> <a href="/tags/杂谈/" style="font-size: 10px;">杂谈</a> <a href="/tags/自我管理/" style="font-size: 15px;">自我管理</a> <a href="/tags/需求管理/" style="font-size: 20px;">需求管理</a>
+
         </div>
     </div>
 
     
-</div>
-        </section>
-        <footer class="footer">
-    <div class="global-width footer-box">
-        <div class="copyright">
-            <span>Copyright &copy; 2019</span>
-            <span class="dotted">|</span>
-            <span>Powered by <a href="https://hexo.io/">Hexo</a></span>
-            <span class="dotted">|</span>
-            <span>Theme by <a href="javascript:">Loren</a></span>
-            <span class="dotted">|</span>
-            <span><a href="http://www.beian.miit.gov.cn">浙ICP备18016660号-1</a></span>
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/01/02/如何定义性能需求/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">如何定义性能需求</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/12/06/软件需求编写指南/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">软件需求编写指南</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
         </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>peapon &copy; 2015 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
     </div>
 </footer>
-    </div>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://peapon.github.io/2017/12/08/简单的逻辑学阅读体会/&title=《简单的逻辑学阅读体会》 — Req Man&pic=https://peapon.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://peapon.github.io/2017/12/08/简单的逻辑学阅读体会/&title=《简单的逻辑学阅读体会》 — Req Man&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://peapon.github.io/2017/12/08/简单的逻辑学阅读体会/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《简单的逻辑学阅读体会》 — Req Man&url=https://peapon.github.io/2017/12/08/简单的逻辑学阅读体会/&via=https://peapon.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://peapon.github.io/2017/12/08/简单的逻辑学阅读体会/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACtElEQVR42u3aQW4jMQwEwPz/01lgTznEk25SynqBmpOR2GPVGJAINj8+4uvz7/X8+utfvl6v7vbqv8n3Hr7w8PDwRkt/dT0znu+QLzG5Q/KN39wfDw8P7xpvdhi0jyZ5TJtDAg8PD+/deLPDIFpE8B48PDy8/5H33EpIGhCb5eLh4eG9G69tBzzDTiE3pTweHh7ePd6pAOw3X/+DfA8PDw8v2F6T60Y8lpTs0drw8PDwLvDaEaizB8ZsbKttGePh4eHd4OUfTmKtdnAqf3CblgceHh7eKV6yTSfb9ywke35Pu+m/LKbx8PDwLvDODokmBXR+/KwKazw8PLwLvBaZjA7kcf6M9Mxb/YZ4eHh4AW+23FnrYX9stO1dPDw8vBu8TXi/b1W0TYq8afLyN8TDw8Nb89rCtx0jaAOzTRMEDw8P7x14s4Gq2aGSlNF5aIeHh4d3m9eWy/kGvQ+38mL9m0/h4eHhXeC1pXAR2JcthtlwQDEfgYeHh3eUN2vR5gVxPl5wqhDHw8PD+31evt3nxXe+lPzgKYbD8PDw8A7xNkNXbRi2ic2SAa/hfAEeHh5eyasjpfgR5A+uPXjaWA4PDw/vLO+zvPKSOh8FyJeeR3F4eHh4v89rA6q27M6D/1k7+HD+hoeHhzdqTNwerpoV6wUSDw8P7wJvP1zV/iUvjmeRGx4eHt49Xh75J1t/fjzkW3+L/6FLjYeHh3eIN4vw2/bELCrb7Px4eHh4Z3mbAGwW9m/ax+168PDw8G7w2tbA7P1ta2M2YtWGcHh4eHgbXnsYzFoPSVE++2w0NICHh4d3gbcZGtgPZm3KYjw8PLz35+XN3Flw1R4eh6fJ8PDw8I7yZmFVchhs2D+0OfDw8PCu8dov2JTjZ8e5VgMEeHh4eEfz9PzwyLO1GbuNwfDw8PCu8f4AgJgDJ9cvnRkAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
 
 <script>
-    hljs.initHighlightingOnLoad();
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
 </script>
+
+
+
 </body>
 </html>
