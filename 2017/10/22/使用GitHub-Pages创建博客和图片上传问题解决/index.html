@@ -1,0 +1,352 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>使用GitHub Pages创建博客和图片上传问题解决 | Req Man</title>
+  <meta name="author" content="peapon">
+  
+  <meta name="description" content="搭建博客博客的搭建过程完全参照小茗同学的博客园中的使用hexo+github搭建免费个人博客详细教程里边的详细介绍。请逐步跟文档进行操作。我只对一些要点做总结。">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="使用GitHub Pages创建博客和图片上传问题解决">
+  <meta property="og:site_name" content="Req Man">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/atom.xml" title="Req Man" type="application/atom+xml">
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/">Req Man</a><span class="split"></span><span class="title">使用GitHub Pages创建博客和图片上传问题解决</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2017-10-22</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  <div class="col-xs-12 col-sm-3 col-md-3 toc"> 
+	<!-- toc -->
+<script type="text/javascript">
+		jQuery(document).ready(function() {
+ 		   generateWikiTOC('.note', '.toc',  2 , 2 );
+		});
+</script>
+  </div><!-- col-md-3 -->
+  
+  
+
+  
+  <div class="col-xs-12 col-sm-9 col-md-9 note">
+	
+
+	  <!-- content -->
+	  <h2 id="搭建博客"><a href="#搭建博客" class="headerlink" title="搭建博客"></a>搭建博客</h2><p>博客的搭建过程完全参照小茗同学的博客园中的<a href="http://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html" target="_blank" rel="noopener">使用hexo+github搭建免费个人博客详细教程</a>里边的详细介绍。请逐步跟文档进行操作。我只对一些要点做总结。<br><a id="more"></a></p>
+<h3 id="要点1-SSH-Key的配置"><a href="#要点1-SSH-Key的配置" class="headerlink" title="要点1 SSH Key的配置"></a>要点1 SSH Key的配置</h3><p>在电脑上使用git时，若SSH Key没有配置，在执行<code>hexo d</code>命令会提示<code>Permision Denied</code>,因此这一步要注意，请按照<a href="http://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html#配置ssh-key" target="_blank" rel="noopener">配置ssh-key</a>中的说明。</p>
+<h3 id="要点2-Deploy设置"><a href="#要点2-Deploy设置" class="headerlink" title="要点2 Deploy设置"></a>要点2 Deploy设置</h3><p>在<code>_config.yum</code>配置时，这一点其实是最容易出现错误，正确的配置应该是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: git@github.com:yourid/liuxianan.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure></p>
+<p>一般大多数的介绍都是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">type: github</span><br><span class="line">repository: https://github.com/yourid/liuxianan.github.io.git</span><br><span class="line">branch: master</span><br></pre></td></tr></table></figure></p>
+<p>  更详细的内容，请参考<a href="http://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html#上传到github" target="_blank" rel="noopener">上传到github</a></p>
+<h2 id="写博客"><a href="#写博客" class="headerlink" title="写博客"></a>写博客</h2><h3 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h3><p>工欲善其事必先利其器，好的工具能够大幅提升效率，这里要安利一下MWEB，<a href="http://zh.mweb.im" target="_blank" rel="noopener">官网在这里</a>，各种好用，谁用谁知道。我们用他的External模式，我的设置方法是：<code>View -&gt; Open External</code>，看图，最后那个选项就是。<br><img src="/images/15086798413830.jpg" alt></p>
+<p>External模式打开后，我们用左下角的“+”把hexo博客目录下的source文件夹选进去就可以了。<br><img src="/images/15086802990020.jpg" alt>)<br><img src="/images/15086802782658.jpg" alt></p>
+<h3 id="图片问题"><a href="#图片问题" class="headerlink" title="图片问题"></a>图片问题</h3><p>刚开始时被在博客里边贴图片的问题难到了，甚至有一刻有放弃的念头，后来在网上查到了MWeb同样可以解决这个问题，方法也很简单，承袭上一步，我们在选择source文件夹时，会弹出让你设置文件夹属性的对话框，进行如下设置即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Media Folder Name: images</span><br><span class="line">Media Save Path: Absolute</span><br></pre></td></tr></table></figure></p>
+<p>这样一来，就可以直接在MWeb中直接粘贴截图了，图片会被自动保存到<code>images</code>文件夹，而后，在运行<code>hexo g</code>的时候，图片文件夹也会被生成和上传到GitHub。<br><img src="/images/15086805331983.jpg" alt></p>
+<h3 id="让Hexo支持流程图"><a href="#让Hexo支持流程图" class="headerlink" title="让Hexo支持流程图"></a>让Hexo支持流程图</h3><p>让Hexo支持Markdown的流程图是一个很酷的想法，所幸不是只有我想到这个问题，人家早已解决，所以我们只需要利用前人的轮子即可。</p>
+<h4 id="安装hexo插件"><a href="#安装hexo插件" class="headerlink" title="安装hexo插件"></a>安装hexo插件</h4><p>命令为<code>npm install --save hexo-filter-flowchart</code>，<a href="https://github.com/bubkoo/hexo-filter-flowchart" target="_blank" rel="noopener">插件地址</a>，</p>
+<h4 id="配置："><a href="#配置：" class="headerlink" title="配置："></a>配置：</h4><p>在hexo的<code>_config.yml</code>文件中配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">flowchart:</span><br><span class="line">  # raphael:   # optional, the source url of raphael.js</span><br><span class="line">  # flowchart: # optional, the source url of flowchart.js</span><br><span class="line">  options: # options used for `drawSVG`</span><br></pre></td></tr></table></figure>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>代码如下（注意，在MWeb中要把这段设置成代码块才能生成流程图）</p>
+<blockquote>
+<p>flow<br>st=&gt;start: Start|past:&gt;<a href="http://www.google.com[blank]" target="_blank" rel="noopener">http://www.google.com[blank]</a><br>e=&gt;end: End:&gt;<a href="http://www.google.com" target="_blank" rel="noopener">http://www.google.com</a><br>op1=&gt;operation: My Operation|past<br>op2=&gt;operation: Stuff|current<br>sub1=&gt;subroutine: My Subroutine|invalid<br>cond=&gt;condition: Yes<br>or No?|approved:&gt;<a href="http://www.google.com" target="_blank" rel="noopener">http://www.google.com</a><br>c2=&gt;condition: Good idea|rejected<br>io=&gt;inputoutput: catch something…|request</p>
+</blockquote>
+<blockquote>
+<p>st-&gt;op1(right)-&gt;cond<br>cond(yes, right)-&gt;c2<br>cond(no)-&gt;sub1(left)-&gt;op1<br>c2(yes)-&gt;io-&gt;e<br>c2(no)-&gt;op2-&gt;e</p>
+</blockquote>
+<div id="flowchart-0" class="flow-chart"></div>
+
+
+
+
+
+<p><script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">st=>start: Start|past:>http://www.google.com[blank]
+e=>end: End:>http://www.google.com
+op1=>operation: My Operation|past
+op2=>operation: Stuff|current
+sub1=>subroutine: My Subroutine|invalid
+cond=>condition: Yes
+or No?|approved:>http://www.google.com
+c2=>condition: Good idea|rejected
+io=>inputoutput: catch something...|request
+
+st->op1(right)->cond
+cond(yes, right)->c2
+cond(no)->sub1(left)->op1
+c2(yes)->io->e
+c2(no)->op2->e</textarea><textarea id="flowchart-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script></p>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+			
+		
+	
+		
+			
+			
+			
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+	
+	
+		<li class="prev"><a href="/2017/10/23/敏捷软件需求管理/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/2017/10/22/Mac下驱动BCM20702A0 USB蓝牙/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2021 peapon
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.tableofcontents.min.js"></script>
+<script src="/js/tocgenerator.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+</body>
+</html>

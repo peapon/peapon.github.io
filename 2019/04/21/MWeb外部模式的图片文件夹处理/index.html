@@ -1,0 +1,312 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>MWeb外部模式的图片文件夹处理 | Req Man</title>
+  <meta name="author" content="peapon">
+  
+  <meta name="description" content="这段文字来源于官方的帮助，详见：MWeb外部模式的详细应用
+引入文件夹到 MWeb 中的办法如下图，按 CMD + E 打开外部模式，然后点击左下角的 “+” 按钮，选择要引入的文件夹即可。
+另外，你还可以直接把文件夹拖拽到左边的文件夹树形列表中，也可以引入文件夹。还有一种方法就是：直接把文件夹拖拽">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="MWeb外部模式的图片文件夹处理">
+  <meta property="og:site_name" content="Req Man">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/atom.xml" title="Req Man" type="application/atom+xml">
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/">Req Man</a><span class="split"></span><span class="title">MWeb外部模式的图片文件夹处理</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2019-04-21</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <p><strong>这段文字来源于官方的帮助，详见：<a href="https://zh.mweb.im/15304187309476.html" target="_blank" rel="noopener">MWeb外部模式的详细应用</a></strong></p>
+<p>引入文件夹到 MWeb 中的办法<br>如下图，按 CMD + E 打开外部模式，然后点击左下角的 “+” 按钮，选择要引入的文件夹即可。<br><img src="/images/15558223756761.jpg" alt></p>
+<p>另外，你还可以直接把文件夹拖拽到左边的文件夹树形列表中，也可以引入文件夹。<br>还有一种方法就是：直接把文件夹拖拽到 MWeb 的图标中，也可以引入文件夹。</p>
+<p>配置引入的文件夹<br>引入文件夹后，还有一项重要的设置，就是引入文件夹的设置，可以右键引入的文件夹，然后选择 编辑，就会显示如下图的界面：<br><img src="/images/15558223937612.jpg" alt></p>
+<p>一个设置是 “显示名称”，这个是引入的文件夹所特有的，你修改这个名称不会修改到文件夹的名称。还有几个比较重要的设置，都是跟插入图片相关的，第一个就是 “保存插入的图片的文件夹名称：”，这个一看就知道意思，这个跟下面的 “插入的图片的保存位置” 相关联，这个只有 “绝对位置” 与 “相对位置” 两个选项。<br>举个例子，比如说我引入的文件夹为 A，然后有一文件在 “A/folder/file.md” 下，我如果在 “file.md” 中插入一张名为 “pic.jpg” 的图片，则不同的选项的结果为：</p>
+<p>相对位置：图片会保存在 “A/folder/media/pic.jpg”，然后生成的 Markdown 为：<img src="media/pic.jpg" alt>。<br>绝对位置：图片会保存在 “A/media/pic.jpg”，生成的 Markdwon 为：![](/media/pic.jpg。<br>另外一个设置：“把插入的图片自动上传至…”。如果勾选了这个选项，那么上面的设置就无效了，因为你插入的图片都会自动上传至所选择的图片上传服务，然后返回 Markdown 语法。</p>
+<p>根据这个特性，可以让 MWeb 很好地支持 Octpress、Jekyll、hexo、gitbook、VuePress 等等静态网站生成工具的图片插入、预览和管理。</p>
+<p>管理引入后的文件夹<br>文件夹引入后，就可以使用右键对引入的文件夹和文件进行一些常用的操作，如下图所示。<br><img src="/images/15558224098027.jpg" alt></p>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+			
+		
+	
+		
+			
+			
+			
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+	
+	
+		<li class="prev"><a href="/2019/05/02/一个假产品经理对产品经理的理解/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/2019/04/20/在macOS-Mojave上搭建树莓派的Qt开发环境/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2021 peapon
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.tableofcontents.min.js"></script>
+<script src="/js/tocgenerator.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+</body>
+</html>

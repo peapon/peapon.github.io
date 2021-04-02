@@ -1,0 +1,315 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Mac下驱动BCM20702A0 USB蓝牙 | Req Man</title>
+  <meta name="author" content="peapon">
+  
+  <meta name="description" content="偶然搞了一个USB蓝牙，查到Mac下能识别，无法驱动，就去找了一下。方法很简单，就是把蓝牙的PID和VID加入到驱动里边去，具体方法和步骤如下：">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Mac下驱动BCM20702A0 USB蓝牙">
+  <meta property="og:site_name" content="Req Man">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/atom.xml" title="Req Man" type="application/atom+xml">
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/">Req Man</a><span class="split"></span><span class="title">Mac下驱动BCM20702A0 USB蓝牙</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2017-10-22</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <p>偶然搞了一个USB蓝牙，查到Mac下能识别，无法驱动，就去找了一下。方法很简单，就是把蓝牙的PID和VID加入到驱动里边去，具体方法和步骤如下：<br><a id="more"></a></p>
+<ol>
+<li>进入到/System/Libary/Extensions目录</li>
+<li>备份IOBluetoothFamily.kext</li>
+<li>在IOBluetoothFamily.kext右击，选择显示包内容</li>
+<li>进入Contents/Plugins</li>
+<li>右击BroadcomBluetoothHostControllerUSBTransport.kext，选择显示包内容</li>
+<li>进入Contents</li>
+<li>将Info.plist拖到桌面进行修改</li>
+<li>在下面的代码中把PID和VID做对应的修改即可</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;key&gt;PID 8684 0x21EC VID 2652 0xA5C&lt;/key&gt;</span><br><span class="line">		&lt;dict&gt;</span><br><span class="line">			&lt;key&gt;CFBundleIdentifier&lt;/key&gt;</span><br><span class="line">			&lt;string&gt;com.apple.iokit.BroadcomBluetoothHostControllerUSBTransport&lt;/string&gt;</span><br><span class="line">			&lt;key&gt;Dongles&lt;/key&gt;</span><br><span class="line">			&lt;dict&gt;</span><br><span class="line">				&lt;key&gt;GMYLE&lt;/key&gt;</span><br><span class="line">				&lt;string&gt;Micro Nano&lt;/string&gt;</span><br><span class="line">				&lt;key&gt;IOGear&lt;/key&gt;</span><br><span class="line">				&lt;string&gt;GBU-521&lt;/string&gt;</span><br><span class="line">				&lt;key&gt;Kinivo&lt;/key&gt;</span><br><span class="line">				&lt;string&gt;BTD-400&lt;/string&gt;</span><br><span class="line">				&lt;key&gt;MediaLink&lt;/key&gt;</span><br><span class="line">				&lt;string&gt;PANBT400 (4.0)&lt;/string&gt;</span><br><span class="line">				&lt;key&gt;MediaLink 2&lt;/key&gt;</span><br><span class="line">				&lt;string&gt;MUA-BA3&lt;/string&gt;</span><br><span class="line">				&lt;key&gt;Plugable&lt;/key&gt;</span><br><span class="line">				&lt;string&gt;4.0 LE&lt;/string&gt;</span><br><span class="line">				&lt;key&gt;Targus&lt;/key&gt;</span><br><span class="line">				&lt;string&gt;ACB10US 4.0&lt;/string&gt;</span><br><span class="line">				&lt;key&gt;UtechSmart&lt;/key&gt;</span><br><span class="line">				&lt;string&gt;4.0 (BCM20702)&lt;/string&gt;</span><br><span class="line">			&lt;/dict&gt;</span><br><span class="line">			&lt;key&gt;IOClass&lt;/key&gt;</span><br><span class="line">			&lt;string&gt;BroadcomBluetoothHostControllerUSBTransport&lt;/string&gt;</span><br><span class="line">			&lt;key&gt;IOProviderClass&lt;/key&gt;</span><br><span class="line">			&lt;string&gt;IOUSBHostDevice&lt;/string&gt;</span><br><span class="line">			&lt;key&gt;idProduct&lt;/key&gt;</span><br><span class="line">			&lt;integer&gt;8684&lt;/integer&gt;</span><br><span class="line">			&lt;key&gt;idVendor&lt;/key&gt;</span><br><span class="line">			&lt;integer&gt;2652&lt;/integer&gt;</span><br><span class="line">		&lt;/dict&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/14991847725023.jpg" alt></p>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+			
+		
+	
+		
+			
+			
+			
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+	
+	
+		<li class="prev"><a href="/2017/10/22/使用GitHub-Pages创建博客和图片上传问题解决/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/2017/10/22/【转载】怎样进行需求评审/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2021 peapon
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.tableofcontents.min.js"></script>
+<script src="/js/tocgenerator.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+</body>
+</html>

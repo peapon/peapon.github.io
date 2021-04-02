@@ -1,0 +1,378 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>为树莓派3B+编译Qt 5.11.2 | Req Man</title>
+  <meta name="author" content="peapon">
+  
+  <meta name="description" content="概述信息最近因为一个项目的原因，接触树莓派，觉得有意思，买了一个板子来自己玩，同时最近在了解QT开发，所以，就趁此机会尝试编写可以在树莓派上运行的程序。
+环境准备树莓派我选择了树莓派3B+，这块板子的性能更高，因此可玩性可能更好一些，购买可以选择去马云家，搜索下有很多，具体的配置如下：
+交叉编译主机">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="为树莓派3B+编译Qt 5.11.2">
+  <meta property="og:site_name" content="Req Man">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/atom.xml" title="Req Man" type="application/atom+xml">
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/">Req Man</a><span class="split"></span><span class="title">为树莓派3B+编译Qt 5.11.2</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2019-04-17</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  <div class="col-xs-12 col-sm-3 col-md-3 toc"> 
+	<!-- toc -->
+<script type="text/javascript">
+		jQuery(document).ready(function() {
+ 		   generateWikiTOC('.note', '.toc',  2 , 2 );
+		});
+</script>
+  </div><!-- col-md-3 -->
+  
+  
+
+  
+  <div class="col-xs-12 col-sm-9 col-md-9 note">
+	
+
+	  <!-- content -->
+	  <h1 id="概述信息"><a href="#概述信息" class="headerlink" title="概述信息"></a>概述信息</h1><p>最近因为一个项目的原因，接触树莓派，觉得有意思，买了一个板子来自己玩，同时最近在了解QT开发，所以，就趁此机会尝试编写可以在树莓派上运行的程序。</p>
+<h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><h3 id="树莓派"><a href="#树莓派" class="headerlink" title="树莓派"></a>树莓派</h3><p>我选择了树莓派3B+，这块板子的性能更高，因此可玩性可能更好一些，购买可以选择去马云家，搜索下有很多，具体的配置如下：<br><img src="/images/15555078279977.jpg" alt></p>
+<h3 id="交叉编译主机"><a href="#交叉编译主机" class="headerlink" title="交叉编译主机"></a>交叉编译主机</h3><p><strong>Mac：</strong> 本来准备在Mac上交叉编译，并搭建相关开发环境，在参考<a href="https://github.com/raulicomr/qt-rpi-macos" target="_blank" rel="noopener">qt-rpi-macos</a>的指导编译后，在Mac上编译的程序没有EGL，配置起来很复杂，所以选择放弃。<br><strong>Ubuntu 18.04：</strong> 后来又跟着<a href="https://mechatronicsblog.com/cross-compile-and-deploy-qt-5-12-for-raspberry-pi/" target="_blank" rel="noopener">Cross-compile and deploy Qt 5.12 for Raspberry Pi</a>这篇指导进行Qt编译和开发环境搭建，<a href="https://mechatronicsblog.com/cross-compile-and-deploy-qt-5-12-for-raspberry-pi/" target="_blank" rel="noopener">Cross-compile and deploy Qt 5.12 for Raspberry Pi</a>的指导是在OpenSUSE 上进行的，我对Ubuntu比较熟悉，所以我选择了Ubuntu。</p>
+<h3 id="Qt版本"><a href="#Qt版本" class="headerlink" title="Qt版本"></a>Qt版本</h3><p><a href="https://mechatronicsblog.com/cross-compile-and-deploy-qt-5-12-for-raspberry-pi/" target="_blank" rel="noopener">Cross-compile and deploy Qt 5.12 for Raspberry Pi</a>的中使用了Qt 5.12.0版本，但我在编译的过程中，使用Qt 5.12.0编译有问题，所以选择了5.11.2。</p>
+<p>总结一下环境：</p>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 树莓派3B+</li>
+<li style="list-style: none"><input type="checkbox"> Ubuntu 18.04</li>
+<li style="list-style: none"><input type="checkbox"> Qt 5.11.2</li>
+</ul>
+<h1 id="编译Qt"><a href="#编译Qt" class="headerlink" title="编译Qt"></a>编译Qt</h1><h2 id="树莓派端的工作"><a href="#树莓派端的工作" class="headerlink" title="树莓派端的工作"></a>树莓派端的工作</h2><h3 id="树莓派基础环境准备"><a href="#树莓派基础环境准备" class="headerlink" title="树莓派基础环境准备"></a>树莓派基础环境准备</h3><p>第一步是安装树莓派，这个教程度娘家一堆，这里不重复，自行百度。</p>
+<p>第二步是更新树莓派，以保证有最新的库，这步很重要，必须这样做，否则没有最新的库和包含文件，是没办法进行后边的操作的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo rpi-update</span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
+<p>同时，在树莓派上配置打开VNC和SSH，可以选择用树莓派的图形界面或者是使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo raspi-config</span><br></pre></td></tr></table></figure>
+<h3 id="为树莓派安装开发库"><a href="#为树莓派安装开发库" class="headerlink" title="为树莓派安装开发库"></a>为树莓派安装开发库</h3><p>为了编译Qt，我们需要安装一些必须的库文件，因为需要安装一些源文件包，因此，需要将 <strong>deb-src</strong> 的这个源启用，具体的启用方法是修改 <strong>/etc/apt/sources.list</strong> 。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nano /etc/apt/sources.list</span><br></pre></td></tr></table></figure>
+<p>效果如下图，要把 <strong>deb-src</strong>前面的 “#”去掉，保存后执行以下命令。<br><img src="/images/15555094487523.jpg" alt></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get build-dep qt4-x11</span><br><span class="line">sudo apt-get build-dep libqt5gui5</span><br><span class="line">sudo apt-get install libudev-dev libinput-dev libts-dev libxcb-xinerama0-dev libxcb-xinerama0</span><br></pre></td></tr></table></figure>
+<p>上面这端代码是为树莓派安装必要的库，后边编译需要用到。</p>
+<h3 id="在树莓派创建QT编译后的目标文件夹"><a href="#在树莓派创建QT编译后的目标文件夹" class="headerlink" title="在树莓派创建QT编译后的目标文件夹"></a>在树莓派创建QT编译后的目标文件夹</h3><p>在树莓派端创建如下文件夹和修改相应的权限，现在只是创建文件夹，还什么都不需要做。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir /usr/local/qt5pi</span><br><span class="line">sudo chown pi:pi /usr/local/qt5pi</span><br></pre></td></tr></table></figure>
+<h2 id="主机端的工作"><a href="#主机端的工作" class="headerlink" title="主机端的工作"></a>主机端的工作</h2><h3 id="准备工作目录和工具链"><a href="#准备工作目录和工具链" class="headerlink" title="准备工作目录和工具链"></a>准备工作目录和工具链</h3><p>要创建一个文件夹，可下载一个工具链，如果提示git没有安装，用<code>sudo apt-get install git</code>安装一下就可以。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir ~/raspi</span><br><span class="line">cd ~/raspi</span><br><span class="line">git clone https://github.com/raspberrypi/tools</span><br></pre></td></tr></table></figure></p>
+<h3 id="创建和配置sysroot"><a href="#创建和配置sysroot" class="headerlink" title="创建和配置sysroot"></a>创建和配置sysroot</h3><p>这个sysroot文件夹非常重要，我们要用这个文件夹把编译QT，以及后期开发所需的库同步过来，先在主机创建下面的文件夹</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir sysroot sysroot/usr sysroot/opt</span><br></pre></td></tr></table></figure>
+<p>然后我们需要同步树莓派中的库文件和包含文件，我们使用<code>rsync</code>命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rsync -avz pi@raspberrypi_ip:/lib sysroot</span><br><span class="line">rsync -avz pi@raspberrypi_ip:/usr/include sysroot/usr</span><br><span class="line">rsync -avz pi@raspberrypi_ip:/usr/lib sysroot/usr</span><br><span class="line">rsync -avz pi@raspberrypi_ip:/opt/vc sysroot/opt</span><br></pre></td></tr></table></figure>
+<p><code>raspberrypi_ip</code>是你的树莓派的IP地址。<br>同步完的效果是这样的：<br><img src="/images/15557610146364.jpg" alt></p>
+<p>接下来，调整一下符号链接，因为目录下的文件是从树莓派同步过来的，链接部分都是失效的，需要重新链接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/riscv/riscv-poky/master/scripts/sysroot-relativelinks.py</span><br><span class="line">chmod +x sysroot-relativelinks.py</span><br><span class="line">./sysroot-relativelinks.py sysroot</span><br></pre></td></tr></table></figure>
+<h3 id="下载Qt"><a href="#下载Qt" class="headerlink" title="下载Qt"></a>下载Qt</h3><p>在我参考的指南中，作者使用的是5.12.0版本的QT，我尝试过，并没有成功。所以我尝试换了一个版本5.11.2就成功了，所以我推荐你参考我的指南来走</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget http://download.qt.io/official_releases/qt/5.11/5.11.2/single/qt-everywhere-src-5.11.2.tar.xz</span><br><span class="line">tar xvf  qt-everywhere-src-5.11.2.tar.xz</span><br><span class="line">cd  qt-everywhere-src-5.11.2</span><br></pre></td></tr></table></figure>
+<p>到这里，编译前的准备工作都已经做完了了，接下来就是进入到编译的过程了。</p>
+<h3 id="为Qt交叉编译进行配置"><a href="#为Qt交叉编译进行配置" class="headerlink" title="为Qt交叉编译进行配置"></a>为Qt交叉编译进行配置</h3><p>因为在Raspbian stretch版本中，使用了EGL，不过呢，使用了一个别的名字brcmEGL，具体方法如下：<br>编辑<code>./qtbase/mkspecs/devices/linux-rasp-pi3-g++/qmake.conf</code>中的<code>-lEGL</code>修改为<code>-lbrcmEGL</code>，以及修改<code>-lGLESv2</code>为<code>-lbrcmGLESv2</code>，保存之后，使用下面的命令进行配置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure -release -opengl es2 -device linux-rasp-pi3-g++ -device-option CROSS_COMPILE=~/raspi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf- -sysroot ~/raspi/sysroot -opensource -confirm-license -skip qtwayland -skip qtlocation -skip qtscript -make libs -prefix /usr/local/qt5pi -extprefix ~/raspi/qt5pi -hostprefix ~/raspi/qt5 -no-use-gold-linker -v -no-gbm</span><br></pre></td></tr></table></figure>
+<h3 id="编译和安装Qt"><a href="#编译和安装Qt" class="headerlink" title="编译和安装Qt"></a>编译和安装Qt</h3><p>Configure运行完，如果你看到下面的提示，则表示环境配置没有任何问题，可以进行编译和安装了。</p>
+<p><em>Qt is now configured for building. Just run ‘make’.</em><br><em>Once everything is built, you must run ‘make install’.</em><br><em>Qt will be installed into ‘/home/penn/raspi/qt5pi’.</em></p>
+<p><em>Prior to reconfiguration, make sure you remove any leftovers from<br>the previous build.</em></p>
+<p>编译和安装需要多久是根据你电脑的性能的，我是用下面的命令来编译的，大概编译了2~3个小时。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make -j4</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<p><code>make install</code>后，实际上qt是安装在本地的qt5pi目录的，需要将这个目录上传到树莓派，还是使用<code>rsync</code>命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rsync -avz qt5pi pi@raspberrypi_ip:/usr/local</span><br></pre></td></tr></table></figure>
+<p>如果你顺利执行到了这一步，表示你的Qt已经编译安装成功，接下来可以进行开发环境的搭建了。</p>
+<h1 id="搭建开发环境"><a href="#搭建开发环境" class="headerlink" title="搭建开发环境"></a>搭建开发环境</h1><p>开发环境创建和配置其实就两件事情，第一是连上你的树莓派，第二是配置之前编译出来的Qt的环境来编译程序</p>
+<h2 id="创建远程设备"><a href="#创建远程设备" class="headerlink" title="创建远程设备"></a>创建远程设备</h2><p>在QtCreator的 <strong>工具-&gt;选项</strong> 下选中 <strong>设备</strong>，添加一个新的通用Linux设备进行配置，具体见下图<br>在设备的域名或者IP地址中填入树莓派的IP，用户名为pi，密码填写树莓派的密码。<br><img src="/images/15557625833616.jpg" alt><br><strong>注意：</strong> 这个是用ssh进行远程访问的，要确保树莓派的ssh是打开的。</p>
+<p>配置完成应该能够看到如下的画面：<br><img src="/images/15557627444063.jpg" alt></p>
+<h2 id="配置编译器和Qt版本"><a href="#配置编译器和Qt版本" class="headerlink" title="配置编译器和Qt版本"></a>配置编译器和Qt版本</h2><p>为了让我们开发的程序能够在树莓派上运行，我们需要使用适合树莓派的交叉编译器，在QtCreator中，我们要用到编译Qt的编译器，具体方法如下：<br>在QtCreator的 <strong>工具-&gt;选项</strong> 下选中 <strong>构建和运行</strong><br><img src="/images/15557629628799.jpg" alt></p>
+<h3 id="添加gcc编译器，编译器的路径为"><a href="#添加gcc编译器，编译器的路径为" class="headerlink" title="添加gcc编译器，编译器的路径为"></a>添加gcc编译器，编译器的路径为</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/raspi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf-gcc</span><br></pre></td></tr></table></figure>
+<h3 id="添加一个G-编译器，编译器路径为"><a href="#添加一个G-编译器，编译器路径为" class="headerlink" title="添加一个G++编译器，编译器路径为"></a>添加一个G++编译器，编译器路径为</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/raspi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf-g++</span><br></pre></td></tr></table></figure>
+<h3 id="设置GDB"><a href="#设置GDB" class="headerlink" title="设置GDB"></a>设置GDB</h3><p>切换到 <strong>Debuggers</strong>添加Debugger，这里要注意，我使用<code>~/raspi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf-gdb</code>时，会报错，无法使用，因此我使用了<strong>gdb-multiarch</strong>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install gdb-multiarch</span><br></pre></td></tr></table></figure>
+<p>之后再Debuggers中添加一个gdb-multiarch，路径为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/gdb-multiarch</span><br></pre></td></tr></table></figure>
+<h3 id="设置qmake"><a href="#设置qmake" class="headerlink" title="设置qmake"></a>设置qmake</h3><p>切换到QtVersions页面，添加一个新的Qt版本，选择刚编译出来的qmake即可，路径为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/raspi/qt5/bin/qmake</span><br></pre></td></tr></table></figure>
+<h3 id="设置kit"><a href="#设置kit" class="headerlink" title="设置kit"></a>设置kit</h3><p>在 <strong>构建套件(Kits)</strong>页面，添加一个新的Kit，设置如图上的那些信息，在完成这一步后，QtCreator的编译环境也设置好了，可以开始编程了。<br><img src="/images/15557637311294.jpg" alt></p>
+<h1 id="开始开发"><a href="#开始开发" class="headerlink" title="开始开发"></a>开始开发</h1><p>在QtCreator中创建一个Qt Widgets Application程序来测试我们的环境到底有没有设置好。<br><img src="/images/15557639253548.jpg" alt></p>
+<h2 id="设置上传路径"><a href="#设置上传路径" class="headerlink" title="设置上传路径"></a>设置上传路径</h2><p>我使用的QtCreator版本（4.5.2）创建出来的项目.pro文件，只有默认的部署路径/opt/，pi用户在树莓派上没有这个目录的写入权限，所以我们要改目录，在.pro文件中加入如下代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target.path = /home/pi/$$&#123;TARGET&#125;/bin!isEmpty(target.path): INSTALLS += target</span><br></pre></td></tr></table></figure>
+<p>然后编译执行，出现下面的信息，表示程序上传成功<br><em>Starting /home/pi/WidgetTest/bin/WidgetTest…</em></p>
+<p><em>Unable to query physical screen size, defaulting to 100 dpi.<br>To override, set QT_QPA_EGLFS_PHYSICAL_WIDTH and QT_QPA_EGLFS_PHYSICAL_HEIGHT (in millimeters).</em></p>
+<p>用VNC登录到树莓派，可以看到我们的程序是上传成功的，运行也可以看到Qt的图形界面。<br><img src="/images/15557645799531.jpg" alt></p>
+<h2 id="链接库文件"><a href="#链接库文件" class="headerlink" title="链接库文件"></a>链接库文件</h2><p>有时我们的程序需要用到树莓派使用的一些库文件比如wiringPi，在我们需要的使用，在.pro文件中加入如下的代码就可以了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LIBS += -L/usr/lib -lwiringPi</span><br></pre></td></tr></table></figure>
+<p>到这一步呢，表示我们已经成功的搭建了树莓派在Ubuntu 18.10中的QtCreator的Qt开发环境了，可以进行图形界面的开发了。</p>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+			
+		
+	
+		
+			
+			
+			
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+	
+	
+		<li class="prev"><a href="/2019/04/17/RX-580解决270度旋转问题/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/2019/03/16/临床数据检测工具/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2021 peapon
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.tableofcontents.min.js"></script>
+<script src="/js/tocgenerator.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+</body>
+</html>

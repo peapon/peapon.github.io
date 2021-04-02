@@ -1,0 +1,350 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Mac OSX程序破解入门 | Req Man</title>
+  <meta name="author" content="peapon">
+  
+  <meta name="description" content="原文链接在这里原文链接
+本软件破解学习教程,仅用于学习软件原理知识,还请各位童鞋(尤其是软件开发的童鞋)养成知识产权的保护意识,拒绝盗版,尊重他人.本篇通过手动创建一个Mac osx应用,然后进行破解学习,一步一步分析,到最后完成破解目标,通篇没有高深的理论术语,因此仅用来作为初步学习的一个引子,供">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Mac OSX程序破解入门">
+  <meta property="og:site_name" content="Req Man">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/atom.xml" title="Req Man" type="application/atom+xml">
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/">Req Man</a><span class="split"></span><span class="title">Mac OSX程序破解入门</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2018-07-04</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <p>原文链接在这里<a href="https://www.jianshu.com/p/33e40af6e328" target="_blank" rel="noopener">原文链接</a></p>
+<p><code>本软件破解学习教程,仅用于学习软件原理知识,还请各位童鞋(尤其是软件开发的童鞋)养成知识产权的保护意识,拒绝盗版,尊重他人.本篇通过手动创建一个Mac osx应用,然后进行破解学习,一步一步分析,到最后完成破解目标,通篇没有高深的理论术语,因此仅用来作为初步学习的一个引子,供各位童鞋或爱好者在软件运行原理的学习中提供一个微薄的参考而已...</code></p>
+<h1 id="学前准备"><a href="#学前准备" class="headerlink" title="学前准备:"></a>学前准备:</h1><ol>
+<li><p>Mac OSX下的反汇编工具: Hopper Disassembler (本示例使用v4.0.8)</p>
+</li>
+<li><p>基本的汇编指令(比如mov ,xor ,jmp,je 等)</p>
+</li>
+<li><p>没有其他啦,马上开始动手吧</p>
+</li>
+</ol>
+<h1 id="先手动创建一个简单的Mac-OSX应用"><a href="#先手动创建一个简单的Mac-OSX应用" class="headerlink" title="先手动创建一个简单的Mac OSX应用"></a>先手动创建一个简单的Mac OSX应用</h1><p>关于如何具体创建简单的Mac OSX 应用,请移步我之前翻译的三篇系列入门一步一步,开始上手Mac开发</p>
+<p>或者可以从这里下载示例中的应用demo工程:github.com/Alexiuce/Tip-for-day/tree/master/CrackDemo</p>
+<p>我们创建的这个简单应用,是模仿注册码验证的一个逻辑判断(其实你也可以把这个当作是登录验证,道理是相同的),如果用户输入1234,我们认为是正确的结果,显示验证通过,否则都会显示验证码错误这样的提示信息</p>
+<p>应用的界面大致如下图:</p>
+<p>示例界面<br>从Xcode工程中提取应用<br>运行工程后,会在Products中,生成一个 “项目名称.app”的应用,这个就是我们的目标应用,然后在finder中找到它,并拷贝到桌面备用(我们后续的破解都是针对这个来进行的~)</p>
+<p>提取项目工程中的应用程序<br>先来运行一下破解前的程序,它的样子差不多跟下面图片相似</p>
+<p>破解前的运行情况</p>
+<h1 id="开启破解之旅"><a href="#开启破解之旅" class="headerlink" title="开启破解之旅"></a>开启破解之旅</h1><h2 id="打开Hopper-Disassembler"><a href="#打开Hopper-Disassembler" class="headerlink" title="打开Hopper Disassembler"></a>打开Hopper Disassembler</h2><p>Hopper Disassembler工具的默认启动界面</p>
+<h2 id="将需要破解的应用-就是demo-app-拖入到Hopper中"><a href="#将需要破解的应用-就是demo-app-拖入到Hopper中" class="headerlink" title="将需要破解的应用(就是demo.app)拖入到Hopper中"></a>将需要破解的应用(就是demo.app)拖入到Hopper中</h2><p>拖入我们的demo.app到Hopper中<br>确认选择界面</p>
+<p>确认<br>加载后的界面,入下图</p>
+<p>加载后的界面<br>这个界面的布局和Xcode非常相似,大家不要被一些看不懂的内容界面和工具栏迷惑而感到微微的手足无措(笔者第一次看到这个界面,也是茫然的~),我们下面把基本上常用的会一一介绍,其他的的功能按钮,先当作不存在(催眠式提升信心法~~),好,我们先来看一下工具栏下面的左侧Labels窗口:</p>
+<p>Labels窗口<br>这个Labels窗口中列出的是应用被反编译后可以识别出来Objective-c方法,看到这些熟悉的方法名,小伙伴们是不是一下子感觉又回到Xcode代码中啦,让我们先忘记掉我们之前写过的工程代码,从这个列表里,我们根据方面名称,大致可以推断(破解的一个要素就是要有根据的猜测)出这几个方法的用途:</p>
+<p>[ViewController viewDidLoad] ====&gt;  视图生命周期方法,加载视图的时候调用</p>
+<p>[ViewController checkCode:] ====&gt;  从名字可以看着,这个方法是用来做验证检查的(后面会进一步分析)</p>
+<p>[ViewController textField] : ====&gt;  get方法,获取文本输入控件</p>
+<p>[ViewController setTextField: ] ====&gt; set方法,设置文本输入控件</p>
+<p>[ViewController tintLable]  ==== &gt;  get方法,获取提示文本控件</p>
+<p>[ViewController setTintLabel:]   ====&gt; set方法,设置提示文本控件</p>
+<h2 id="查看checkCode-方法"><a href="#查看checkCode-方法" class="headerlink" title="查看checkCode:方法"></a>查看checkCode:方法</h2><p>我们根据方法名列表,最值得怀疑的就是checkCode:(就像如果破解一个软件的vip身份,那么如果看到isVip就应该给予特别注意一样)<br>查看checkCode:的逻辑(右侧显示的部分很重要)<br>从这个图里的右侧流程部分,我们可以看出checkCode这个方法的执行逻辑是这样的:</p>
+<p>checkCode方法入口—&gt; 执行一些代码(我们先不管这些代码在做什么)—&gt;选择两个分支代码段中的一个执行—&gt; 再执行一些代码后,checkCode方法结束<br>checkCode:方法的逻辑流程图</p>
+<h2 id="假设阶段"><a href="#假设阶段" class="headerlink" title="假设阶段"></a>假设阶段</h2><p>查看汇编代码<br>这三行汇编代码是:</p>
+<p>mov al,byte [rbp+var_29]     ====&gt; 这句汇编的含义相当于我们使用高级语言里的赋值语句,例如 al = 123(这里是为了理解写al = 123来举例,程序运行真实的al值并不是123),我们先把al当作一个变量来看,不去想al寄存器的事情</p>
+<p>cmp al,0x0    ====&gt; 这个汇编的含义是进行两个值的比较 ,我们可以把它想象成一个高级语言的比较函数,后面是两个参数,例如cmp(a,b), 执行后返回比较的结果,汇编执行比较,其实是做减法运算,因此两个数相减会有三种情况,分别是大于零,等于零,小于零,这三种结果,有可以简单分为两个:相等,或不相等</p>
+<p>je loc_10001054  ====&gt; 这个汇编的含义,我们可以认为是 相等(equality), 不相等是jne, 在汇编中,一般cmp后面都会根上类似的判断跳转语句. 因此这行代码下面会有两个分支(参考方法的流程图),如果cmp的比较结果是相等,就执行 loc_10001054 这个分支,否则就执行另外的那个分支(方法流程图中红色线条指向的那个分支)<br>从这个代码逻辑,我们可以简单的猜测出来应用里判断验证码的逻辑是这样的:</p>
+<p>if (输入的内容 == 验证码) {显示正确结果(分支1)}else{显示错误结果分支2)}</p>
+<h2 id="求证阶段"><a href="#求证阶段" class="headerlink" title="求证阶段"></a>求证阶段</h2><p>现在我们面临的问题是,哪个分支才是正确结果的那个部分呢?<br>我们不必去读懂两个分支的汇编代码(如果你有兴趣另说),只需要修改逻辑并根据执行结果来验证就好了,比如,我们去除掉je loc_10001054 这个相等就执行的汇编代码,这样,checkCode的执行逻辑就被我们修改为没有分支loc_10001054的直线流程了.好,先动手试试</p>
+<p>切换工具栏按钮<br>替换掉je loc_10001054这条汇编指令(就是去掉条件判断,不管比较结果如何,都会执行固定的分支)</p>
+<p>替换空指令<br>替换后的结果<br>保存修改后的结果,生成新的可执行文件</p>
+<p>保存修改结果,生成新的可执行文件<br>保存的路径一定不能与demo.app相同!</p>
+<p>保存的路径一定不能与demo.app相同!!</p>
+<p>保存的路径一定不能与demo.app相同!!!</p>
+<p>保存新的可执行文件<br>使用新的可执行文件,替换掉破解前的可执行文件:</p>
+<p>在demo.app上点击右键,显示包内容<br>用破解的文件替换原来的<br>替换后示例<br>运行破解后的demo.app</p>
+<p>破解的运行结果</p>
+<h1 id="小结与讨论"><a href="#小结与讨论" class="headerlink" title="小结与讨论"></a>小结与讨论</h1><p>到这里我们貌似已经完成了破解工作,但其实是有很大的运气成分(我们只选了一个分支就碰巧是验证通过的那个代码分支),大家可以考虑如果我们这个分支是无论怎么输入都是显示错误的那个分支,应该怎么办呢?其实很简单,就是把je换成jne就可以了,有兴趣的可是试试,我这里就不再详细描述了(点选Modify菜单-&gt;Assemble Instruction 可以手动输入新的汇编指令,把je 替换成jne就可以哦)</p>
+<p>最后,给有兴趣的童鞋留个疑问,如果找到原来正确的验证码呢? 大家自己动手看看吧</p>
+<p>作者：代码行者<br>链接：<a href="https://www.jianshu.com/p/33e40af6e328" target="_blank" rel="noopener">https://www.jianshu.com/p/33e40af6e328</a><br>來源：简书<br>简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。</p>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+			
+		
+	
+		
+			
+			
+			
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+	
+	
+		<li class="prev"><a href="/2018/07/05/【转载】高效演讲——一本书彻底解决演讲问题/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/2018/07/03/XMind-8u2-和谐过程/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2021 peapon
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.tableofcontents.min.js"></script>
+<script src="/js/tocgenerator.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+</body>
+</html>

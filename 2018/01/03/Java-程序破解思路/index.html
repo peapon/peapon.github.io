@@ -1,0 +1,333 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Java 程序破解思路 | Req Man</title>
+  <meta name="author" content="peapon">
+  
+  <meta name="description" content="本文提供的方法仅供学习用，不对结果负责。
+总体思路
+定位授权或加密类
+分析加密/授权方法
+修改Jar包文件
+重新打包
+
+这里提供一种提供试用版软件的破解方法。假设程序需要输入试用License文件才能试用。具体的方法步骤如下。
+定位加密文件和类定位的方法是苦功夫，至少我是这么干的，打开你安装的程序的">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Java 程序破解思路">
+  <meta property="og:site_name" content="Req Man">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/atom.xml" title="Req Man" type="application/atom+xml">
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/">Req Man</a><span class="split"></span><span class="title">Java 程序破解思路</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2018-01-03</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <p>本文提供的方法仅供学习用，不对结果负责。</p>
+<h1 id="总体思路"><a href="#总体思路" class="headerlink" title="总体思路"></a>总体思路</h1><ol>
+<li>定位授权或加密类</li>
+<li>分析加密/授权方法</li>
+<li>修改Jar包文件</li>
+<li>重新打包</li>
+</ol>
+<p>这里提供一种提供试用版软件的破解方法。假设程序需要输入试用License文件才能试用。具体的方法步骤如下。</p>
+<h2 id="定位加密文件和类"><a href="#定位加密文件和类" class="headerlink" title="定位加密文件和类"></a>定位加密文件和类</h2><p>定位的方法是苦功夫，至少我是这么干的，打开你安装的程序的文件夹，找一找有点像的jar包名称，如active，license等，这个靠人品了，具体的软件有所不同。</p>
+<h3 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h3><p>用一个你熟悉的Java反编译器来反编译Java的class文件，我用jd-gui，官网在<a href="http://jd.benow.ca" target="_blank" rel="noopener">这里</a>。<br>运行JD后，把你要分析的jar包拖进去或者用文件打开，就能看到你要的“Java源代码”了<br><img src="/images/15149883645837.jpg" alt></p>
+<h3 id="定位"><a href="#定位" class="headerlink" title="定位"></a>定位</h3><p>接下来就是苦功夫了，如果我们没有能够一下找到license授权管理所在的jar包，我们就要慢慢找了，可以把你认为有可能性的包都拖进来，用JD的search功能搜关键字，如license，找到后去慢慢分析，如果不是则可以换一个别的关键字试试。</p>
+<h2 id="分析加密-授权方法"><a href="#分析加密-授权方法" class="headerlink" title="分析加密/授权方法"></a>分析加密/授权方法</h2><p>如果运气不错，你能碰到一个比较简单的授权方法，如通过密码，那我们就能够通过前一步骤中打开的Java类找到对应的解密方法，然后反推加密方法。<br>对于支持试用类的软件，也比较好办，找到试用管理的函数或者类，我们自然也就找到了加密解密的方法了，这种时候可以通过编写一个keygen生成一个密码或文件。</p>
+<h2 id="修改Jar包文件"><a href="#修改Jar包文件" class="headerlink" title="修改Jar包文件"></a>修改Jar包文件</h2><p>我们谈谈修改Jar包里边的文件，这个也有很多种方法，我用的是javassist-3.15.0-GA,官网在<a href="http://blog.csdn.net/sunny_sailor/article/details/8505201" target="_blank" rel="noopener">这里</a>，使用方法请参考<a href="http://blog.csdn.net/sunny_sailor/article/details/8505201" target="_blank" rel="noopener">这篇文章</a>，我写的代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">package modifyclass;import java.io.IOException;import java.util.Arrays;import javassist.*;public class modifyclass &#123;	public static void main(String[] args) throws NotFoundException, </span><br><span class="line">	CannotCompileException, IOException, InstantiationException, </span><br><span class="line">	IllegalAccessException </span><br><span class="line">	&#123;		ClassPool pool = ClassPool.getDefault();</span><br><span class="line">		CtClass cc = pool.get(&quot;com.test.license&quot;);</span><br><span class="line">		CtMethod cm = cc.getDeclaredMethod(&quot;getPublicKey&quot;);</span><br><span class="line">		cm.insertBefore(func);</span><br><span class="line">		cc.writeFile();</span><br><span class="line">		&#125;</span><br><span class="line">	</span><br><span class="line">	private static String func = </span><br><span class="line">	&quot;byte [] data = new byte[] &#123; 95, 63, 46, 79 &#125;; key_data = data;&quot; &#125;</span><br></pre></td></tr></table></figure>
+<p>这个程序运行后会在com/test文件夹下生成一个新的license.class文件，这个文件就是我们修改过得文件了。</p>
+<h2 id="重新打包文件"><a href="#重新打包文件" class="headerlink" title="重新打包文件"></a>重新打包文件</h2><p>用jar命令来重新打包</p>
+<ol>
+<li>将原来的jar包解压出来，命令<code>jar xvf license.jar</code></li>
+<li>将前一步骤生成的class文件替换jar包解压出来的文件</li>
+<li>使用jar命令重新打包，命令为<code>jar cvf license.jar com/ META-INF/</code><br>解释一下这条命令，license.jar是我们要打包的文件名称，后边的com/ META-INF/是要打包进去的文件或文件夹。</li>
+</ol>
+<p>这样基本就完成了，剩下的事情就是用了。当然，如果是要写keygen的话，需要编写其他的代码。</p>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>有时候我们会碰到一些混淆的代码，难度对应会增加，但基本思路还是差不太多的。</p>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+			
+		
+	
+		
+			
+			
+			
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+	
+	
+		<li class="prev"><a href="/2018/01/09/使用原型/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/2018/01/02/如何定义性能需求/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2021 peapon
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.tableofcontents.min.js"></script>
+<script src="/js/tocgenerator.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+</body>
+</html>

@@ -1,0 +1,362 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>需求在医疗设备企业（一） | Req Man</title>
+  <meta name="author" content="peapon">
+  
+  <meta name="description" content="大家都知道医疗设备的管控上，是非常严格的，那么在医疗设备制造企业做需求管理是一种什么样的体验，我也说不清，但我可以从我工作的经历来聊一聊。">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="需求在医疗设备企业（一）">
+  <meta property="og:site_name" content="Req Man">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/atom.xml" title="Req Man" type="application/atom+xml">
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/">Req Man</a><span class="split"></span><span class="title">需求在医疗设备企业（一）</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2017-10-22</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <hr>
+<p>大家都知道医疗设备的管控上，是非常严格的，那么在医疗设备制造企业做需求管理是一种什么样的体验，我也说不清，但我可以从我工作的经历来聊一聊。<br><a id="more"></a></p>
+<h2 id="需求工程师的职责"><a href="#需求工程师的职责" class="headerlink" title="需求工程师的职责"></a>需求工程师的职责</h2><p>当然，聊工作前需要聊聊我的组织，我们需要干一些什么事情？</p>
+<ul>
+<li><strong>临床场景分析</strong></li>
+<li>竞争对手的知识产权分析，专利撰写、商标申请</li>
+<li>法规符合性的分析</li>
+<li><strong>临床调研</strong></li>
+<li><strong>竞争对手分析</strong></li>
+<li><strong>产品策划和产品策划方案输出</strong></li>
+<li><strong>用户需求输出</strong></li>
+<li><strong>产品需求输出</strong></li>
+<li><strong>产品需求分解（子系统分解需求说明书）审核</strong></li>
+<li><strong>软件需求输出</strong></li>
+<li><strong>术语表（数据字典输出）</strong></li>
+<li><strong>中文字符串组织评审</strong></li>
+<li>中文说明书审核</li>
+<li>说明书评审</li>
+<li><strong>需求跟踪</strong></li>
+<li><strong>软件需求功能确认，软件方案设计评审</strong></li>
+<li><strong>与产品线和市场部排定需求优先级</strong></li>
+<li><strong>产品资料发布（长期）</strong></li>
+<li>临床反馈收集和走访</li>
+</ul>
+<p>不负责什么呢？</p>
+<ul>
+<li>项目进度跟踪</li>
+<li>字符串表输出，只负责术语表的定义和中文字符串审核</li>
+<li>英文字符串输出和英文说明书审核，资料和项目经理负责</li>
+<li>硬件需求输出</li>
+<li>模块需求输出</li>
+<li>结构需求输出</li>
+<li>附件需求输</li>
+</ul>
+<p>我们很多职能其实并不是需求工程师的基本职能，从负责的工作上将，多数已经跨越了产品经理方面的工作。但实际上，需求工程师要做的核心工作还是需求的输入管理和转化，而周边相关工作应该淡化。我们这一系列的文章来谈谈我们怎么来做好需求管理或我们采取了什么措施做好需求管理。</p>
+<h2 id="需求分层"><a href="#需求分层" class="headerlink" title="需求分层"></a>需求分层</h2><p>复杂的事情简单化的两种基本思路：一是划分模块，也就是分割，化整为零；二是分层，割裂到各自的应用领域来解决，下图是《软件需求（第三版）》中关于软件需求分层的方法。<br><img src="/images/14979641265646.jpg" alt><br>上图的层次很清楚也很理想，第一层次的业务需求描述组织目标，第二层描述用户期望，第三层描述满足用户期望的方法。<br>组织目标也就是商业目标，往往，在研发层面的需求工程师是较少接触的，这往往是产品经理、产品线经理（或其他类似职能经理）跟老板一起来做出的决策，也就是这是一个策划活动，与组织战略和企业目标相关。</p>
+<h3 id="医疗系统需求层次"><a href="#医疗系统需求层次" class="headerlink" title="医疗系统需求层次"></a>医疗系统需求层次</h3><p>对于软件需求的分层的方法，我这里不继续展开叙述，但对于需求工程师来说，第二、三层才是重点。与我们的工作实际相关，实际上我接下来就是要谈我们的需求的分层，实际上，我们讲软件需求中提到的二、三两层的需求又划分了三个层次，如下图：<br><img src="/images/14979660777079.jpg" alt><br>接下来我们看看每一个层次的需求是用来定义生么的。</p>
+<h3 id="用户需求"><a href="#用户需求" class="headerlink" title="用户需求"></a>用户需求</h3><p>用户需求是需求捕获的产物。<br>用户需求定义什么呢？用户需求是用来定义产品<em>预期用途</em>及用户主要的预期功能。</p>
+<pre><code>预期用途：描述产品主要的应用目的和场景和使用的预期效果。
+</code></pre><p>举个例子，什么样的描述是预期用途，假设我们要做一个监护仪，它的预期用途可以这么描述：该产品在医疗单位中供有资质的医师操作，对成人、小儿和新生儿进行心电(ST 段测量和心律失常分析)、呼吸、体温、脉搏氧饱和度、脉率、无创血压、呼吸 二氧化 碳、成人和 3 岁以上小儿有创血压的监护。</p>
+<p>用户主要的预期功能怎么说呢，还是举例来说明：</p>
+<table>
+<thead>
+<tr>
+<th>XX-CRD-001</th>
+<th>需求名称</th>
+<th>支持心电监测</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>父需求编号</td>
+<td>需求描述</td>
+<td>能够进行人体的心电监测</td>
+</tr>
+</tbody>
+</table>
+<p>这里描述的是非常高层的用户需要的需求，以用户的语言来描述，也许有人会质疑这种高层抽象的需求存在的必要性。那么从FDA 820 QSR来看，用户需求存在的理由还是很充分的，另外从流程V&amp;V的角度来讲，用户需求的存在也简化了Validation的复杂度，后边我会专门讲到流程。<br><img src="/images/14980881219750.jpg" alt></p>
+<h3 id="产品需求"><a href="#产品需求" class="headerlink" title="产品需求"></a>产品需求</h3><p>产品需求是需求定义的产物。</p>
+<h3 id="子系统需求"><a href="#子系统需求" class="headerlink" title="子系统需求"></a>子系统需求</h3><p>子系统需求是领域需求分析与建模的产物。</p>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+			
+		
+	
+		
+			
+			
+			
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+	
+	
+		<li class="prev"><a href="/2017/10/22/需求变更管理/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/2017/10/22/需求的粒度的思考/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2021 peapon
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.tableofcontents.min.js"></script>
+<script src="/js/tocgenerator.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+</body>
+</html>

@@ -1,0 +1,347 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>网络诊断三部曲 | Req Man</title>
+  <meta name="author" content="peapon">
+  
+  <meta name="description" content="查信号强度网络现场勘察和延迟分析
+现场勘查，获取平面图；
+获取网络类型，确定是零漫游、AP+AP还是AC+AP，这两点是基础信息获取；
+在Windows命令行或终端中ping任意一台设备，延迟大于500ms时，表示网络基本不可用，小于200ms表示网络状况可以；
+如果网络中存在干扰，ping包的延时">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="网络诊断三部曲">
+  <meta property="og:site_name" content="Req Man">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/atom.xml" title="Req Man" type="application/atom+xml">
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/">Req Man</a><span class="split"></span><span class="title">网络诊断三部曲</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2017-11-01</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <h2 id="查信号强度"><a href="#查信号强度" class="headerlink" title="查信号强度"></a>查信号强度</h2><h3 id="网络现场勘察和延迟分析"><a href="#网络现场勘察和延迟分析" class="headerlink" title="网络现场勘察和延迟分析"></a>网络现场勘察和延迟分析</h3><ul>
+<li>现场勘查，获取平面图；</li>
+<li>获取网络类型，确定是零漫游、AP+AP还是AC+AP，这两点是基础信息获取；</li>
+<li>在Windows命令行或终端中ping任意一台设备，延迟大于500ms时，表示网络基本不可用，小于200ms表示网络状况可以；</li>
+<li>如果网络中存在干扰，ping包的延时特点是时间长短不一，而且差异明显，如可能会出现10+ms，有的会达到几百ms</li>
+<li>ping命令<code>ping 192.168.1.x -t</code>，使用该命令会持续不断的ping目标地址</li>
+<li>具体的用法用量<a href="https://jingyan.baidu.com/article/466506580c9c27f549e5f8d5.html" target="_blank" rel="noopener">点这里</a>。</li>
+</ul>
+<h3 id="遥测设备信号强度确定"><a href="#遥测设备信号强度确定" class="headerlink" title="遥测设备信号强度确定"></a>遥测设备信号强度确定</h3><ul>
+<li>在遥测设备 上进入到维护菜单（长按F键+开/关机键），三秒左右会出菜单</li>
+<li>输入密码厂家维护密码</li>
+<li>进入到网络设置菜单</li>
+<li>查看RSSI值，如果没有值，表示WIFI没有连上</li>
+<li>信号强度要在-65dBm及以上（注意是以上，比如-50dBm）才能比较稳定的连接</li>
+<li>注意点：</li>
+</ul>
+<ol>
+<li>一般来说在一个房间测试时，需要测试四个角、每个床位，正对和背对天线都需要测试</li>
+<li>如果是AP+AP，AC+AP，如果AP都在走廊，需要确认一下墙体材质和厚度，一般来说</li>
+</ol>
+<ul>
+<li>玻璃材质不档信号</li>
+<li>砖体墙会衰减信号，根据厚度不一样而不一样</li>
+<li>整块金属对信号的屏蔽能力很强</li>
+<li>人体对信号的屏蔽明显，在10dBm左右，胖子不知道</li>
+<li>查看信号，一定要在遥测设备上进行，手机和电脑上看到的信号强度不具有参考价值</li>
+</ul>
+<h2 id="查无线网络配置"><a href="#查无线网络配置" class="headerlink" title="查无线网络配置"></a>查无线网络配置</h2><p>无线网络的配置有时会影响设备持续在线的能力，因此需要查看无线网络的配置，与设备支持的配置一致才能很好的兼容，初步需要注意下面两点：</p>
+<ul>
+<li>802.11bgn中的三种制式，禁用n模式，保留bg混合模式或者只保留b或者只保留g模式</li>
+<li>关闭路由器的WMM功能，设备不需要该服务，该服务会对数据包优先级排序，可能会影响网络</li>
+<li>这个设置可能需要IT部门支持</li>
+<li>具体的配置方法要参考相应型号的使用手册</li>
+</ul>
+<h2 id="查同频干扰-信道干扰"><a href="#查同频干扰-信道干扰" class="headerlink" title="查同频干扰/信道干扰"></a>查同频干扰/信道干扰</h2><p>无线网络的信道就是一种网络带宽资源，信道上的带宽是固定的，用的人多，就会出现僧多粥少的拥挤局面，因此要避免信道重叠或者邻频干扰，查看信道使用情况的工具有很多</p>
+<ul>
+<li>Windows平台，推荐使用WirelessMon、Xirrus WiFi Inspector，简单好用，<a href="http://blog.chinaunix.net/uid-22166872-id-4467388.html" target="_blank" rel="noopener">使用方法见</a>。</li>
+<li>Android平台，inssider软件和WiFi Overview 360都可以查看周围信号强度，都可以查看信道的使用情况，都能够简单上手。</li>
+<li>iOS，没有</li>
+</ul>
+<h2 id="抓包"><a href="#抓包" class="headerlink" title="抓包"></a>抓包</h2><p>调试有时需要使用wireshark来抓包<a href="https://www.wireshark.org/download.html" target="_blank" rel="noopener">官网地址</a>，初级教程<a href="http://blog.jobbole.com/70907/" target="_blank" rel="noopener">点这里</a>。</p>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+			
+		
+	
+		
+			
+			
+			
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+	
+	
+		<li class="prev"><a href="/2017/12/06/MagicApp说明/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/2017/10/23/敏捷软件需求管理/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2021 peapon
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.tableofcontents.min.js"></script>
+<script src="/js/tocgenerator.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+</body>
+</html>

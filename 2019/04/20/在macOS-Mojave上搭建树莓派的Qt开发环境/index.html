@@ -1,0 +1,332 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>在macOS Mojave上搭建树莓派的Qt开发环境 | Req Man</title>
+  <meta name="author" content="peapon">
+  
+  <meta name="description" content="做这件事的原因有两个：第一是，接上一篇《为树莓派3B+编译Qt 5.11.2》中的Ubuntu 18.10是在虚拟机中搭建的，所以每次要进行开发时，都需要再启动一个虚拟机，有点麻烦，不想这样做，也就是懒；第二是，Mac是Unix-like系统，理论上只要找到合适的编译器，也就可以在Mac上配置环境而">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="在macOS Mojave上搭建树莓派的Qt开发环境">
+  <meta property="og:site_name" content="Req Man">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/atom.xml" title="Req Man" type="application/atom+xml">
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/">Req Man</a><span class="split"></span><span class="title">在macOS Mojave上搭建树莓派的Qt开发环境</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2019-04-20</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <p>做这件事的原因有两个：<br>第一是，接上一篇《为树莓派3B+编译Qt 5.11.2》中的Ubuntu 18.10是在虚拟机中搭建的，所以每次要进行开发时，都需要再启动一个虚拟机，有点麻烦，不想这样做，也就是懒；<br>第二是，Mac是Unix-like系统，理论上只要找到合适的编译器，也就可以在Mac上配置环境而使用在虚拟机中编译的Qt。<br>所以带着勇闯雷区的勇气就开始了我的尝试之旅了。</p>
+<h1 id="树莓派部分"><a href="#树莓派部分" class="headerlink" title="树莓派部分"></a>树莓派部分</h1><p>树莓派部分我们已经在Ubuntu中做好了一切准备，所以我们不需要再做什么了，具体参考<a href="https://peapon.github.io/2019/04/17/为树莓派3B-编译Qt-5-11-2/">为树莓派3B+编译Qt 5.11.2</a>。<br></p>
+<h1 id="主机准备"><a href="#主机准备" class="headerlink" title="主机准备"></a>主机准备</h1><p>我的电脑的信息如下：<br><img src="/images/15558112564165.jpg" alt></p>
+<h2 id="工作目录和工具链准备"><a href="#工作目录和工具链准备" class="headerlink" title="工作目录和工具链准备"></a>工作目录和工具链准备</h2><p>这部分的工作呢，和在Ubuntu上准备是一样的，具体如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir ~/raspi</span><br><span class="line">cd ~/raspi</span><br><span class="line">git clone https://github.com/raspberrypi/tools</span><br></pre></td></tr></table></figure>
+<p>虽然我们不用tool下的gcc编译器，但我不确定是否用到其他环境，所以我们还是完整的下载。</p>
+<h2 id="准备正确的工具链和sysroot"><a href="#准备正确的工具链和sysroot" class="headerlink" title="准备正确的工具链和sysroot"></a>准备正确的工具链和sysroot</h2><h3 id="下载Mac下用的工具链"><a href="#下载Mac下用的工具链" class="headerlink" title="下载Mac下用的工具链"></a>下载Mac下用的工具链</h3><p>armv8-rpi3-linux-gnueabihf-gcc-8.1.0-macos-high-sierra这个工具链是在mac下可以使用来编译Qt的交叉编译器,先<code>git clone</code>下这个工具链。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github.com:yc2986/armv8-rpi3-linux-gnueabihf-gcc-8.1.0-macos-high-sierra.git</span><br></pre></td></tr></table></figure>
+<p>下载完工具链后，把<code>armv8-rpi3-linux-gnueabihf</code>拷贝到<code>~/raspi/tools</code>目录下。</p>
+<h3 id="准备sysroot"><a href="#准备sysroot" class="headerlink" title="准备sysroot"></a>准备sysroot</h3><p>还是需要在raspi下创建sysroot，并同步树莓派上面的库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir sysroot sysroot/usr sysroot/opt</span><br><span class="line">rsync -avz -e &quot;ssh -p 22&quot; pi@raspberrypi.local:/lib sysroot</span><br><span class="line">rsync -avz -e &quot;ssh -p 22&quot; pi@raspberrypi.local:/usr/include sysroot/usr</span><br><span class="line">rsync -avz -e &quot;ssh -p 22&quot; pi@raspberrypi.local:/usr/lib sysroot/usr</span><br><span class="line">rsync -avz -e &quot;ssh -p 22&quot; pi@raspberrypi.local:/opt/vc sysroot/opt</span><br></pre></td></tr></table></figure>
+<p>把<code>raspberrypi.local</code>换成树莓派的IP。<br>还有一种办法就是直接同步Ubuntu 下配置好的sysroot，具体方法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rsync -avz -e &quot;ssh -p 22&quot; penn@Penn 92.168.3.113:/home/penn/raspi/sysroot ./</span><br></pre></td></tr></table></figure>
+<p>这条命令是把Ubuntu端的sysroot同步到Mac的raspi目录。</p>
+<p><strong>还有一步非常非常重要的步骤，不然编译器的环境不完整，需要将<code>~/raspi/tools/armv8-rpi3-linux-gnueabihf/armv8-rpi3-linux-gnueabihf/sysroot</code>下所有的目录及文件拷到~/raspi/sysroot下，选择合并处理</strong>。</p>
+<h2 id="编译Qmake"><a href="#编译Qmake" class="headerlink" title="编译Qmake"></a>编译Qmake</h2><p>下载源代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget http://download.qt.io/official_releases/qt/5.11/5.11.2/single/qt-everywhere-src-5.11.2.tar.xz</span><br><span class="line">tar xvf  qt-everywhere-src-5.11.2.tar.xz</span><br><span class="line">cd  qt-everywhere-src-5.11.2</span><br></pre></td></tr></table></figure>
+<p>做完前面的工作，mac端的编译环境就准备好了，我们需要用到qt的编译器qmake，这个需要我们自己编译出来，步骤不重复叙述，configure要说一下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure -release -no-opengl -device linux-rasp-pi3-g++ -device-option CROSS_COMPILE=~/raspi/tools/armv8-rpi3-linux-gnueabihf/bin/armv8-rpi3-linux-gnueabihf- -sysroot ~/raspi/sysroot/ -opensource -confirm-license -skip qtwayland -skip qtlocation -skip qtscript -make libs -prefix /usr/local/qt5pi -extprefix ~/raspi/qt5pi -hostprefix ~/raspi/qt5 -no-use-gold-linker -v -no-gbm</span><br></pre></td></tr></table></figure>
+<p>这里注意，我们用了<code>-no-opengl</code>选项，因为我们在Ubuntu上已经编译了，而且这里我们也只是需要生成一个qmake及相关环境，我们并不用mac下编译出来的库。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make -j4</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<p>做完上面的步骤后，执行下面的命令确认是否正确编译了qmake</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~/rasp/qt5</span><br><span class="line">./bin/qmake -v</span><br></pre></td></tr></table></figure>
+<p>如果正确编译了qmake，能够得到下面的信息</p>
+<p><em>QMake version 3.1</em></p>
+<h1 id="配置开发环境"><a href="#配置开发环境" class="headerlink" title="配置开发环境"></a>配置开发环境</h1><p>QtCreator的配置是跟Ubuntu下是一样的，参考<a href="https://peapon.github.io/2019/04/17/为树莓派3B-编译Qt-5-11-2/#搭建开发环境">为树莓派3B-编译Qt-5-11-2/#搭建开发环境</a></p>
+<h2 id="GDB"><a href="#GDB" class="headerlink" title="GDB"></a>GDB</h2><p>要特别说明一下，这里的GDB有点区别，GDB设置的路径为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/Cellar/gdb/8.2.1/bin/gdb</span><br></pre></td></tr></table></figure>
+<h1 id="测试环境是否可用"><a href="#测试环境是否可用" class="headerlink" title="测试环境是否可用"></a>测试环境是否可用</h1><p>创建一个Qt Widgets Application名字为WidgetsDemo，然后编译执行，在VNC到树莓派，可以看到我们的程序已经上传到输煤派了。<br><img src="/images/15558165964519.jpg" alt></p>
+<p>好了，到这里在macOS mojave下搭建Qt的交叉编译环境也就完成了，希望你也能成功。</p>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+			
+		
+	
+		
+			
+			
+			
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+	
+	
+		<li class="prev"><a href="/2019/04/21/MWeb外部模式的图片文件夹处理/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/2019/04/17/RX-580解决270度旋转问题/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2021 peapon
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.tableofcontents.min.js"></script>
+<script src="/js/tocgenerator.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+</body>
+</html>

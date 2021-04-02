@@ -1,0 +1,340 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Axure 幻灯片轮播实现--简略版 | Req Man</title>
+  <meta name="author" content="peapon">
+  
+  <meta name="description" content="步骤
+在页面中添加”动态面板”
+为“动态面板”添加“状态”
+每一个“状态”中添加一个“图像”区
+在“图像”区中载入本地图片
+为页面添加一个“页面载入”的交互
+
+详细描述和截图添加动态面板添加动态面板，添加动态面板后双击动态面板进入到面板编辑模式
+添加状态
+添加图像图片添加这里分两步
+
+添加图像控件
+">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Axure 幻灯片轮播实现--简略版">
+  <meta property="og:site_name" content="Req Man">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/atom.xml" title="Req Man" type="application/atom+xml">
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/">Req Man</a><span class="split"></span><span class="title">Axure 幻灯片轮播实现--简略版</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2020-04-12</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ol>
+<li>在页面中添加”动态面板”</li>
+<li>为“动态面板”添加“状态”</li>
+<li>每一个“状态”中添加一个“图像”区</li>
+<li>在“图像”区中载入本地图片</li>
+<li>为页面添加一个“页面载入”的交互</li>
+</ol>
+<h2 id="详细描述和截图"><a href="#详细描述和截图" class="headerlink" title="详细描述和截图"></a>详细描述和截图</h2><h3 id="添加动态面板"><a href="#添加动态面板" class="headerlink" title="添加动态面板"></a>添加动态面板</h3><p>添加动态面板，添加动态面板后双击动态面板进入到面板编辑模式<br><img src="/images/15866867889164.jpg" alt></p>
+<h3 id="添加状态"><a href="#添加状态" class="headerlink" title="添加状态"></a>添加状态</h3><p><img src="/images/15866868829802.jpg" alt></p>
+<h3 id="添加图像"><a href="#添加图像" class="headerlink" title="添加图像"></a>添加图像</h3><p>图片添加这里分两步</p>
+<ul>
+<li>添加图像控件</li>
+<li>导入图片，见后边两张图</li>
+</ul>
+<p><img src="/images/15866870674953.jpg" alt><img src="/images/15866871219188.jpg" alt></p>
+<h3 id="为页面新建交互"><a href="#为页面新建交互" class="headerlink" title="为页面新建交互"></a>为页面新建交互</h3><p><img src="/images/15866873180604.jpg" alt></p>
+<p>页面新建交互的属性是：</p>
+<ul>
+<li>交互事件：页面加载</li>
+<li>交互目标：设置面板状态</li>
+<li>面板状态切换：下一项</li>
+<li>进入和退出动画：向左移动（可以自行根据需要设置）</li>
+<li>动画时间：3000ms</li>
+<li>循环时间：3000ms</li>
+</ul>
+<p>如此一来，就实现了Axure 来做一个幻灯片轮播的效果了。</p>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+			
+		
+	
+		
+			
+			
+			
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+	
+	
+		<li class="prev"><a href="/2020/04/19/多层物料关联/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/2019/05/29/浅谈用户思维/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2021 peapon
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.tableofcontents.min.js"></script>
+<script src="/js/tocgenerator.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+</body>
+</html>

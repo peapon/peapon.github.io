@@ -1,0 +1,313 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>需求确认 | Req Man</title>
+  <meta name="author" content="peapon">
+  
+  <meta name="description" content="为什么需要需求确认先从这幅图看起，这不是心血来潮弄出来的，这是一个研究给出的结论（Kelly，Sherief and Hops 1992），我只给出了10倍代价的图，这个研究给出的结论是在需求阶段修复错误往往只要30分钟，而在测试过程中修正错误往往需要5~17个小时。换句话说，就是在需求阶段修正错误">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="需求确认">
+  <meta property="og:site_name" content="Req Man">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/atom.xml" title="Req Man" type="application/atom+xml">
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/">Req Man</a><span class="split"></span><span class="title">需求确认</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2018-01-09</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <h1 id="为什么需要需求确认"><a href="#为什么需要需求确认" class="headerlink" title="为什么需要需求确认"></a>为什么需要需求确认</h1><p><img src="/images/15154525829579.jpg" alt><br>先从这幅图看起，这不是心血来潮弄出来的，这是一个研究给出的结论（Kelly，Sherief and Hops 1992），我只给出了10倍代价的图，这个研究给出的结论是在需求阶段修复错误往往只要30分钟，而在测试过程中修正错误往往需要5~17个小时。<br>换句话说，就是在需求阶段修正错误是值得的，也是必须的。因此发现需求中的错误成了至关重要的活动，这些错误包括不符合用户的需要、没有正确的描述、需求冲突等等，我们把这个过程叫<strong>需求确认。</strong><br>我们要讨论的内容就是需求确认的目的，何时开始需求确认，怎么做。</p>
+<h1 id="需求确认目的"><a href="#需求确认目的" class="headerlink" title="需求确认目的"></a>需求确认目的</h1><p>这个问题很难回答，也很好回答，我们上面已经说过了，需求阶段修正错误可以付出很小的代价，也就是说能省钱。<br>我更喜欢《软件需求》中关于这个目的的描述：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1. 软件需求能够准确地描述了预期的系统能力和特征，并且这些能力和特征能够满足不同干系人的需要。</span><br><span class="line">2. 从业务需求、系统需求、业务规则及其他来源中正确产线需求。</span><br><span class="line">3. 需求是完整的、可行的、可验证的。</span><br><span class="line">4. 所有需求都是必要的，并且整改需求集合满足业务目标。</span><br><span class="line">5. 所有需求彼此是一致的。</span><br><span class="line">6. 需求能够为后续的设计和构建提供充分的依据。</span><br></pre></td></tr></table></figure>
+<h1 id="何时开始"><a href="#何时开始" class="headerlink" title="何时开始"></a>何时开始</h1><p>如果你问我什么时候开始做需求确认，我的答案是越早越好，当然，前提是你完成了需求捕获和初步的需求分析。</p>
+<h1 id="需求确认的过程"><a href="#需求确认的过程" class="headerlink" title="需求确认的过程"></a>需求确认的过程</h1><p>首先我们要抛弃需求评审即是需求确认全部的思想，且需求确认也不是需求工作的终点。需求确认过程的活动应该是多个部分组成的，需求评审是必须的活动；原型可以根据需求的成熟度来决定是否采用原型，当然，也可以把原型理解为需求过程中的一种工具，可以随时使用；而需求测试是最有挑战的活动，很难去推动测试部门建立一种概念测试的观念，在没有实物前提下对需求测试对于很多测试工程师来讲，也是一个挑战。</p>
+<h2 id="需求评审"><a href="#需求评审" class="headerlink" title="需求评审"></a>需求评审</h2><p>需求评审是一个强大的工具，可以帮助需求作者及开发团队发现需求不明确或者不可验证、定义不清晰导致无法设计等问题，那么，需求规格或需求文档的作者这个时候就要摆正心态，想想评审的单词是“Review”，就是让别人给你看一遍的意思。<br>评审的形式也多种多样，我们主要考虑非正式评审的需求走查和正式评审的需求审查</p>
+<h3 id="需求走查"><a href="#需求走查" class="headerlink" title="需求走查"></a>需求走查</h3><p>Walkthrough，这个单词的字面意思是演练、预演、过一遍的意思，所以这个活动的重心也就出来了，那么如何有效的开展走查是一个重要的问题。</p>
+<p><a href="http://blog.csdn.net/zhangmike/article/details/51619937" target="_blank" rel="noopener">这是别人的见解</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">系统性的走查目的是为了评估一个软件产品。走查可能也会有让培训软件产品受众的目的。走查的作用还有交流技术、交流不同风格变化。 走查不仅可以发现异常，也可以指出不足之处（例如，软件产品的效率和可读性问题，设计或代码的模块化问题，或无法验证的规格）。参与走查有4个角色，分别是走查组长、记录者、作者、走查成员，走查至少需要2人。任何走查组成员的行政上级都不能参加走查。走查的最主要活动是作者或走查组长详细的展现所评审产物的每个部分，走查组识别并提出发现的异常和问题。走查的标准最少输出物总计有9项。走查不要求产物已经全部完成，可以按需高频开展。 </span><br><span class="line">在本五维需求评审框架中，走查属于有预审的双人即时或者会议形式、技术方面的定期或高频的同级需求文档评审。双人走查是标准允许的最少人数。双人走查与会议形式走查其实存在较大的差异：双人走查可以使用一台普通显示器，利用普通能够坐下两人的工作位置即可，这样就能够高频按需开展，会议形式往往需要会议室，而会议室在多数组织是稀缺资源，如果所有项目团队都开展需求和代码会议走查，那么每二周一次的会议室预订都未必能够保证，所以难以按需开展。代码走查是常听到的词汇，但是需求走查在中文世界很少提到，而在敏捷软件开发中已经显示了其有效性。</span><br></pre></td></tr></table></figure>
+<h3 id="需求审查"><a href="#需求审查" class="headerlink" title="需求审查"></a>需求审查</h3><p>需求审查的单词是“inspection”，这个词也是有两部分，spection是检查的意思，加入前缀in，那么就是深入检查的意思，也就是审查啦。</p>
+<h2 id="需求原型"><a href="#需求原型" class="headerlink" title="需求原型"></a>需求原型</h2><h2 id="需求测试"><a href="#需求测试" class="headerlink" title="需求测试"></a>需求测试</h2><h1 id="需求确认中的常见误区"><a href="#需求确认中的常见误区" class="headerlink" title="需求确认中的常见误区"></a>需求确认中的常见误区</h1><p><strong>需求验证形式化：</strong>许多时候是为了过流程，否则会阻塞开发，因此走一个正儿八经的流程，但实际上并没有达到效果；<br><strong>不重视：</strong>随便找个用户代表签字，责任为先，影响很不好；<br><strong>开会跑偏题：</strong>时常会开成批评会、吵架会、翻书会、语法纠错会。</p>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+			
+		
+	
+		
+			
+			
+			
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+	
+	
+		<li class="prev"><a href="/2018/01/24/用户画像/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/2018/01/09/使用原型/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2021 peapon
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.tableofcontents.min.js"></script>
+<script src="/js/tocgenerator.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+</body>
+</html>

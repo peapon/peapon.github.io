@@ -1,0 +1,326 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>如何定义性能需求 | Req Man</title>
+  <meta name="author" content="peapon">
+  
+  <meta name="description" content="本文来源于InfoQ，感谢原作者的贡献如何定义性能需求
+JVM监控解决方案提供商Plumbr的官方博客上发表了一篇题为《如何定义性能需求》的文章。文章指出，随着企业信息化程度的提高，业务人员对软件功能性需求的描述越来越好。但涉及到易用性、兼容性或性能等非功能性需求的时候，他们经常会不得要领。比如，他">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="如何定义性能需求">
+  <meta property="og:site_name" content="Req Man">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/atom.xml" title="Req Man" type="application/atom+xml">
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/">Req Man</a><span class="split"></span><span class="title">如何定义性能需求</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2018-01-02</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <p>本文来源于InfoQ，感谢原作者的贡献<a href="http://www.infoq.com/cn/news/2015/02/define-performance-requirements" target="_blank" rel="noopener">如何定义性能需求</a></p>
+<p>JVM监控解决方案提供商Plumbr的官方博客上发表了一篇题为《如何定义性能需求》的文章。文章指出，随着企业信息化程度的提高，业务人员对软件功能性需求的描述越来越好。但涉及到易用性、兼容性或性能等非功能性需求的时候，他们经常会不得要领。比如，他们可能会提出“它的运行速度要快”这样的性能需求。在更好的情况下，他们可能会提出下面这样的性能需求：</p>
+<ul>
+<li>在系统中执行的操作，95%的都必须在5秒针内响应；</li>
+<li>系统必须支持100并发用户。</li>
+</ul>
+<p>初看上去，这样的需求已经好了很多了。但实际上，它们甚至比只用一个“快”字描述更差。虽然它们包含了一些数字，看上去似乎可以作为开发人员的终极目标。但实际上，这两个需求最多只能为关于性能需求的讨论开一个头。</p>
+<p>文章接下来对上述两个需求进行了剖析。</p>
+<p>第一个需求没有提出针对其它5%的操作的性能需求。而且，不同的功能对性能的需求也不尽相同。比如，对于功能“显示当前账户余额”和“显示2013年所有的交易”，前者5秒响应可能都略显慢，而后者响应时间再长一些也可以接受。因此，性能需求描述应该：</p>
+<ul>
+<li>针对不同的操作类型指定可接受的时间延迟；</li>
+<li>将时间延迟相关的需求与负载/吞吐量相关的需求联系起来；</li>
+<li>明确时间延迟的测量位置，比如，延迟时间是以客户端为标准，还是以服务器端发送出最后一个字节为标准；</li>
+<li>哪些操作的时间延迟不太要紧。</li>
+</ul>
+<p>第二个需求看上去很准确，实际上很笼统。比如，将“100个并发用户”理解成“100个线程处理100个并发操作”。如果每个操作用时1秒，那么系统吞吐量为100 ops/sec；但如果每个操作用时10秒，那么系统吞吐量则只有10 ops/sec。对于后一种情况，我们不能认为它满足“100个并发用户”的需求。因此，需求应该更清楚地描述特定用户的行为，而不是用“并发用户”这样的术语。当然，这里并不是说建议测量吞吐量，因为现实世界的应用程序往往是多功能的，很难使用吞吐量来衡量其性能。</p>
+<p>本文还提到了容量规划，即在什么样的前提条件下实现上述性能需求，包括如下三个方面：</p>
+<ul>
+<li>系统的数据量；</li>
+<li>系统的基础设施限制，比如，CPU、内存等；</li>
+<li>系统的部署环境，比如，网络带宽是多少，是否需要离线操作等。</li>
+</ul>
+<p>总之，应该与业务人员紧密合作，制定出可测量的、具体的性能需求。</p>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+			
+		
+	
+		
+			
+			
+			
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+	
+	
+		<li class="prev"><a href="/2018/01/03/Java-程序破解思路/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/2017/12/08/简单的逻辑学阅读体会/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2021 peapon
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.tableofcontents.min.js"></script>
+<script src="/js/tocgenerator.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+</body>
+</html>

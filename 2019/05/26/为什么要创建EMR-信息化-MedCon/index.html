@@ -1,0 +1,340 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>为什么要创建EMR 信息化(MedCon) | Req Man</title>
+  <meta name="author" content="peapon">
+  
+  <meta name="description" content="起源背景我本人是在医疗器械企业的研发部门工作的，从事研发和产品相关的工作近10年，我的经历可以大致分为下面几个阶段：
+
+软件开发，软件工程师，负责基于Windows平台的软件的研发；
+项目管理，软件工程师&amp;amp;软件项目经理，人少则仕，项目经理跑了，就要去做项目管理的工作；
+需求管理，需求管理与产">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="为什么要创建EMR 信息化(MedCon)">
+  <meta property="og:site_name" content="Req Man">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/atom.xml" title="Req Man" type="application/atom+xml">
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/">Req Man</a><span class="split"></span><span class="title">为什么要创建EMR 信息化(MedCon)</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2019-05-26</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  <div class="col-xs-12 col-sm-3 col-md-3 toc"> 
+	<!-- toc -->
+<script type="text/javascript">
+		jQuery(document).ready(function() {
+ 		   generateWikiTOC('.note', '.toc',  2 , 2 );
+		});
+</script>
+  </div><!-- col-md-3 -->
+  
+  
+
+  
+  <div class="col-xs-12 col-sm-9 col-md-9 note">
+	
+
+	  <!-- content -->
+	  <h1 id="起源"><a href="#起源" class="headerlink" title="起源"></a>起源</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>我本人是在医疗器械企业的研发部门工作的，从事研发和产品相关的工作近10年，我的经历可以大致分为下面几个阶段：</p>
+<ul>
+<li>软件开发，软件工程师，负责基于Windows平台的软件的研发；</li>
+<li>项目管理，软件工程师&amp;软件项目经理，人少则仕，项目经理跑了，就要去做项目管理的工作；</li>
+<li>需求管理，需求管理与产品稍微挂钩，做一个简单的尝试。</li>
+</ul>
+<p>我这些年的工作，多多少少都涉及到一个共同的话题——医疗信息化，也许这正好就是这几年的势头。当然，我在所服务的企业内部也经历了信息化发展的几个阶段：</p>
+<ul>
+<li>发端，由当时我的上级编写的一个简单HL7程序，而我去实施的首个案例；</li>
+<li>发展，在实施了几个案例后，我们发现我们的方案的缺陷，我带头调研了北美市场的EMR状况及IHE等进展，并提出开发网关的设想并得到实施；</li>
+<li>战略提升，截止到我们规划的一款产品上市时，公司已经把公司产品的信息化和设备的互操作性提升为公司战略。</li>
+</ul>
+<h2 id="为什么EMR-信息化"><a href="#为什么EMR-信息化" class="headerlink" title="为什么EMR 信息化"></a>为什么EMR 信息化</h2><p>既然我所服务的企业都已经把信息化上升为企业战略了，那为什么现在才创建这个EMR 信息化呢，原因很简单，我们并没有一个完全成熟的解决方案。<br>我目睹了公司信息化产品的发展，了解其中的艰难，知道其中的弯路，而且还要帮助提升产品的信息化程度，所以，希望借用一些公开平台作为载体，记录学习和实施过程中的一些要点，以帮助后续需要用到这些信息的人。<br>我所披露的都是公开和公有的信息，我相信业界一定有科学家一样的大神存在，但我还是想系统的归纳，作为后续其他人查找信息的入口。</p>
+<h1 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h1><p>EMR 信息化的目标，是为了在中国创建一个更好的解读国内外信息化标准的技术交流平台。</p>
+<h1 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h1><p>EMR信息化初期规划的内容包含以下几部分：</p>
+<ul>
+<li>Mirth Connect的使用和解析；</li>
+<li>HL7简要解析；</li>
+<li>中国医院信息互联互通标准解析；</li>
+<li>HIMSS初步解析；</li>
+<li>ATSM解析；</li>
+<li>IEC 11073标准的解析。</li>
+</ul>
+<p>对于医疗信息化标准的解析，国内的厂商多数是处于封闭的发展状态，而且很多时候也没有精力去做这一块，所以国内真正要找一块信息化相关的内容，难度还是不小的，我希望能够通过我的努力，稍微改善一下这样的状况。<br>这一系列的事情，我会根据我解读的情况，以系列文章的形式来整理出来，最终能到什么程度我也不清楚，所以我会选择一个难度最小的，也就是Mirth Connect入手。</p>
+<h1 id="假定"><a href="#假定" class="headerlink" title="假定"></a>假定</h1><p>我假定读这些文章的人对医疗信息化、HL7这些东西都有一个简单的了解，至少听说过，因此在有些术语上，我不会特别深入的去解释。</p>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+			
+		
+	
+		
+			
+			
+			
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+	
+	
+		<li class="prev"><a href="/2019/05/27/7Edit-安装和使用/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/2019/05/11/读《情商管理课——优秀的人如何掌控情绪》/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2021 peapon
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.tableofcontents.min.js"></script>
+<script src="/js/tocgenerator.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+</body>
+</html>

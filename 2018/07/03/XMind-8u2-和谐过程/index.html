@@ -1,0 +1,359 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>XMind 8u2 和谐过程 | Req Man</title>
+  <meta name="author" content="peapon">
+  
+  <meta name="description" content="Briefing Notes:This is a MultiOS RCE adaptation of the deconstructed XMind 8 Pro Update 1 v3.7.1 RCE, by Team appnee, for the Windows edition of XMind">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="XMind 8u2 和谐过程">
+  <meta property="og:site_name" content="Req Man">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/atom.xml" title="Req Man" type="application/atom+xml">
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/">Req Man</a><span class="split"></span><span class="title">XMind 8u2 和谐过程</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2018-07-03</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <h2 id="Briefing-Notes"><a href="#Briefing-Notes" class="headerlink" title="Briefing Notes:"></a>Briefing Notes:</h2><p>This is a MultiOS RCE adaptation of the deconstructed XMind 8 Pro Update 1 v3.7.1 RCE, by Team appnee, for the Windows edition of XMind, which was based on the XMind 3.5.0 RCE serial from CodeCracker @ Team SND.</p>
+<p>Team appnee’s RCE strategy is novel, and elegant, and whilst developed specifically for 3.7.1 on Windows, when generalised, continues to work successfully for 3.7.2, on all desktop operating systems, and may also provide an RCE strategy for later revisions of XMind.</p>
+<p>The patch from that Windows edition RCE created a Java container file and also replaced the XMind initialisation text-file to then reference that Java container file.</p>
+<p>The RCE solutions for XMind, are historically, principally, modified Java container files, and usually, as a consequence, they are Operating System (O/S) agnostic.</p>
+<p>Props and thanks to CodeCracker @ Team SND for the original serial!</p>
+<p>Props and thanks to Team appnee for the current RCE!</p>
+<p>Props and thanks to ph03n1x for the GNU/Linux, and MacOSX, technical instructions!</p>
+<h2 id="RCE-instructions-to-install-amp-activate-XMind-Pro-on-Mac-OS-X"><a href="#RCE-instructions-to-install-amp-activate-XMind-Pro-on-Mac-OS-X" class="headerlink" title="RCE instructions to install &amp; activate XMind Pro on Mac OS X:"></a>RCE instructions to install &amp; activate XMind Pro on Mac OS X:</h2><p>What you will need to know how to do:</p>
+<ol>
+<li>Use a file manager application</li>
+<li>Establish a Terminal window, with a command shell prompt</li>
+<li>Change directory location at the command line and in the file manager GUI (graphical user interface)</li>
+<li>Edit a plain-text file with a text-editor application</li>
+</ol>
+<p>These are all basic, foundation, computer literacy skills, for any operating system; the search engine is your friend.</p>
+<ol>
+<li>Install XMind and then run it once to disable any callbacks (Check for any Updates, or Data Sharing, options in the Preferences, and disable them all). Once completed, quit XMind.</li>
+</ol>
+<p>[Refer to the graphic: ‘/Graphics/XMind-MacOSX-RCE-Activation-Snapshot-1.png’]</p>
+<ol start="2">
+<li>Modify the ‘XMind.ini’ file, found in the following location:</li>
+</ol>
+<p>/Applications/XMind.app/Contents/Eclipss</p>
+<p>Using a text-editor and add the following line to the very end of the file:</p>
+<p>-javaagent:../RCE/XMindCrack.jar</p>
+<ol start="3">
+<li>Create the ‘RCE’ sub-folder, (rememering that the “Case” of ‘RCE’ is important), inside the following location:</li>
+</ol>
+<p>/Applications/XMind.app/Contents</p>
+<p>Resulting in:</p>
+<p>/Applications/XMind.app/Contents/RCE</p>
+<p>[Refer to the graphic: ‘/Graphics/XMind-MacOSX-RCE-Activation-Snapshot-2.png’]</p>
+<p>Copy and paste the file ‘XMindCrack.jar’ into that newly created ‘RCE’ sub-folder.</p>
+<ol start="4">
+<li>Open the MacOSX HOSTS file by running the following command, at the command shell prompt, in a Terminal Window, providing your user password when prompted:</li>
+</ol>
+<p>sudo nano /private/etc/hosts</p>
+<p>Then add the following two entries to the HOSTS file and then save it:</p>
+<p>127.0.0.1 xmind.net<br>127.0.0.1 <a href="http://www.xmind.net" target="_blank" rel="noopener">www.xmind.net</a></p>
+<ol start="5">
+<li>Run the following command in a Terminal Window, at the command shell prompt, after saving the HOSTS file:</li>
+</ol>
+<p>dscacheutil -flushcache</p>
+<p>Now run XMind again. Open the Preferences, click onto ‘XMind Pro’ and then onto ‘Upgrade’. Click on ‘Enter Key’ and then register using the provided serial. XMind should then be successfully activated.</p>
+<p>[Refer to the graphic: ‘/Graphics/XMind-MacOSX-RCE-Activation-Snapshot-3.png’]</p>
+<h2 id="Credits"><a href="#Credits" class="headerlink" title="Credits:"></a>Credits:</h2><p>Props and thanks to CodeCracker @ Team SND for the original serial!</p>
+<p>Props and thanks to Team appnee for the current RCE!</p>
+<p>Props and thanks to ph03n1x for the GNU/Linux, and MacOSX, technical instructions!</p>
+<h2 id="See-also"><a href="#See-also" class="headerlink" title="See also:"></a>See also:</h2><p>Introduction to the Mac OS X Command Line:</p>
+<p><a href="http://blog.teamtreehouse.com/introduction-to-the-mac-os-x-command-line" target="_blank" rel="noopener">http://blog.teamtreehouse.com/introduction-to-the-mac-os-x-command-line</a></p>
+<p>How to Open a Terminal Window in Mac:</p>
+<p><a href="http://www.wikihow.com/Open-a-Terminal-Window-in-Mac" target="_blank" rel="noopener">http://www.wikihow.com/Open-a-Terminal-Window-in-Mac</a></p>
+<p>Using the sudo command in Terminal:</p>
+<p><a href="https://support.apple.com/en-us/HT202035" target="_blank" rel="noopener">https://support.apple.com/en-us/HT202035</a></p>
+<p>How to modify the HOSTS file, on Windows, MacOSX, and GNU/Linux:</p>
+<p><a href="https://support.rackspace.com/how-to/modify-your-hosts-file/" target="_blank" rel="noopener">https://support.rackspace.com/how-to/modify-your-hosts-file/</a></p>
+<p>[EOF]</p>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+			
+		
+	
+		
+			
+			
+			
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+	
+	
+		<li class="prev"><a href="/2018/07/04/Mac-OSX程序破解入门/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/2018/07/03/需求交付质量讨论/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2021 peapon
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.tableofcontents.min.js"></script>
+<script src="/js/tocgenerator.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+</body>
+</html>
